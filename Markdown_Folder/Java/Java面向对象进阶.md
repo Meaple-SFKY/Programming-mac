@@ -6,7 +6,7 @@
 
 ## *4.1 面向对象三大特性*
 
-- 继承（Inhertiance）
+- 继承（Intertiance）
 - 封装（Encapsulation）
 - 多态（Polymorphism）
 
