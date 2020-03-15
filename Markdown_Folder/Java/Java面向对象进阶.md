@@ -708,7 +708,17 @@ Java中接口定义的一般形式如下
 > code - 多态
 
 ```java
-public interface
+public interface Fruit {
+    public void get();
+}
+public class Apple implement Fruit {
+    public void get() {
+        System.out.println("采集苹果");
+    }
+}
+public class Banana implement Fruit {
+    public 
+}
 ```
 
 ---

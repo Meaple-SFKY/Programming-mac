@@ -5,7 +5,6 @@ using namespace std;
 
 int main(void)
 {
-    SetConsoleTitle("MAZE");
     Menu();
     system("cls");
     MAZE maze;
