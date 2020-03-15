@@ -640,7 +640,6 @@ public class Show {
         System.exit(0);
     }
 }
-
 ```
 
 #### [4]其他说明
@@ -717,10 +716,256 @@ public class Apple implement Fruit {
     }
 }
 public class Banana implement Fruit {
-    public 
+    public void get() {
+        System.out.println("采摘香蕉");
+    }
+}
+public class Mainclass() {
+    public static void main(String[] args) {
+        // 实例化一个Apple
+        Apple apple = new Apple();
+        // 实例化一个Banana
+        Banana banana = new Banana();
+        apple.get();
+        banana.get();
+    }
 }
 ```
+
+### [5]abstract class 和 interface
+
+- 从语法定义层面
+  - 使用abstract class的方式定义Demo抽象类的方式：
+    abstract class Demo {
+        abstract void method1();
+        abstract void method2();
+        method2();
+        ...
+    }
+  - 使用interface的方式定义Demo抽象类的方式:
+    interface Demo {
+        void method1();
+        void method2();
+        ...
+    }
+- 从编程的角度
+  - 抽象类在Java语言中表示的是一种继承关系，一个类只能使用一次继承关系，一个类却可以实现多个接口
+  - 在抽象类的定义中，我们可以赋予方法的默认行为，但是在接口的定义中，*接口却不能拥有默认行为*
+  - 接口的实现只要有相关的函数名称就可以了，即便没有任何实现都可以
+  - **如果一个接口中定义的方法名改变了，那么所有实现此接口的子类显然将无法通过编译**
+- 从设计层面接口比抽象类好，一般情况下，如果能用接口就不用抽象类
+  从设计上讲和抽象类有很大不同
+  - 接口表示实现类*尊崇接口的"协议"，并不是接口的特征*，接口既然定义了就不能随便修改。所以设计上，接口不应该很"大"（后面的线程实现就是例子）
+  - 如果一个子类继承了抽象类就决定了这个类的主要特征
+
+### [4]抽象类 VS 接口
+
+区别点|抽象类|接口
+------|------|---
+定义|abstract修饰的类|抽象方法和全局常量的集合
+组成|构造方法、抽象方法、普通方法、常量、变量|抽象方法、变量
+使用|子类继承抽象类（extends）|子类继承接口（implements）
+关系|抽象类可以实现多个接口|接口不能继承抽象类，但允许类实现多个接口，接口可以继承接口
+设计模式|模板设计|工厂设计、代理设计
+对象|都通过对象的多态性产生实例化对象
+局限|抽象类有单继承的局限|接口没有单继承的局限
+实际使用|作为一个模板|是作为一个标准或是表示一种能力
+选择|若抽象类和接口都可以使用，优先使用接口，避免单继承的问题
+
+### [5]接口实现于继承类
+
+接口的应用实例
+
+![interface](Pictures/interface.png)
+
+### [6]接口、实现与继承实例
+
+```java
+// 接口在编程中的应用  例程 Vehicle.java
+// 接口定义的成员变量全部使用final static进行修饰
+// 接口不允许有程序体，  接口不是类，所有接口中不能定义构造方法
+import java.util.*; //引用使用类
+interface Automobile { //汽车接口
+    int i = 5;
+    void accelent(); //static &final
+    void maintain(); //Automatically public
+    String forward();
+    String reverse();
+}
+class Little_car implements Automobile { //小车类
+    public void accelent() {
+       System.out.println("Little_car.accelent()");
+    }
+   public void maintain() {}
+   public String forward() {
+       return "Little_car.forward";
+    }
+    public String reverse() {
+        return "Little_car.reverse";
+    }
+}
+class Big_car implements Automobile { //大车类
+    public void accelent() {
+        System.out.println(" Big_car.accelent()");
+    }
+    public void maintain() {}
+    public String forward() {
+        return "Big_car.forward";
+    }
+    public String reverse() {
+        return "Big_car.reverse";
+    }
+}  
+class Jeep implements Automobile { //吉普车类
+    public void accelent() {
+        System.out.println("Jeep.accelent()");
+    }
+    public void maintain() {}
+    public String forward() {
+        return " Jeep.forward";
+    }
+    public String reverse() {
+        return " Jeep.reverse";
+    }
+}
+class Microbus extends Big_car { //面包车类
+    public void accelent() {
+        System.out.println("Microbus.accelent()");
+    }
+    public void maintain() {
+        System.out.println("Microbus. maintain()");
+    }
+}
+class Bus extends Big_car {
+    public String forward() {
+        return "  Bus.forward";
+    }
+    public String reverse() {
+        return "  Bus.reverse";
+    }
+}
+public class Vehicle { //主类
+    public static void main(String args[]) {
+        Automobile[] vehicle = new Automobile[5];
+        int i = 0;
+        vehicle[i++] = new Little_car();
+        vehicle[i++] = new Big_car();
+        vehicle[i++] = new Jeep();
+        vehicle[i++] = new Bus();
+        vehicle[i++] = new Microbus();
+        for(i = 0; i < vehicle.length; i++)
+            vehicle[i].accelent();
+    }
+}
+```
+
+> [!TIP]
+> 程序运行结果
+>
+> Little_car.accelent
+>
+> Big_car.accelent()
+>
+>Jeep.accelent()
+>
+>Microbus.accelent()
+>
+>Big_car.accelent()
 
 ---
 
 ## *4.4 "设计模式"初体验 —— 简单工厂模式*
+
+### [1]工厂模式
+
+- 简单工厂模式属于类的创建型模式，又叫做静态工厂方法模式，通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类
+
+![factory](Pictures/factory.png)
+
+> Code - 1 - 水果类
+
+```java
+interface Feed {
+    //采集
+    public void get();
+}
+class Apple implements Feed {
+    //吃
+    public void eat() {
+        System.out.println("吃苹果");
+    }
+}
+class Meat implements Feed {
+    //吃
+    public void eat() {
+        System.out.println("吃肉");
+    }
+}
+```
+
+> Code - 2 - 简单工厂类
+
+```java
+class FruitFactory {
+    //get方法，获得所有产品对象
+    public static Fruit getFruit(String type) throws Exception{
+        if (type.equalsIgnoreCase("apple")) {
+            return Apple.class.newInstance();
+        }
+        else if (type.equalsIgnoreCase("banana")) {
+            return Banana.class.newInstance();
+        }
+        else {
+            System.out.println("找不到相应的实例化类");
+            return null;
+        }
+    }
+}
+```
+
+> Code - 3 - 主类
+
+```java
+public class MainClass {
+    public static void main(String[] args) throws Exception {
+        //简单工厂方法创建水果对象
+        Fruit apple = FruitFactory.getFruit("Apple");
+        Fruit banana = FruitFactory.getFruit("Banana");
+        //调用水果对象方法
+        apple.get();
+        banana.get();
+    }
+}
+```
+
+#### <1>模式中包含的角色及其职责
+
+- ***抽象（Product）角色***
+  - 简单工厂模式所创建的所有对象的父类，它负责描述所有实例所共有的公共接口。
+- ***具体产品（Concrete Product）角色***
+  - 简单工厂模式所创建的具体实例对象
+- ***工厂（Creator）角色***
+  - 简单工厂模式的核心，它负责实现创建所有实例的内部逻辑。工厂类可以被外界直接调用，创建所需的产品对象
+
+#### <2>简单工厂模式的优缺点
+
+- **优点**
+  - 在这个模式中，工厂类是整个模式的关键所在
+  - 它包含必要的判断逻辑，能够根据外界给定的信息，决定究竟应该创建哪个具体类的对象。用户在使用时可以直接根据工厂类去创建所需的实例，无需了解对象是如何创建以及如何组织的
+  - 有利于整个软件体系结构的优化
+- **缺点**
+  - 简单工厂模式的缺点也正体现在其工厂类
+  - 工厂类集中了所有实例的创建逻辑，"高内聚"方面不佳
+  - 另外，当系统中的具体产品类不断增多时，可能会出现要求工厂类也要做相应的修改，扩展性并不很好
+
+#### <3>总结：设计模式六大原则
+
+- 设计模式的核心原则是：***"开-闭"原则 （OCP）***
+- 软件实体(类,模块,函数等)应该可以扩展,但是不可以修改
+- 依赖倒转原则
+  - A:高层模块不应该依赖底层模块
+  - B:抽象不应该依赖细节,细节应该依赖抽象
+- 里氏代换原则：子类型必须能够替换它们的父类型
+- 单一职能原则：就一个类而言,应该仅有一个引起他变化的原因 （不该你管的事情你不要管 ）
+- 迪米特法则：系统中的类,尽量不要与其他类互相作用,减少类之间的耦合度
+- 接口隔离法则:这个法则与迪米特法则是相通。迪米特法则是目的,而接口隔离法则是对迪米特法则的规范
