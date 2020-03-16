@@ -1,7 +1,5 @@
 # **4. Java面向对象进阶**
 
-[toc]
-
 ---
 
 ## *4.1 面向对象三大特性*
@@ -134,7 +132,7 @@ public class Test_Point {
 
 下面的列表说明访问控制修饰符含义:
 
-![template](https://github.com/Meaple-SFKY/Programming/blob/master/Markdown_Folder/Java/Pictures/template.png?raw=true)
+![template](Pictures/template.png)
 
 #### [2]公共访问控制符public
 
