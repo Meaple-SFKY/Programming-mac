@@ -137,7 +137,7 @@ public class Test_Point {
 #### [2]公共访问控制符public
 
 > [!TIP]
-> 无论是类或者类成员，只要被声明成public，就意味着它可以被从任何地方访问
+> 无论是类或者类成员，只要被声明成public，就意味着它可以从任何地方被访问
 
 - 一个类作为整体对程序的其他部分可见，并不能代表类内的所有属性和方法也同时对程序的其他部分可见，前者只是后者的必要条件，类的属性和方法能否为所有其他类所访问，还要看这些属性和方法自己的访问控制符
 - 实例变量采用*public*关键字，这是一种非常糟糕的做法,破坏封装
@@ -168,8 +168,8 @@ import package1[.package2...].(classname|*)
 - 例如，在Point2D类中有两个变量，它们被定义成以下形式：
 
 ```java
-    private  double  x;
-    private  double  y;
+    private double x;
+    private double y;
 ```
 
 - private（私有的）关键字用来确保可以访问这些实例变量的只能是Point2D类本身的方法。
@@ -180,7 +180,7 @@ import package1[.package2...].(classname|*)
 ```java
 //引用私有方法和修改私有成员变量
 class def05_01{
-    private int x,y,z = 0;
+    private int x, y, z = 0;
     private void method1() {
         int x = 3, y = 4, z;
         z = x * y;
@@ -191,30 +191,31 @@ class def05_01{
     }
 }
 class ch05_01{
-  public static void main(String args[]){
-    def05_01 ss = new def05_01();
-     ss.method1(); //调用私有方法出错
-     ss.z = 12;         //修改私有变量出错
-     ss.show();
+    public static void main(String[] args){
+        def05_01 ss = new def05_01();
+            ss.method1(); //调用私有方法出错
+            ss.z = 12;         //修改私有变量出错
+            ss.show();
    }
 }
 //引用公共方法和修改私有成员变量
 class def05_01b {
-    private int x,y,z=0;
+    private int x, y, z = 0;
     public void method1(){
-       int x = 3, y = 4,z;
-       z = x * y;
-       System.out.println("z = " + z);  }
+        int x = 3, y = 4,z;
+        z = x * y;
+        System.out.println("z = " + z);  }
     public void show() {
-       System.out.println("z = " + z);  }
- }
- class  ch05_01b {
-   public static void main(String args[]){
-       def05_01b ss = new def05_01b();
-       ss.method1();
-       ss.z = 12;
-       ss.show();  }
- }
+        System.out.println("z = " + z);  }
+}
+class ch05_01b {
+    public static void main(String args[]){
+        def05_01b ss = new def05_01b();
+        ss.method1();
+        ss.z = 12;
+        ss.show();
+    }
+}
 ```
 
 #### [5]保护访问控制符protected
@@ -232,7 +233,7 @@ class def05_01b {
 > Code - protected方法
 
 ```java
-//定义类的protected 方法，通过创建对象来引用此方法
+//定义类的protected方法，通过创建对象来引用此方法
 class Max {
     private int x,y;
     protected int play(int s, int t) {
@@ -337,10 +338,10 @@ public class Test_Calculate {
 ```java
 public class Demo {
     public static void main(String[] args) {
-      Animal a = new Cat();  
-      a.eat();
-      Cat c = (Cat)a;
-      c.work();
+        Animal a = new Cat();  
+        a.eat();
+        Cat c = (Cat)a;
+        c.work();
     }
 }
 abstract class Animal {  
