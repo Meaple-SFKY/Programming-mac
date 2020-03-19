@@ -267,3 +267,11 @@ public class ExceptionDemo04{
 
 > [!TIP]
 > 抛出的异常类被捕获后，先执行它的构造方法，然后执行*catch*块的方法
+
+上一篇：
+> [!div class="nextstepaction"]
+> [Java异常处理](Java异常处理.md)
+
+下一篇：
+> [!div class="nextstepaction"]
+> [Java输入输出系统](Java输入输出系统.md)

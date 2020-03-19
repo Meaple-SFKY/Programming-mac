@@ -32,7 +32,7 @@ sled dogs 雪橇犬
 
 Amerigo Vespucci
 
-### <1>The famous explores
+### <1>The famous explorers
 
 - Magellan(Spanish)
 - John Cabot(English)
