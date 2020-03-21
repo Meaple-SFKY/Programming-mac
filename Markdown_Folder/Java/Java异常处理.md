@@ -28,7 +28,7 @@
 
 ### <3>Java异常处理机制1
 
-程序设计时必须考虑发生的突发错误，避免程序被中断或破坏，在以前的程序设计语言中，通常通过*if-else*结构来手工判断，不仅增加的程序员的工作，而且会遗漏隐藏的错误
+程序设计时必须考虑发生的突发错误，避免程序被中断或破坏，在以前的程序设计语言中，通常通过*if-else*结构来手工判断，不仅增加程序员的工作，而且会遗漏隐藏的错误
 
 > - Java提供了功能强大的异常处理机制，可以方便地
 >   - 在程序中监视可能发生异常的程序块
@@ -43,10 +43,10 @@
 
 ### <3>Java异常处理机制2
 
-在**Java**的异常处理机制种引进了很多用来描述和处理异常的类，成为异常类。每个异常类反映一类**运行错误**，类定义中包含了该类异常的信息和对异常进行处理的方法
+在**Java**的异常处理机制种引进了很多用来描述和处理异常的类，称为异常类。每个异常类反映一类**运行错误**，类定义中包含了该类异常的信息和对异常进行处理的方法
 
 - 程序执行中如出现异常，系统会检测到并自动生成一个相应的异常类对象，然后交给运行时系统
-- 运行时系统自动寻找相应的异常处理代码处理这一异常。若找不到可以处理该异常的代码，则运行时系统将终止，程序运行将推出
+- 运行时系统自动寻找相应的异常处理代码处理这一异常。若找不到可以处理该异常的代码，则运行时系统将终止，程序运行将退出
 
 ```java
 public void work() {
@@ -61,7 +61,7 @@ public void work() {
 
 ### <3>java的异常处理机制3
 
-- Java将异常分为*Exception（异常）*和*Error（错误）*两大类
+- Java将异常分为*Exception(异常)* 和 *Error(错误)*两大类
   - **Exception类** 解决由程序本身及环境所产生的异常
   - **Error类**  JVM本身错误，不能被程序员处理
   - *Exception类异常*可以被捕获并进行处理，而对*Error类异常*，程序员通常无能为力，只能在其发生时由用户按照系统提示关闭程序
@@ -73,12 +73,12 @@ public void work() {
 
 ### <4>异常分类
 
-- 非检查性异常：Error 和 RuntimeException 以及子类。  javac在编译时，不会提示和发现这样的异常，我们可以编写代码处理（使用try…catch…finally）这样的异常，也可以不处理。这样的异常发生的原因多半是代码写的有问题。
+- 非检查性异常：Error 和 RuntimeException 以及子类。*javac*在编译时，不会提示和发现这样的异常，我们可以编写代码处理（使用try…catch…finally）这样的异常，也可以不处理。这样的异常发生的原因多半是代码写的有问题。
   - 如除0错误：ArithmeticException
   - 错误的强制类型转换错误：ClassCastException
   - 数组索引越界:ArrayIndexOutOfBoundsException
   - 使用了空对象:NullPointerException
-- 检查性异常：除了Error 和 RuntimeException的其它异常。javac强制要求程序员为这样的异常做预备处理工作（使用try…catch…finally或者throws），否则编译不通过。
+- 检查性异常：除了Error 和 RuntimeException的其它异常。*javac*强制要求程序员为这样的异常做预备处理工作（使用try…catch…finally或者throws），否则编译不通过。
   - 打开不存在的文件：FileNotFoundException
 
 ---
@@ -154,12 +154,10 @@ public class ExceptionDemo02{
         int x = 15, y = 0;
         System.out.println("x / y = " + x / y);
         System.out.println("Computing successfully!");
-    }
-    catch(ArithmeticException e) {
+    } catch(ArithmeticException e) {
         System.out.println("捕获 ArithmeticException!");
         System.out.println("异常信息: "+e.toString());
-    }
-    finally {
+    } finally {
         System.out.println(" 善后处理!");
     }
 }
@@ -230,7 +228,7 @@ class 自定义异常类名 extends Exception {
 }
 ```
 
-> 自定义异常类例
+> Code - 自定义异常类例
 
 ```java
 // 自定义异常类将继承Exception 类的所有方法
@@ -241,7 +239,7 @@ class OverFlowException extends Exception {
     }
 }
 public class ExceptionDemo04{
-    public static int x=100000;
+    public static int x = 100000;
     public static int multi() throws OverFlowException{
         int aim;
         aim = x * x * x;
@@ -249,7 +247,7 @@ public class ExceptionDemo04{
             throw new OverFlowException();
         }
         else {
-            return x*x;
+            return x * x;
         }
     }
     public static void main(String args[]){
@@ -257,8 +255,7 @@ public class ExceptionDemo04{
         try {
            y = multi();
            System.out.println(" y = " + y);
-        }
-        catch(OverFlowException e) {
+        } catch(OverFlowException e) {
            System.out.println(e);
         }
     }
