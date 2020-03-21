@@ -12,7 +12,7 @@
 
 ![io](Pictures/io.png)
 
-- **Java**的输入输出是以流（*stream*)的方式进行处理的，流是在计算机的 输入、输出操作中流动的数据序列
+- **Java**的输入输出是以流（*stream*)的方式进行处理的，流是在计算机的输入、输出操作中流动的数据序列
 - **Java**按流的单位分有位流（字节流）和字符流；按流动方向分为输入流和输出流
 
 ![stream](Pictures/stream.png)
@@ -47,7 +47,7 @@ public File(File parent, String child)|根据父对象以及字文件/目录名�
 //Windows中路径分隔可使用/或\\
 File file1 = new File("d:\\java\\a.txt");
 File file2 = new File("d:\\java", "a.txt");
-File file3 = new File(new File("d:\\"), "java\\a.txt");
+File file3 = new File(new File("d:\\", "java\\a.txt");
 ```
 
 - *File类的常用方法*
@@ -71,7 +71,7 @@ mkdirs()|创建多级目录，返回类型boolean
 renameTo(File dest)|重命名（剪切功能），返回类型boolean
 
 - *File*类 - 注意事项
-  - *delete()*方法在删除目录时如果其内有内容则无法删除，需要先清空目录下的内容，再删除目录本身
+  - delete()方法在删除目录时如果其内有内容则无法删除，需要先清空目录下的内容，再删除目录本身
   - *isDirectory()*和*isFile()*方法在判断是否为文件或者目录时，如果文件或目录不存在则返回false
   - *createNewFile()*方法在创建文件时，如果文件所在的目录不存在则创建失败并抛出异常
   - *String[] list()*和*File[] listFiles()*都是返回对象包含的所有的文件和目录，返回类型不同
@@ -242,7 +242,7 @@ close()|关闭流对象
 - 特有方法：
   - String getEncoding()
 
-### <6>FileWriter
+### <7>FileWriter
 
 - 用来写入字符文件的类
 - 构造方法：
@@ -254,7 +254,7 @@ close()|关闭流对象
     - 将一个路径封装成字符输出流，如果第二个参数为true，则在文件存在的情况下，可以追加
 - 常用方法：同父类
 
-### <7>带缓冲区的字符流
+### <8>带缓冲区的字符流
 
 > 包装类，将没有缓冲功能的普通字符流，包装加强之后形成高效的缓冲字符流包装类也是顶层抽象父类的子类
 
