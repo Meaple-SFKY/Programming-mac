@@ -24,7 +24,7 @@
   - 向窗体中添加组件
   - 对组件进行事件处理
 
-### <2>Java的徒刑用户界面AWT包
+### <2>Java的图形用户界面AWT包
 
 - **AWT**：*Abstract Window Toolkit*，第一代GUI开发工具
 - **Swing**：第二代**GUI**开发工具，建立在**AWT**之上，但用新版本的组件替代了旧版本的组件
@@ -76,7 +76,7 @@
   - 常用方法：
     - public String getText();
     - public void setText(String t);
-- 文本区：由JComponent的子类JTexArea创建文本区
+- 文本区：由JComponent的子类JTextArea创建文本区
   - 构造函数：
     - JTextArea();
     - JTextArea(int rows, int columns)
