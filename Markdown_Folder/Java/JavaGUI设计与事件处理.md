@@ -423,3 +423,7 @@ boolean drawImage(Image img, int x, int y, int width, int height, ImageObserver 
 boolean drawImage(Image img, int x, int y, Color bgcolor, ImageObserver observer)
 boolean drawImage(Image img, int x, int y, int width, int height, Color bgcolor, ImageObserver observer)
 ```
+
+上一篇：
+> [!div class="nextstepaction"]
+> [Java输入输出系统](Java输入输出系统.md)

@@ -322,8 +322,8 @@ public class standardIO2 {
 
 上一篇：
 > [!div class="nextstepaction"]
-> [Java输入输出系统](Java输入输出系统.md)
+> [Java异常处理](Java异常处理.md)
 
 下一篇：
 > [!div class="nextstepaction"]
-> [Java GUI设计与事件处理](Java GUI设计与事件处理.md)
+> [Java GUI设计与事件处理](JavaGUI设计与事件处理.md)

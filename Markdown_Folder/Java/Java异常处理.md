@@ -267,7 +267,7 @@ public class ExceptionDemo04{
 
 上一篇：
 > [!div class="nextstepaction"]
-> [Java异常处理](Java异常处理.md)
+> [Java面向对象进阶](Java面向对象进阶.md)
 
 下一篇：
 > [!div class="nextstepaction"]
