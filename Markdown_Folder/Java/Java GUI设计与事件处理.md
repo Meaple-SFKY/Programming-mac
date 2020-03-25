@@ -373,3 +373,53 @@ public class ActionEventTest {
     }
 }
 ```
+
+---
+
+## *7.2 自定义绘画*
+
+### <1>用户自定义绘画
+
+> 用户要完成自定义绘画需要"画笔"、"画布"两种
+>
+> 画布的选择：可以通过继承*JPanel*或者*JLabel*类，完成画布的创建
+>
+> - 画笔的获得：从画布上拿起画笔, 重写
+>   - public void paintComponent(Graphics g)
+>   - 参数Graphics对象就是画笔
+> - 重新绘制的方法：
+>   - void repaint()
+>   - void repaint(int, int, int, int)
+
+### <2>绘制简单的图形和文字 - Graphics
+
+- Graphics类提供基本绘图方法，主要有：
+  - 画线段：
+    - public abstract void drawLine(int x1, int y1, int x2, int y2)
+  - 画矩形：
+    - public void drawRect(int x, int y, int width, int height)
+    - public void fillRect(int x, int y, int width, int height)
+
+![graphics](Pictures/graphics.png)
+
+### <3>使用图像
+
+- 获得图像：使用 Toolkit 的 getImage 方法
+  - Image getImage(URL url)
+  - Image getImage(String filename)
+- 使用方法：
+
+```java
+Toolkit toolkit = Toolkit.getDefaultToolkit();
+Image image1 = toolkit.getImage("imageFile.gif");
+Image image2 = toolkit.getImage(new URL("http://java.sun.com/graphics/people.gif"));
+```
+
+- 显示图像：使用Graphics对象的方法
+
+```java
+boolean drawImage(Image img, int x, int y, ImageObserver observer)
+boolean drawImage(Image img, int x, int y, int width, int height, ImageObserver observer)
+boolean drawImage(Image img, int x, int y, Color bgcolor, ImageObserver observer)
+boolean drawImage(Image img, int x, int y, int width, int height, Color bgcolor, ImageObserver observer)
+```
