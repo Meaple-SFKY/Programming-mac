@@ -146,7 +146,7 @@
 ### <5>JPanel面板
 
 - 构造方法：*JPanel()*;
-  - *JPanel p=new JPanel()*;
+  - *JPanel p = new JPanel()*;
 - 常用方法：*public void add()*;
 - 使用*JPanel*创建面板，再向这个面板添加组件，然后把这个面板添加到其它容器中, *JPanel*面板的默认布局是*FlowLayout*布局
 
