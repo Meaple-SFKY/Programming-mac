@@ -7,7 +7,5 @@
 			"path": "."
 		}
 	],
-	"settings": {
-		"http.proxy": "https://proxy.golang.org"
-	}
+	"settings": {}
 }
