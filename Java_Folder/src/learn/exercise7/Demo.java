@@ -1,22 +1,31 @@
-package src.temporary.magic;
+//此类在src.learn.exercise6包里
+package src.learn.exercise7;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+
+//定义Demo类，包含主方法，继承JFrame父方法，实现MouseListener接口
 public class Demo extends JFrame implements MouseListener {
 
+    //默认添加
     /**
      *
      */
     private static final long serialVersionUID = 1L;
 
+    //定义main方法
     public static void main(String[] args) {
         Demo demo = new Demo();
     }
 
+    //x,y分别表示鼠标点击位置
+    //sign表示右键或者左键，点击一次将对其值重新设定
+    //width,height分别表示显示器尺寸的三分之一，使得显示效果更佳
     public int x, y, sign, width, height;
 
+    //获取x,y的值
     public int getX() {
         return this.x;
     }
@@ -25,6 +34,7 @@ public class Demo extends JFrame implements MouseListener {
         return this.y;
     }
 
+    //设定x,y的值
     public void setX(int X) {
         this.x = X;
     }
@@ -33,16 +43,21 @@ public class Demo extends JFrame implements MouseListener {
         this.y = Y;
     }
 
+    //设定sign的值
     public void setFlag(int flag) {
         sign = flag;
     }
 
+    //获取sign的值
     public int getFlag() {
         return this.sign;
     }
 
+    //构造函数
     public Demo() {
+        //绑定监听器
         addMouseListener(this);
+        //获取屏幕尺寸
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
         width = (int)screenSize.getWidth() / 3;

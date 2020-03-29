@@ -276,7 +276,7 @@
 
 ```java
 class ButtonListener implements ActionListener {
-    public void actionPerformed(       ) {
+    public void actionPerformed() {
       /**  按钮事件所进行的具体工作  **/
     }
 }
@@ -285,7 +285,7 @@ class ButtonListener implements ActionListener {
 ### <4>常用事件类
 
 - "实现了某种类型的监听器接口"的类的对象,如何编程实现监听器?
-  - 每一个事件类都有唯一的事件处理方法接口，例如，对于处理鼠标事件"*MouseEvent*"类的对应接口为"*MouseListener*"
+  - 每一个事件类都有唯一的事件处理方法接口，例如，对于处理鼠标事件"*MouseEvent*"类的对应接口为"*MouseListener*"
   - 每一个接口中都已经规定了一个空的抽象方法在该方法中编码实现自己想做的的工作
 
 事件类型|典型触发动作
