@@ -5,13 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug",
-            "type": "lldb",
+            "name": "c/c++ Launch",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/{fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/a.out",
             "args": [],
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "preLaunchTask":"Build with Clang"
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "preLaunchTask":"c++"
         }
     ]
 }

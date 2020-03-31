@@ -1,5 +1,5 @@
 #include<iostream>
-#include<string>
+#include<string.h>
 
 using namespace std;
 
@@ -483,7 +483,7 @@ Opponent::Opponent(string name, string time, string distance, string direction, 
 /********************************************************************************/
 
 //解析函数
-void analyze(string msg) {
+void analyze() {
 
     //定义特定字符串
     string Hear = "hear";
@@ -495,11 +495,12 @@ void analyze(string msg) {
     string Player_ = "player";
     string Hfut1 = "hfut1";
     string Hfut2 = "hfut2";
+    string msg = "(hear 1022 -30 passto(23,24))(see 1022 ((ball) 20 -20 1 -2) ((player hfut1 2) 23 45 0.5 1 22 40 ) ((goal r) 12 20))";
 
     int len = msg.length();
     int i;
 
-    char* p = NULL;
+    char p[] = "(hear 1022 -30 passto(23,24))(see 1022 ((ball) 20 -20 1 -2) ((player hfut1 2) 23 45 0.5 1 22 40 ) ((goal r) 12 20))";
 
     //从信息msg字符串中查找特定字符串
     string::size_type index;
@@ -919,7 +920,6 @@ void analyze(string msg) {
 }
 
 int main(void) {
-    string msg = "(hear 1022 -30 passto(23,24))(see 1022 ((ball) 20 -20 1 -2) ((player hfut1 2) 23 45 0.5 1 22 40 ) ((goal r) 12 20))";
-    analyze(msg);
+    analyze();
     return 0;
 }
