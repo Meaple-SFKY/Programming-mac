@@ -3,14 +3,14 @@ package src.practice.robocup;
 /*---------------------------     定义Teammate类     ------------------------------*/
 
 public class Teammate {
-    private double Distance;
-    private double Direction;
-    private double DistChng;
-    private double DirChng;
-    private double BodyDir;
-    private double HeadDir;
-    private int Time_Period;
-    private String Name;
+    private static double Distance;
+    private static double Direction;
+    private static double DistChng;
+    private static double DirChng;
+    private static double BodyDir;
+    private static double HeadDir;
+    private static int Time_Period;
+    private static String Name;
 
     private void setDistance(String distance) {
         Distance = Double.parseDouble(distance);

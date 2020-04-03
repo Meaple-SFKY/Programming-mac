@@ -3,10 +3,10 @@ package src.practice.robocup;
 /*-------------------------------     定义Goal类      ------------------------------*/
 
 public class Goal {
-    private double Distance;
-    private double Direction;
-    private String Name;
-    private int Time_Period;
+    private static double Distance;
+    private static double Direction;
+    private static String Name;
+    private static int Time_Period;
     
     private void setDistance(String distance) {
         Distance = Double.parseDouble(distance);

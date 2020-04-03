@@ -4,11 +4,11 @@ package src.practice.robocup;
 
 public class Ball {
 
-    private double Distance;
-    private double Direction;
-    private double DistChng;
-    private double DirChng;
-    private int Time_Period;
+    private static double Distance;
+    private static double Direction;
+    private static double DistChng;
+    private static double DirChng;
+    private static int Time_Period;
 
     private void setDistance(String distance) {
         Distance = Double.parseDouble(distance);
