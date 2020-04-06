@@ -433,3 +433,7 @@ boolean drawImage(Image img, int x, int y, int width, int height, Color bgcolor,
 上一篇：
 > [!div class="nextstepaction"]
 > [Java输入输出系统](Java输入输出系统.md)
+
+下一篇：
+> [!div class="nextstepaction"]
+> [Java多线程程序设计](Java多线程程序设计.md)
