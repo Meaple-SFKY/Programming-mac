@@ -12,7 +12,7 @@
 
 ### <1>一个例程
 
-> 在创体中绘制一个"*会运动的、碰壁后会反弹的*"小球
+> 在窗体中绘制一个"*会运动的、碰壁后会反弹的*"小球
 
 #### [1]程序主体框架
 
@@ -20,7 +20,7 @@
 // 定义带有"球"的窗体类
 class MyFrame extends Frame {
     …    // 窗体的属性设置
-    inner class Ball {  // 定义球类
+    inner class Ball { // 定义球类
         …  // 球的属性设置
         …  // 球的运动方法
     }
@@ -64,11 +64,11 @@ class DrawSingleBall {
 
 > [!div class="checklist"]
 > * 采用多线程技术的**动机**
->   - 问题： 程序的某部分与特定的事件或资源联系在一起，而设计者不想让这种联系阻碍程序其余部分运行
+>   - 问题：程序的某部分与特定的事件或资源联系在一起，而设计者不想让这种联系阻碍程序其余部分运行
 >   - 解决：创建一个与事件或资源关联的线程，并且让此线程独立于主线程运行
 
 - 一个程序在其执行过程中，可以产生多个线程，形成多条执行线索。每条线程，有产生、存在和消亡的过程。
-- 程序中多个线程，按照自己的执行路线并发工作，独立完成各自的功能，互不干扰
+- 程序中多个线程，按照自己的执行路线并发工作，独立完成各自的功能，互不干扰
 
 ---
 
@@ -115,7 +115,7 @@ class DrawSingleBall {
 - 可运行：
   - 线程已经启动，等待获得*CPU时间片*执行
   - 获得*CPU时间片*的线程开始执行
-  - 获得*CPU时间片*的线程可以放弃当前执行机会，等待下次执行
+  - 获得*CPU时间片*的线程可以放弃当前执行机会，等待下次执行
 - 不可运行：
   - 不分配给线程*CPU*时间，直到线程重新进入就绪状态
   - 原因：*阻塞、线程睡眠(sleep)、线程挂起(wait)*
@@ -198,7 +198,7 @@ class MyThread implements Runnable {
     - "自己的名称和遍数"
     - "打印结束提示"
 - 解决方法
-  - 设计自己的线程类(派生自*Thread类*或实现*Runnable接口*)
+  - 设计自己的线程类(派生自*Thread类*或实现*Runnable接口*)
   - 在主线程(*main*方法)中创建两个线程
 
 ```java
@@ -290,7 +290,7 @@ class Thread_3 {
 ### <2>多线程互斥的关键
 
 - 对于访问某个关键共享资源的所有方法，都必须把它们设为*synchronized*，例如：
-  - synchronized void f() { /* ... */ }
+  - synchronized void f() { /* ... */ }
   - synchronized void g() { /* ... */ }
 - 当一个线程A使用一个*synchronized*修饰的方法时，其它线程想使用这个方法时就必须等待，直到线程A 使用完该方法 （除非线程A主动让出*CPU*资源）
 - 如果想保护某些资源不被多个线程同时访问，可以强制通过*synchronized*方法访问那些资源。
@@ -324,8 +324,8 @@ class Customer extends Thread {
 //main class
 class Thread_4 {
     public static void main(String args[]){
-        Customer Customer1 = new Customer( );
-        Customer Customer2 = new Customer( );
+        Customer Customer1 = new Customer( );
+        Customer Customer2 = new Customer( );
         Customer1.start();
         Customer2.start();
     }
@@ -358,10 +358,10 @@ class Thread_4 {
     - 线程放弃当前的*CPU*使用权，但将*CPU*资源让出来后马上重新参加CPU资源竞争；
     - 线程会自动回到执行状态
   - *sleep()*:
-    - "休眠"使线程停止执行一段时间，该时间由你给定的毫秒数决定；
+    - "休眠"使线程停止执行一段时间，该时间由你给定的毫秒数决定；
     - 线程会自动回到执行状态
   - *wait()*
-    - "挂起"线程将释放所有资源，等得到通知后在参加资源竞争；
+    - "挂起"线程将释放所有资源，等得到通知后在参加资源竞争；
     - 启动办法是*notify()*和*notifyAll()*方法
 
 上一篇：
