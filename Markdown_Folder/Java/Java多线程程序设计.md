@@ -214,10 +214,9 @@ class myThread extends Thread {
     //一定要实现run方法
     public void run() {
         for (int i = 1; i <= count; i++) {
-        System.out.println(tname + i);
-    }
-    System.out.println
-        (tname + " finished!");
+            System.out.println(tname + i);
+        }
+        System.out.println(tname + " finished!");
     }
 }
 
@@ -306,9 +305,8 @@ class Cbank {
         temp = temp - m;
         try {
             Thread.sleep((int)(1000 * Math.random()));
+        } catch(InterruptedException e) {
         }
-        catch(InterruptedException e)
-            {}
         s = temp;
         System.out.println("s="+s);
     }
