@@ -103,6 +103,7 @@ String toString()|将此URL对象转换为字符串形式
 //URLReader, 获取网页并按行打印
 import java.net.*;
 import java.io.*;
+
 public class Network_1 {
     public static void main(String[] args) throws Exception {
         //URL数据-> InputStreamReader对象 -> BufferedReader对象  -> 程序处理
@@ -110,8 +111,8 @@ public class Network_1 {
         BufferedReader in = new BufferedReader(new InputStreamReader( hfut.openStream()));
         String inputLine;
         //打印输出HTML
-        while ( (inputLine = in.readLine() ) != null )
-        System.out.println(inputLine);
+        while ((inputLine = in.readLine()) != null )
+            System.out.println(inputLine);
         //关闭缓冲区
         in.close();
     }
