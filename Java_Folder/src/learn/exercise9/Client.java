@@ -2,13 +2,16 @@ package src.learn.exercise9;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import java.io.*;
 import java.net.*;
-import javax.swing.*;
 
 class CFrame extends Frame 
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Socket client = null;
 	TextField port = new  TextField("8000");
 	TextField ip = new TextField("127.0.0.1");

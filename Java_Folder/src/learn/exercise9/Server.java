@@ -2,13 +2,16 @@ package src.learn.exercise9;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import java.io.*;
 import java.net.*;
-import javax.swing.*;
 
 class SFrame extends Frame{
-	ServerSocket server  =  null;  
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	ServerSocket server = null;
 	Socket client = null;
 	TextField port = new  TextField("8000");
 	Button start = new Button("Start");

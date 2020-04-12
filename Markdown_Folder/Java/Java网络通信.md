@@ -14,7 +14,7 @@
 
 ![net](Pictures/net.png)
 
-- 互联网上的计算机之间的通讯是通过TCP (Transport Control Protocol)   或UDP (User Datagram Protocol)协议
+- 互联网上的计算机之间的通讯是通过TCP (Transport Control Protocol) 或UDP (User Datagram Protocol)协议
 
 如下图所示
 
@@ -64,9 +64,9 @@
 ## *9.2 URL编程*
 
 - 在**WWW**上，每一信息资源都有统一且唯一的地址，该地址就叫*URL(Uniform Resource Locator)*，是**WWW**的统一资源定位标识符。
-- *URL*由4部分组成；资源类型、存放资源的主机域名、资源文件名和端口。例如，*<http://61.135.169.125:80/img/baidu_sylogo1.gif>*
+- *URL*由4部分组成；资源类型、存放资源的主机域名、资源文件名和端口。例如，*<http://61.135.169.125:80/img/baidu_sylogo1.gif>*
   - http                               表示该资源类型是超文本信息
-  - 61.135.169.125(www.baidu.com)      是百度的主机域名
+  - 61.135.169.125(www.baidu.com)      是百度的主机域名
   - 80                                  表示HTTP协议的端口号
   - /img/baidu_sylogo1.gif               表示资源文件名
 
@@ -130,7 +130,7 @@ public class Network_1 {
 - 建立输入/输出流*URLConnection*类不仅可以使用*getInputStream()*方法获得URL节点的信息，还可以采用*getOutputStream()*方法向*URL*节点处传送信息
 - 在建立*URLConnection*类对象的同时就已经在本级和URL节点之上建立了一条HTTP通道
 - **HTTP**是一个连接协议，发送信息之前要附加确认双方身份的信息
-  - *DataInputStream datain = newDataInputStream(connect.getInputStream());*
+  - *DataInputStream datain = new DataInputStream(connect.getInputStream());*
 
 > URL程序例二
 
