@@ -15,7 +15,7 @@ class ServerFrame extends Frame {
     ServerSocket server = null;
     Socket client = null;
     private String name;
-    TextField port = new TextField("8000");
+    TextField port = new TextField("19000");
     Button start = new Button("Start");
     TextArea sTextArea = new TextArea(30, 60);
     JFileChooser sFileChooser = new JFileChooser();

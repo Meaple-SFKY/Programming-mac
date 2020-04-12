@@ -15,7 +15,7 @@ class ClientFrame extends JFrame {
     Socket client = null;
     private String name;
     TextField ip = new TextField("127.0.0.1");
-    TextField port = new TextField("8000");
+    TextField port = new TextField("19000");
     Button connect = new Button("Connect");
     TextArea cTextArea = new TextArea(30, 60);
     JFileChooser cFileChooser = new JFileChooser();
