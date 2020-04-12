@@ -53,7 +53,7 @@ class ImageViewerFrame extends JFrame
             {
                 String name = chooser.getSelectedFile().getPath();
                 label.setIcon(new ImageIcon(name));
-            }
+            } 
         });
 
         JMenuItem exitItem = new JMenuItem("Exit");

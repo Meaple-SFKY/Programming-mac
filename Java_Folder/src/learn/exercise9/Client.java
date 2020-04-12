@@ -11,7 +11,7 @@ class CFrame extends Frame
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	Socket client = null;
 	TextField port = new  TextField("8000");
 	TextField ip = new TextField("127.0.0.1");
@@ -56,7 +56,7 @@ class CFrame extends Frame
 		North.add(new Label("port"));
 		North.add(this.port);
 		North.add(this.connect);
-		this.add(North,BorderLayout.NORTH);
+		this.add(North, BorderLayout.NORTH);
 				
 		Panel Center = new Panel();
 		Center.add(this.cfTA);
