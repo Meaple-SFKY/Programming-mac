@@ -15,13 +15,14 @@ class ServerFrame extends Frame {
     ServerSocket server = null;
     Socket client = null;
     private String name;
-    TextField port = new TextField("19000");
+    private String path;
+    TextField port = new TextField("8000");
     Button start = new Button("Start");
     TextArea sTextArea = new TextArea(30, 60);
     JFileChooser sFileChooser = new JFileChooser();
     Button choose = new Button("Choose File");
     TextField chooseFile = new TextField(40);
-    Button send = new Button("send");
+    Button send = new Button("Send");
     SListener sListener = new SListener();
 
     public ServerFrame(String title) {
@@ -35,8 +36,9 @@ class ServerFrame extends Frame {
             int result = sFileChooser.showOpenDialog(null);
 
             if (result == JFileChooser.APPROVE_OPTION) {
-                name = sFileChooser.getSelectedFile().getPath();
-                chooseFile.setText(name);
+                path = sFileChooser.getSelectedFile().getPath();
+                name = sFileChooser.getSelectedFile().getName();
+                chooseFile.setText(path);
             }
         });
 
@@ -125,6 +127,23 @@ class ServerFrame extends Frame {
                     sTextArea.append(s + "\n");
                     s = br.readLine();
                 }
+                File file = new File(s);
+                File newFile = new File(name);
+                System.out.println(s + " " + name);
+                newFile.createNewFile();
+                FileInputStream fileInputStream = new FileInputStream(file);
+                FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                
+                int len;
+                byte[] b = new byte[1024];
+                while ((len = bufferedInputStream.read(b)) > 0) {
+                    bufferedOutputStream.write(b, 0, len);
+                }
+                bufferedOutputStream.flush();
+                bufferedInputStream.close();
+                bufferedOutputStream.close();
             } catch(Exception re) {
                 re.printStackTrace();
             }

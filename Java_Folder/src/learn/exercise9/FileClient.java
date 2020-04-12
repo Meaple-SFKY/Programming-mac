@@ -14,14 +14,15 @@ class ClientFrame extends JFrame {
     
     Socket client = null;
     private String name;
+    private String path;
     TextField ip = new TextField("127.0.0.1");
-    TextField port = new TextField("19000");
+    TextField port = new TextField("8000");
     Button connect = new Button("Connect");
     TextArea cTextArea = new TextArea(30, 60);
     JFileChooser cFileChooser = new JFileChooser();
     Button choose = new Button("Choose File");
     TextField chooseFile = new TextField(40);
-    Button send = new Button("send");
+    Button send = new Button("Send");
     CListener cListener = new CListener();
 
     public ClientFrame(String title) {
@@ -35,8 +36,9 @@ class ClientFrame extends JFrame {
             int result = cFileChooser.showOpenDialog(null);
 
             if (result == JFileChooser.APPROVE_OPTION) {
-                name = cFileChooser.getSelectedFile().getPath();
-                chooseFile.setText(name);
+                path = cFileChooser.getSelectedFile().getPath();
+                name = cFileChooser.getSelectedFile().getName();
+                chooseFile.setText(path);
             }
         });
 
@@ -126,6 +128,24 @@ class ClientFrame extends JFrame {
                     cTextArea.append(s + "\n");
                     s = br.readLine();
                 }
+                
+                File file = new File(s);
+                File newFile = new File(name);
+                System.out.println(s + " " + name);
+                newFile.createNewFile();
+                FileInputStream fileInputStream = new FileInputStream(file);
+                FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                
+                int len;
+                byte[] b = new byte[1024];
+                while ((len = bufferedInputStream.read(b)) > 0) {
+                    bufferedOutputStream.write(b, 0, len);
+                }
+                bufferedOutputStream.flush();
+                bufferedInputStream.close();
+                bufferedOutputStream.close();
             } catch(Exception re) {
                 re.printStackTrace();
             }
