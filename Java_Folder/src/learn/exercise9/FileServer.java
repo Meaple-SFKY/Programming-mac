@@ -1,3 +1,4 @@
+//在src.learn.exercise9包中
 package src.learn.exercise9;
 
 import java.awt.*;
@@ -6,6 +7,7 @@ import java.io.*;
 import java.net.*;
 import javax.swing.*;
 
+//定义ServerFrame类
 class ServerFrame extends Frame {
     /**
      *
@@ -19,6 +21,7 @@ class ServerFrame extends Frame {
     TextField port = new TextField("8000");
     Button start = new Button("Start");
     TextArea sTextArea = new TextArea(30, 60);
+    //显示文件目录，选择文件
     JFileChooser sFileChooser = new JFileChooser();
     Button choose = new Button("Choose File");
     TextField chooseFile = new TextField(40);
@@ -32,6 +35,7 @@ class ServerFrame extends Frame {
         start.addActionListener(sListener);
         send.addActionListener(sListener);
         sFileChooser.setCurrentDirectory(new File("."));
+        //当鼠标点击choose按钮时，显示目录
         choose.addActionListener(event -> {
             int result = sFileChooser.showOpenDialog(null);
 
@@ -57,6 +61,7 @@ class ServerFrame extends Frame {
    		this.setVisible(true);
     }
 
+    //初始化窗口
     void init() {
         setLocation(1200, 100);
         setSize(400, 400);
@@ -83,6 +88,7 @@ class ServerFrame extends Frame {
         pack();
     }
 
+    //定义CListener类，监听按钮发生的事件
     class SListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String string = e.getActionCommand();
@@ -118,6 +124,7 @@ class ServerFrame extends Frame {
         }
     }
 
+    //定义ServerThread类，实现发送文件和接收文件
     class ServerThread extends Thread {
         public void run() {
             try {
@@ -129,7 +136,6 @@ class ServerFrame extends Frame {
                 }
                 File file = new File(s);
                 File newFile = new File(name);
-                System.out.println(s + " " + name);
                 newFile.createNewFile();
                 FileInputStream fileInputStream = new FileInputStream(file);
                 FileOutputStream fileOutputStream = new FileOutputStream(newFile);
@@ -151,6 +157,7 @@ class ServerFrame extends Frame {
     }
 }
 
+//定义FileServer类，此类包含主方法
 public class FileServer {
     public static void main(String[] args) {
         ServerFrame serverFrame = new ServerFrame("Server");

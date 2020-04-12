@@ -1,3 +1,4 @@
+//在src.learn.exercise9包中
 package src.learn.exercise9;
 
 import java.awt.*;
@@ -6,6 +7,7 @@ import java.io.*;
 import java.net.*;
 import javax.swing.*;
 
+//定义ClientFrame类
 class ClientFrame extends JFrame {
     /**
      *
@@ -19,6 +21,7 @@ class ClientFrame extends JFrame {
     TextField port = new TextField("8000");
     Button connect = new Button("Connect");
     TextArea cTextArea = new TextArea(30, 60);
+    //显示文件目录，选择文件
     JFileChooser cFileChooser = new JFileChooser();
     Button choose = new Button("Choose File");
     TextField chooseFile = new TextField(40);
@@ -32,6 +35,7 @@ class ClientFrame extends JFrame {
         connect.addActionListener(cListener);
         send.addActionListener(cListener);
         cFileChooser.setCurrentDirectory(new File("."));
+        //当鼠标点击choose按钮时，显示目录
         choose.addActionListener(event -> {
             int result = cFileChooser.showOpenDialog(null);
 
@@ -57,6 +61,7 @@ class ClientFrame extends JFrame {
    		this.setVisible(true);
     }
 
+    //初始化窗口
     void init() {
         setLocation(300, 100);
         setSize(400, 400);
@@ -85,6 +90,7 @@ class ClientFrame extends JFrame {
         pack();
     }
 
+    //定义CListener类，监听按钮发生的事件
     class CListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String string = e.getActionCommand();
@@ -119,11 +125,13 @@ class ClientFrame extends JFrame {
         }
     }
 
+    //定义ClientThread类，实现发送文件和接收文件
     class ClientThread extends Thread {
         public void run() {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String s = br.readLine();
+                //输入Quit退出
                 while (!"Server: Quit".equals(s) && s != null) {
                     cTextArea.append(s + "\n");
                     s = br.readLine();
@@ -131,7 +139,6 @@ class ClientFrame extends JFrame {
                 
                 File file = new File(s);
                 File newFile = new File(name);
-                System.out.println(s + " " + name);
                 newFile.createNewFile();
                 FileInputStream fileInputStream = new FileInputStream(file);
                 FileOutputStream fileOutputStream = new FileOutputStream(newFile);
@@ -153,6 +160,7 @@ class ClientFrame extends JFrame {
     }
 }
 
+//定义FileClient类，此类包含主方法
 public class FileClient {
     public static void main(String[] args) {
         ClientFrame clientFrame = new ClientFrame("Client");
