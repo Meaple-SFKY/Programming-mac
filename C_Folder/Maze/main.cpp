@@ -6,7 +6,6 @@ using namespace std;
 int main(void)
 {
     Menu();
-    system("cls");
     MAZE maze;
     srand((unsigned int)time(NULL));
     initialMaze(maze);

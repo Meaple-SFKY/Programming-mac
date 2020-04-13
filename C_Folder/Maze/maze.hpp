@@ -27,16 +27,12 @@ using namespace std;
 
 typedef struct
 {
-    int X_Locat;
-    int Y_Locat;
-} Locat;
-
-typedef struct
-{
     int** array;
     int** read;
-    Locat Start;
-    Locat End;
+    int Start_X_Locat;
+    int Start_Y_Locat;
+    int End_X_Locat;
+    int End_Y_Locat;
     int size;
 } MAZE;
 
@@ -99,8 +95,10 @@ MAZE initialMaze(MAZE& maze)
             maze.array[i][j] = WALLR;
         }
     }
-    maze.Start = { 1, 1 };
-    maze.End = { maze.size - 2, maze.size - 2 };
+    maze.Start_X_Locat = 1;
+    maze.Start_X_Locat = 1;
+    maze.End_X_Locat = maze.size - 2;
+    maze.End_X_Locat = maze.size - 2;
     return maze;
 }
 
@@ -203,19 +201,7 @@ void Menu(void)
 {
     WallAround();
     EmptyLine();
-    cout << SQUARE << "  Welcome to the MAZE WORLD!  " << SQUARE << endl;
+    cout << SQUARE << "               Welcome to the MAZE WORLD!               " << SQUARE << endl;
     EmptyLine();
     WallAround();
-    system("pause");
-}
-
-void SetSE(MAZE& maze, Locat start, Locat end)
-{
-    maze.Start = start;
-    maze.End = end;
-}
-
-void EditMaze(MAZE& maze)
-{
-    
 }
