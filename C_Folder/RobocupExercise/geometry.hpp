@@ -1,3 +1,4 @@
+/*------------------------------- geometry.hpp ----------------------------------------*/
 #ifndef _GEOMETRY_HPP_
 #define _GEOMETRY_HPP_
 
