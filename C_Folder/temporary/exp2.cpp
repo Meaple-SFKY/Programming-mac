@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
 typedef vector<int> Array1D;
 typedef vector<vector<int> > Array2D;
 
@@ -9,7 +10,7 @@ int main(int argc, char *argv[])
     int i,j;
     Array1D sz;
     for(i=0;i<10;i++)
-      sz.push_back(i);
+        sz.push_back(i);
 
     for(i=0;i<10;i++)
        cout<<sz[i]<<" ";
@@ -18,14 +19,14 @@ int main(int argc, char *argv[])
     sz.erase(sz.begin()+3);
 
     for(i=0;i<sz.size();i++)
-      cout<<sz[i]<<" ";
+        cout<<sz[i]<<" ";
     cout<<endl;
 
     sz.erase(sz.begin()+2,sz.begin()+5);
 
     for(i=0;i<sz.size();i++)
-     cout<<sz[i]<<" ";
-     cout<<endl;
+        cout<<sz[i]<<" ";
+        cout<<endl;
 
     sz.erase(sz.begin(),sz.end());//sz.clear();
 
@@ -33,20 +34,19 @@ int main(int argc, char *argv[])
 
     tw.resize(5);
     for(i=0;i<5;i++)
-      tw[i].resize(5);
+        tw[i].resize(5);
 
     for(i=0;i<5;i++)
-      for(j=0;j<5;j++)
-        tw[i][j]=i*5+j;
+        for(j=0;j<5;j++)
+            tw[i][j]=i*5+j;
 
     for(i=0;i<tw.size();i++)
     {
-      for(j=0;j<tw[i].size();j++)
-        cout<<tw[i][j]<<" ";
-      cout<<endl;
+        for(j=0;j<tw[i].size();j++)
+            cout<<tw[i][j]<<" ";
+        cout<<endl;
     }  
   
-    system("PAUSE");  //press any key to continue......
+    system("read -p 'Press Enter to continue' var");  //press any key to continue......
     return 0;
 }
-
