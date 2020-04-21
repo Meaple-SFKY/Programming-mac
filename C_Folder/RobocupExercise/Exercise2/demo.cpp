@@ -56,7 +56,7 @@ int main(void) {
         bPart = 2 * fixedLine.get_a() * fixedLine.get_c() - 2 * pow(fixedLine.get_b(), 2) * circle.getCenterPoint().x
                 + 2 * fixedLine.get_a() * fixedLine.get_b() * circle.getCenterPoint().y;
         cPart = pow(fixedLine.get_b(), 2) * (pow(circle.getCenterPoint().x, 2) + pow(circle.getCenterPoint().y, 2) 
-                - pow(circle.getRadius(), 2)) + pow(fixedLine.get_c(), 2) + 2 * fixedLine.get_b() * circle.getCenterPoint().y * fixedLine.get_c();
+                - pow(circle.getRadius(), 2)) - pow(fixedLine.get_c(), 2) + 2 * fixedLine.get_b() * circle.getCenterPoint().y * fixedLine.get_c();
         xFir = (-bPart + pow(pow(bPart, 2) - 4 * aPart * cPart, 0.5)) / (2 * aPart);
         xSec = (-bPart - pow(pow(bPart, 2) - 4 * aPart * cPart, 0.5)) / (2 * aPart);
         yFir = -(fixedLine.get_c() + fixedLine.get_a() * xFir) / fixedLine.get_b();
@@ -174,7 +174,7 @@ Point judgeInter(Line line, Point pointFir, Point pointSec) {
     double a = line.get_a();
     double b = line.get_b();
     double c = line.get_c();
-    double d = pointSec.x - pointFir.y;
+    double d = pointSec.y - pointFir.y;
     double e = pointFir.x - pointSec.x;
     double f = (pointSec.x - pointFir.x) * pointFir.y - (pointSec.y - pointFir.y) * pointFir.x;
     double x = (b * f - c * e) / (a * e - b * d);
