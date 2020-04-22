@@ -1,5 +1,5 @@
-#ifndef _MAZEPLUS_HPP_
-#define _MAZEPLUS_HPP_
+#ifndef _MAZE_HPP_
+#define _MAZE_HPP_
 
 #include<iostream> 
 #include<ctime>

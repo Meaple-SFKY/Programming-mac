@@ -1,4 +1,4 @@
-#include"mazeplus.hpp"
+#include"maze.hpp"
 
 int main(void) {
     srand((unsigned int)time(NULL));
