@@ -1,16 +1,11 @@
-#include<iostream>
-#include"maze.hpp"
+#include"mazeplus.hpp"
 
-using namespace std;
-
-int main(void)
-{
-    Menu();
-    MAZE maze;
+int main(void) {
     srand((unsigned int)time(NULL));
-    initialMaze(maze);
-    int x = 1, y = 1;
-    Openpath(maze, x, y);
-    printMaze(maze);
+    int size;
+    cout << "Please enter the size" << endl;
+    cin >> size;
+    Maze maze(size);
+    maze.printMaze(maze.MAZE);
     return 0;
 }
