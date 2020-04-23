@@ -1,18 +1,26 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558 
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
+            "type": "shell",
             "label": "c++",
             "command": "clang++",
-            "type": "shell",
-            "args": [],
+            "args": [
+             	"${file}",
+                "-std=c++11",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.out",
+                "-g"
+            ],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
                 "focus": false,
-                "panel": "shared"
+                "panel": "shared",
+            },
+           "group": {
+           		"kind": "build",
+                "isDefault": true
             }
         }
     ]
