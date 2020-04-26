@@ -9,7 +9,8 @@
 	],
 	"settings": {
 		"files.associations": {
-			"iosfwd": "cpp"
+			"isopod": "cpp",
+			"upstream": "cpp"
 		}
 	}
 }
