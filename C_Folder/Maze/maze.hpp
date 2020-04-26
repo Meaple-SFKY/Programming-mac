@@ -67,6 +67,7 @@ public:
     void openpath(mazeInfo& maze, Point pointOpenPath);
     void setInfoCommon(void);
     void setInfoFromFile(string fileNamePath);
+    void dfsFindPath(void);
 };
 
 Maze::Maze(int size) {
@@ -271,6 +272,7 @@ void Maze::editRoadPoint(Point pointSetRoad) {
 void Maze::setInfoFromFile(string fileNamePath) {
     ifstream infoFile(fileNamePath);
     string temp;
+    int j = 0;
     stringstream stringToInteger;
 
     if (!infoFile.is_open()) {
@@ -279,8 +281,22 @@ void Maze::setInfoFromFile(string fileNamePath) {
 
     while (getline(infoFile, temp)) {
         for (int i = 0; i < temp.length(); i++) {
+            stringToInteger.clear();
             stringToInteger << temp.substr(i, 0);
-            stringToInteger >> 
+            stringToInteger >> MAZE.array[j][i];
+        }
+        j++;
+    }
+
+    infoFile.close();
+}
+
+void Maze::dfsFindPath(void) {
+    for (int i = 0; i < MAZE.size; i++)
+    {
+        for (int j = 0; j < MAZE.size; j++) {
+            MAZE.array[i][j] = UNREADED;
+            if ()
         }
     }
 }

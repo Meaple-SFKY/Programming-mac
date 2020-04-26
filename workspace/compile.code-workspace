@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../Compile_Folder"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
