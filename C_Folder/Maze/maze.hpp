@@ -7,8 +7,6 @@
 #include <ctime>
 #include <string>
 
-using namespace std;
-
 #define SQUARE "██"
 #define SPACE "  "
 #define MYSELF "★★"
@@ -28,9 +26,11 @@ using namespace std;
 #define LEFT 2
 #define RIGHT 3
 
+using namespace std;
+
 typedef struct point {
     int X_Locat;
-    int Y_Locat; 
+    int Y_Locat;
 } Point;
 
 typedef struct {
@@ -39,6 +39,7 @@ typedef struct {
     Point startPoint;
     Point endPoint;
     int size;
+    int pointNum;
 } mazeInfo;
 
 class Maze {
@@ -50,6 +51,7 @@ private:
     bool around(mazeInfo maze, Point pointAround);
     void wallAround(void);
     void emptyLine(void);
+    void setPointNum(void);
 
 public:
     mazeInfo MAZE;
@@ -203,6 +205,20 @@ void Maze::emptyLine(void) {
     cout << SQUARE << endl;
 }
 
+void Maze::setPointNum(void) {
+    int num = 0;
+
+    for (int i = 0; i < MAZE.size; i++) {
+        for (int j = 0; j < MAZE.size; j++) {
+            if (MAZE.array[i][j] == ROAD) {
+                num++;
+            }
+        }
+    }
+
+    MAZE.pointNum = num;
+}
+
 void Maze::setMode(string modeStr) {
     mode = modeStr;
 }
@@ -295,10 +311,14 @@ void Maze::dfsFindPath(void) {
     for (int i = 0; i < MAZE.size; i++)
     {
         for (int j = 0; j < MAZE.size; j++) {
-            MAZE.array[i][j] = UNREADED;
-            if ()
+            MAZE.read[i][j] = UNREADED;
+            if (MAZE.array[i][j] == WALL) {
+                MAZE.read[i][j] = READED;
+            } 
         }
     }
+
+    
 }
 
 #endif
