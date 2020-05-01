@@ -37,6 +37,11 @@
 #define HISTORYLEFT "left"
 #define HISTORYRIGHT "right"
 #define HISTORYNOPS "no"
+#define DIRECTIONUP "up"
+#define DIRECTIONDOWN "down"
+#define DIRECTIONLEFT "left"
+#define DIRECTIONRIGHT "right"
+#define DIRECTIONINIT "init"
 
 using namespace std;
 
@@ -55,6 +60,7 @@ typedef struct {
 typedef struct {
     string type;
     string state;
+    string dirShould;
     string visitHistory;
     Continuity continuity;
 } Node;
@@ -92,7 +98,6 @@ public:
     Maze(int size);
     ~Maze() {};
 
-    void setGraphFromArray(void);
     void setMode(string modeStr);
     string getMode(void);
     void printMaze(mazeInfo maze);
@@ -103,6 +108,9 @@ public:
     void openpath(mazeInfo& maze, Point pointOpenPath);
     void setInfoCommon(void);
     void setInfoFromFile(string fileNamePath);
+    void setGraphFromArray(void);
+    bool ifIsDedication(int i, int j);
+    void setDirection(int i, int j);
     void getPath(void);
 };
 
@@ -163,6 +171,7 @@ void Maze::setGraphFromArray(void) {
             if (MAZE.array[i][j] == WALL) {
                 MAZE.graph[i][j].type = WALLTYPE;
                 MAZE.graph[i][j].state = VISITEDTYPE;
+                MAZE.graph[i][j].dirShould = DIRECTIONINIT;
                 MAZE.graph[i][j].visitHistory = HISTORYNOPS;
                 MAZE.graph[i][j].continuity.ifUp = false;
                 MAZE.graph[i][j].continuity.ifDown = false;
@@ -197,7 +206,7 @@ void Maze::setGraphFromArray(void) {
                     MAZE.graph[i][j].type = FORKTYPE;
                 }
                 MAZE.graph[i][j].state = UNREADTYPE;
-
+                MAZE.graph[i][j].dirShould = DIRECTIONINIT;
                 MAZE.graph[i][j].visitHistory = HISTORYNOPS;
             }
         }
@@ -394,8 +403,17 @@ void Maze::setInfoFromFile(string fileNamePath) {
     infoFile.close();
 }
 
-void Maze::getPath(void) {
-    
+bool Maze::ifIsDedication(int i, int j) {
+    if (i == MAZE.endPoint.X_Locat && j == MAZE.endPoint.Y_Locat) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Maze::setDirection(int i, int j) {
+    if (MAZE.graph[i][j].type == )
 }
 
 #endif
