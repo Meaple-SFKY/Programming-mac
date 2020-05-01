@@ -25,6 +25,18 @@
 #define DOWN 1
 #define LEFT 2
 #define RIGHT 3
+#define LEAVETYPE "leave"
+#define FORKTYPE "fork"
+#define BRANCHTYPE "branch"
+#define WALLTYPE "wall"
+#define UNREADTYPE "unread"
+#define READEDTYPE "readed"
+#define VISITEDTYPE "visited"
+#define HISTORYUP "up"
+#define HISTORYDOWN "down"
+#define HISTORYLEFT "left"
+#define HISTORYRIGHT "right"
+#define HISTORYNOPS "no"
 
 using namespace std;
 
@@ -34,8 +46,29 @@ typedef struct point {
 } Point;
 
 typedef struct {
+    bool ifUp;
+    bool ifDown;
+    bool ifLeft;
+    bool ifRight;
+} Continuity;
+
+typedef struct {
+    string type;
+    string state;
+    string visitHistory;
+    Continuity continuity;
+} Node;
+
+typedef struct {
+    Node priorNode;
+    Node nextNode;
+    Point* passBy;
+} Edge;
+
+typedef struct {
     int** array;
     int** read;
+    Node** graph;
     Point startPoint;
     Point endPoint;
     int size;
@@ -59,6 +92,7 @@ public:
     Maze(int size);
     ~Maze() {};
 
+    void setGraphFromArray(void);
     void setMode(string modeStr);
     string getMode(void);
     void printMaze(mazeInfo maze);
@@ -69,7 +103,7 @@ public:
     void openpath(mazeInfo& maze, Point pointOpenPath);
     void setInfoCommon(void);
     void setInfoFromFile(string fileNamePath);
-    void dfsFindPath(void);
+    void getPath(void);
 };
 
 Maze::Maze(int size) {
@@ -115,6 +149,59 @@ Maze::Maze(int size) {
 
 int Maze::getSeed(void) {
     return rand() % 4;
+}
+
+void Maze::setGraphFromArray(void) {
+    Node** a = new Node* [MAZE.size];
+    for (int i = 0; i < MAZE.size; i++) {
+        a[i] = new Node[MAZE.size];
+    }
+
+    MAZE.graph = a;
+    for (int i = 0; i < MAZE.size; i++) {
+        for (int j = 0; j < MAZE.size; j++) {
+            if (MAZE.array[i][j] == WALL) {
+                MAZE.graph[i][j].type = WALLTYPE;
+                MAZE.graph[i][j].state = VISITEDTYPE;
+                MAZE.graph[i][j].visitHistory = HISTORYNOPS;
+                MAZE.graph[i][j].continuity.ifUp = false;
+                MAZE.graph[i][j].continuity.ifDown = false;
+                MAZE.graph[i][j].continuity.ifLeft = false;
+                MAZE.graph[i][j].continuity.ifRight = false;
+            }
+            else {
+                int temp = 0;
+                if (MAZE.array[i - 1][j] == ROAD) {
+                    temp++;
+                    MAZE.graph[i][j].continuity.ifLeft = true;
+                }
+                if (MAZE.array[i + 1][j] == ROAD) {
+                    temp++;
+                    MAZE.graph[i][j].continuity.ifRight = true;
+                }
+                if (MAZE.array[i][j - 1] == ROAD) {
+                    temp++;
+                    MAZE.graph[i][j].continuity.ifUp = true;
+                }
+                if (MAZE.array[i][j + 1] == ROAD) {
+                    temp++;
+                    MAZE.graph[i][j].continuity.ifDown = true;
+                }
+                if (temp == 1) {
+                    MAZE.graph[i][j].type = LEAVETYPE;
+                }
+                else if (temp == 2) {
+                    MAZE.graph[i][j].type = BRANCHTYPE;
+                }
+                else {
+                    MAZE.graph[i][j].type = FORKTYPE;
+                }
+                MAZE.graph[i][j].state = UNREADTYPE;
+
+                MAZE.graph[i][j].visitHistory = HISTORYNOPS;
+            }
+        }
+    }
 }
 
 bool Maze::readJudge(mazeInfo maze, Point pointReadJudge) {
@@ -307,17 +394,7 @@ void Maze::setInfoFromFile(string fileNamePath) {
     infoFile.close();
 }
 
-void Maze::dfsFindPath(void) {
-    for (int i = 0; i < MAZE.size; i++)
-    {
-        for (int j = 0; j < MAZE.size; j++) {
-            MAZE.read[i][j] = UNREADED;
-            if (MAZE.array[i][j] == WALL) {
-                MAZE.read[i][j] = READED;
-            } 
-        }
-    }
-
+void Maze::getPath(void) {
     
 }
 
