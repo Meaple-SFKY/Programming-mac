@@ -32,11 +32,6 @@
 #define UNREADTYPE "unread"
 #define READEDTYPE "readed"
 #define VISITEDTYPE "visited"
-#define HISTORYUP "up"
-#define HISTORYDOWN "down"
-#define HISTORYLEFT "left"
-#define HISTORYRIGHT "right"
-#define HISTORYNOPS "no"
 #define DIRECTIONUP "up"
 #define DIRECTIONDOWN "down"
 #define DIRECTIONLEFT "left"
@@ -60,8 +55,6 @@ typedef struct {
 typedef struct {
     string type;
     string state;
-    string dirShould;
-    string visitHistory;
     Continuity continuity;
 } Node;
 
@@ -98,8 +91,8 @@ public:
     Maze(int size);
     ~Maze() {};
 
-    void setMode(string modeStr);
     string getMode(void);
+    void setMode(string modeStr);
     void printMaze(mazeInfo maze);
     void setStartPoint(Point pointStartPoint);
     void setEndPoint(Point pointStartPoint);
@@ -109,8 +102,16 @@ public:
     void setInfoCommon(void);
     void setInfoFromFile(string fileNamePath);
     void setGraphFromArray(void);
+    bool ifIsEntrance(int i, int j);
     bool ifIsDedication(int i, int j);
-    void setDirection(int i, int j);
+    Point unreadedBranch(int i, int j);
+    Point unreadedFork(int i, int j);
+    Point unreadedLeave(int i, int j);
+    Point readedBranch(int i, int j);
+    Point readedFork(int i, int j);
+    Point visitedBranch(int i, int j);
+    Point visitedFork(int i, int j);
+    Point visitedLeave(int i, int j);
     void getPath(void);
 };
 
@@ -171,8 +172,6 @@ void Maze::setGraphFromArray(void) {
             if (MAZE.array[i][j] == WALL) {
                 MAZE.graph[i][j].type = WALLTYPE;
                 MAZE.graph[i][j].state = VISITEDTYPE;
-                MAZE.graph[i][j].dirShould = DIRECTIONINIT;
-                MAZE.graph[i][j].visitHistory = HISTORYNOPS;
                 MAZE.graph[i][j].continuity.ifUp = false;
                 MAZE.graph[i][j].continuity.ifDown = false;
                 MAZE.graph[i][j].continuity.ifLeft = false;
@@ -206,8 +205,6 @@ void Maze::setGraphFromArray(void) {
                     MAZE.graph[i][j].type = FORKTYPE;
                 }
                 MAZE.graph[i][j].state = UNREADTYPE;
-                MAZE.graph[i][j].dirShould = DIRECTIONINIT;
-                MAZE.graph[i][j].visitHistory = HISTORYNOPS;
             }
         }
     }
@@ -403,6 +400,15 @@ void Maze::setInfoFromFile(string fileNamePath) {
     infoFile.close();
 }
 
+bool Maze::ifIsEntrance(int i, int j) {
+    if (i == MAZE.startPoint.X_Locat && j == MAZE.startPoint.Y_Locat) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 bool Maze::ifIsDedication(int i, int j) {
     if (i == MAZE.endPoint.X_Locat && j == MAZE.endPoint.Y_Locat) {
         return true;
@@ -412,8 +418,373 @@ bool Maze::ifIsDedication(int i, int j) {
     }
 }
 
-void Maze::setDirection(int i, int j) {
-    if (MAZE.graph[i][j].type == )
+Point Maze::unreadedBranch(int i, int j) {
+    Point newPoint;
+    if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifRight == true) {
+        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifUp == true && MAZE.graph[i][j].continuity.ifDown == true) {
+        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifUp == true) {
+        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifDown == true) {
+        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifRight == true && MAZE.graph[i][j].continuity.ifUp == true) {
+        if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+    }
+    else {
+        if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+    }
+    MAZE.graph[i][j].state = READEDTYPE;
+
+    return newPoint;
+}
+
+Point Maze::unreadedFork(int i, int j) {
+    Point newPoint;
+    if (MAZE.graph[i][j].continuity.ifLeft == false) {
+        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifRight == false) {
+        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifUp == false) {
+        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifDown == false) {
+        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    else {
+        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    MAZE.graph[i][j].state = READEDTYPE;
+
+    return newPoint;
+}
+
+Point Maze::unreadedLeave(int i, int j) {
+    Point newPoint;
+    if (MAZE.graph[i][j].continuity.ifLeft == true) {
+        newPoint.X_Locat = i;
+        newPoint.Y_Locat = j - 1;
+    }
+    else if (MAZE.graph[i][j].continuity.ifRight == true) {
+        newPoint.X_Locat = i;
+        newPoint.Y_Locat = j + 1;
+    }
+    else if (MAZE.graph[i][j].continuity.ifUp == true) {
+        newPoint.X_Locat = i - 1;
+        newPoint.Y_Locat = j;
+    }
+    else {
+        newPoint.X_Locat = i + 1;
+        newPoint.Y_Locat = j;
+    }
+    MAZE.graph[i][j].state = VISITEDTYPE;
+
+    return newPoint;
+}
+
+Point Maze::readedBranch(int i, int j) {
+    Point newPoint;
+    if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifRight == true) {
+        if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifUp == true && MAZE.graph[i][j].continuity.ifDown == true) {
+        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifUp == true) {
+        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifDown == true) {
+        if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifRight == true && MAZE.graph[i][j].continuity.ifUp == true) {
+        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+    }
+    else {
+        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+    }
+    MAZE.graph[i][j].state = VISITEDTYPE;
+
+    return newPoint;
+}
+
+Point Maze::readedFork(int i, int j) {
+    Point newPoint;
+    if (MAZE.graph[i][j].continuity.ifLeft == false) {
+        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifRight == false) {
+        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifUp == false) {
+        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+    }
+    else if (MAZE.graph[i][j].continuity.ifDown == false) {
+        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(UNREADTYPE) == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+    }
+    else {
+        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+            if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+                if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
+                    if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+                        newPoint.X_Locat = 
+                    }
+                }
+            }
+        }
+    }
 }
 
 #endif
