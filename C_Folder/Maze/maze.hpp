@@ -779,11 +779,25 @@ Point Maze::readedFork(int i, int j) {
             if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
                 if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
                     if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
-                        newPoint.X_Locat = 
+                        newPoint.X_Locat = i;
+                        newPoint.Y_Locat = j - 1;
+                    }
+                    else {
+                        newPoint.X_Locat = i + 1;
+                        newPoint.Y_Locat = j;
                     }
                 }
+                else {
+                    newPoint.X_Locat = i;
+                    newPoint.Y_Locat = j + 1;
+                }
+            }
+            else {
+                newPoint.X_Locat = i - 1;
+                newPoint.Y_Locat = j;
             }
         }
+        else if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true)
     }
 }
 
