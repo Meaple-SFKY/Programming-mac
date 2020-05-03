@@ -1,3 +1,4 @@
+/*------------------------------  main.cpp  ------------------------------*/
 #include "maze.hpp"
 
 int main(void) {
@@ -27,17 +28,18 @@ int main(void) {
                 if (subkey == 1) {
                     Point newPoint;
                     int type;
-                    cout << "Please enter the Abscissa and the Ordinate: ";
-                    cin >> newPoint.X_Locat >> newPoint.Y_Locat;
                     cout << "Please set its type(wall-1, space-0, exit-2): ";
                     cin >> type;
                     while (type != 2) {
+                        cout << "Please enter the Abscissa and the Ordinate: ";
+                        cin >> newPoint.X_Locat >> newPoint.Y_Locat;
                         if (type == 1) {
                             maze.editWallPoint(newPoint);
                         }
                         else {
                             maze.editRoadPoint(newPoint);
                         }
+                        cout << "Please set its type(wall-1, space-0, exit-2): ";
                         cin >> type;
                     }
                     maze.setGraphFromArray();
