@@ -32,6 +32,7 @@
 #define UNREADTYPE "unread"
 #define READEDTYPE "readed"
 #define VISITEDTYPE "visited"
+#define INITTYPE "init"
 #define DIRECTIONUP "up"
 #define DIRECTIONDOWN "down"
 #define DIRECTIONLEFT "left"
@@ -81,37 +82,32 @@ private:
 
     bool readJudge(mazeInfo maze, Point pointReadJudge);
     bool around(mazeInfo maze, Point pointAround);
-    void wallAround(void);
-    void emptyLine(void);
     void setPointNum(void);
+    bool ifIsEntrance(int i, int j);
+    bool ifIsDedication(int i, int j);
+    Point unreadedEntrance(int i, int j);
+    Point unreadedBranch(int i, int j);
+    Point unreadedFork(int i, int j);
+    Point unreadedLeave(int i, int j);
+    Point readedEntrance(int i, int j);
+    Point readedBranch(int i, int j);
+    Point readedFork(int i, int j);
 
 public:
     mazeInfo MAZE;
 
     Maze(int size);
+    Maze(string name);
     ~Maze() {};
 
-    string getMode(void);
-    void setMode(string modeStr);
     void printMaze(mazeInfo maze);
     void setStartPoint(Point pointStartPoint);
     void setEndPoint(Point pointStartPoint);
     void editWallPoint(Point pointSetWall);
     void editRoadPoint(Point pointSetRoad);
     void openpath(mazeInfo& maze, Point pointOpenPath);
-    void setInfoCommon(void);
-    void setInfoFromFile(string fileNamePath);
+    void setInfoFromFile(string name);
     void setGraphFromArray(void);
-    bool ifIsEntrance(int i, int j);
-    bool ifIsDedication(int i, int j);
-    Point unreadedBranch(int i, int j);
-    Point unreadedFork(int i, int j);
-    Point unreadedLeave(int i, int j);
-    Point readedBranch(int i, int j);
-    Point readedFork(int i, int j);
-    Point visitedBranch(int i, int j);
-    Point visitedFork(int i, int j);
-    Point visitedLeave(int i, int j);
     void getPath(void);
 };
 
@@ -156,44 +152,51 @@ Maze::Maze(int size) {
     openpath(MAZE, pointOpenPath);
 }
 
+Maze::Maze(string name) {
+    setInfoFromFile(name);
+}
+
 int Maze::getSeed(void) {
     return rand() % 4;
 }
 
 void Maze::setGraphFromArray(void) {
-    Node** a = new Node* [MAZE.size];
+    MAZE.graph = new Node* [MAZE.size];
+
     for (int i = 0; i < MAZE.size; i++) {
-        a[i] = new Node[MAZE.size];
+        MAZE.graph[i] = new Node[MAZE.size];
     }
 
-    MAZE.graph = a;
     for (int i = 0; i < MAZE.size; i++) {
         for (int j = 0; j < MAZE.size; j++) {
-            if (MAZE.array[i][j] == WALL) {
-                MAZE.graph[i][j].type = WALLTYPE;
-                MAZE.graph[i][j].state = VISITEDTYPE;
-                MAZE.graph[i][j].continuity.ifUp = false;
-                MAZE.graph[i][j].continuity.ifDown = false;
-                MAZE.graph[i][j].continuity.ifLeft = false;
-                MAZE.graph[i][j].continuity.ifRight = false;
-            }
-            else {
-                int temp = 0;
-                if (MAZE.array[i - 1][j] == ROAD) {
-                    temp++;
-                    MAZE.graph[i][j].continuity.ifLeft = true;
-                }
-                if (MAZE.array[i + 1][j] == ROAD) {
-                    temp++;
-                    MAZE.graph[i][j].continuity.ifRight = true;
-                }
+            MAZE.graph[i][j].type = WALLTYPE;
+            MAZE.graph[i][j].state = INITTYPE;
+            MAZE.graph[i][j].continuity.ifUp = false;
+            MAZE.graph[i][j].continuity.ifDown = false;
+            MAZE.graph[i][j].continuity.ifLeft = false;
+            MAZE.graph[i][j].continuity.ifRight = false;
+        }
+    }
+
+    for (int i = 0; i < MAZE.size; i++) {
+        for (int j = 0; j < MAZE.size; j++) {
+            int temp = 0;
+            if (MAZE.array[i][j] == ROAD) {
                 if (MAZE.array[i][j - 1] == ROAD) {
+                    MAZE.graph[i][j].continuity.ifLeft = true;
                     temp++;
+                }
+                if (MAZE.array[i - 1][j] == ROAD) {
                     MAZE.graph[i][j].continuity.ifUp = true;
+                    temp++;
                 }
                 if (MAZE.array[i][j + 1] == ROAD) {
+                    MAZE.graph[i][j].continuity.ifRight = true;
                     temp++;
+                }
+                if (MAZE.array[i + 1][j] == ROAD) {
                     MAZE.graph[i][j].continuity.ifDown = true;
+                    temp++;
                 }
                 if (temp == 1) {
                     MAZE.graph[i][j].type = LEAVETYPE;
@@ -201,13 +204,18 @@ void Maze::setGraphFromArray(void) {
                 else if (temp == 2) {
                     MAZE.graph[i][j].type = BRANCHTYPE;
                 }
-                else {
+                else if (temp == 3 || temp == 4){
                     MAZE.graph[i][j].type = FORKTYPE;
+                }
+                else {
+
                 }
                 MAZE.graph[i][j].state = UNREADTYPE;
             }
         }
     }
+
+    cout << MAZE.graph[2][5].continuity.ifLeft << endl;
 }
 
 bool Maze::readJudge(mazeInfo maze, Point pointReadJudge) {
@@ -283,21 +291,6 @@ void Maze::openpath(mazeInfo& maze, Point pointOpenPath) {
     }
 }
 
-void Maze::wallAround(void) {
-    for (int i = 0; i < 30; i++) {
-        cout << SQUARE;
-    }
-    cout << endl;
-}
-
-void Maze::emptyLine(void) {
-    cout << SQUARE;
-    for (int i = 0; i < 28; i++) {
-        cout << SPACE;
-    }
-    cout << SQUARE << endl;
-}
-
 void Maze::setPointNum(void) {
     int num = 0;
 
@@ -310,14 +303,6 @@ void Maze::setPointNum(void) {
     }
 
     MAZE.pointNum = num;
-}
-
-void Maze::setMode(string modeStr) {
-    mode = modeStr;
-}
-
-string Maze::getMode(void) {
-    return mode;
 }
 
 void Maze::printMaze(mazeInfo maze) {
@@ -339,11 +324,16 @@ void Maze::printMaze(mazeInfo maze) {
             else if (x == MAZE.endPoint.X_Locat && y == MAZE.endPoint.Y_Locat) {
                 cout << DESTINATION;
             }
-            else if (maze.array[x][y] == WALL) {
+            else if (maze.graph[x][y].type == WALLTYPE) {
                 cout << SQUARE;
             }
             else {
-                cout << SPACE;
+                if (MAZE.graph[x][y].state == READEDTYPE) {
+                    cout << "01";
+                }
+                else {
+                    cout << SPACE;
+                }
             }
         }
         cout << " " << x << endl;
@@ -378,23 +368,38 @@ void Maze::editRoadPoint(Point pointSetRoad) {
     MAZE.array[pointSetRoad.X_Locat][pointSetRoad.Y_Locat] = ROAD;
 }
 
-void Maze::setInfoFromFile(string fileNamePath) {
-    ifstream infoFile(fileNamePath);
+void Maze::setInfoFromFile(string name) {
+    string fileName = name;
+    ifstream infoFile(fileName);
     string temp;
-    int j = 0;
+    int j = 0, k = 0, size;
     stringstream stringToInteger;
 
     if (!infoFile.is_open()) {
         cout << "File failed to open." << endl;
+        return;
     }
 
     while (getline(infoFile, temp)) {
-        for (int i = 0; i < temp.length(); i++) {
+        if (k == 0) {
             stringToInteger.clear();
-            stringToInteger << temp.substr(i, 0);
-            stringToInteger >> MAZE.array[j][i];
+            stringToInteger << temp;
+            stringToInteger >> size;
+            MAZE.size = size;
+            MAZE.array = new int* [MAZE.size];
+            for (int i = 0; i < size; i++) {
+                MAZE.array[i] = new int[MAZE.size];
+            }
         }
-        j++;
+        else {
+            for (int i = 0; i < temp.length(); i++) {
+                stringToInteger.clear();
+                stringToInteger << temp.substr(i, 1);
+                stringToInteger >> MAZE.array[j][i];
+            }
+            j++;
+        }
+        k++;
     }
 
     infoFile.close();
@@ -418,10 +423,86 @@ bool Maze::ifIsDedication(int i, int j) {
     }
 }
 
+Point Maze::unreadedEntrance(int i, int j) {
+    Point newPoint;
+    if (MAZE.graph[i][j].type == LEAVETYPE) {
+        if (MAZE.graph[i][j].continuity.ifLeft == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j].continuity.ifUp == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.X_Locat = j;
+        }
+        else if (MAZE.graph[i][j].continuity.ifRight == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+    }
+    else if (MAZE.graph[i][j].type == BRANCHTYPE) {
+        if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifRight == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j].continuity.ifUp == true && MAZE.graph[i][j].continuity.ifDown == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifUp == true) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifDown == true) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i][j].continuity.ifRight == true && MAZE.graph[i][j].continuity.ifUp == true) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+    }
+    else if (MAZE.graph[i][j].type == FORKTYPE) {
+        if (MAZE.graph[i][j].continuity.ifLeft == false) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i][j].continuity.ifUp == false) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+        else if (MAZE.graph[i][j].continuity.ifRight == false) {
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
+        }
+        else if (MAZE.graph[i][j].continuity.ifDown == false) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
+        }
+        else {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j - 1;
+        }
+    }
+    else {
+
+    }
+    MAZE.graph[i][j].state = READEDTYPE;
+
+    return newPoint;
+}
+
 Point Maze::unreadedBranch(int i, int j) {
     Point newPoint;
     if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifRight == true) {
-        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
@@ -431,7 +512,7 @@ Point Maze::unreadedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifUp == true && MAZE.graph[i][j].continuity.ifDown == true) {
-        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -441,7 +522,7 @@ Point Maze::unreadedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifUp == true) {
-        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
@@ -451,7 +532,7 @@ Point Maze::unreadedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifDown == true) {
-        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == READEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -461,7 +542,7 @@ Point Maze::unreadedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifRight == true && MAZE.graph[i][j].continuity.ifUp == true) {
-        if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j + 1].state == READEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
@@ -471,7 +552,7 @@ Point Maze::unreadedBranch(int i, int j) {
         }
     }
     else {
-        if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j + 1].state == READEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -488,11 +569,11 @@ Point Maze::unreadedBranch(int i, int j) {
 Point Maze::unreadedFork(int i, int j) {
     Point newPoint;
     if (MAZE.graph[i][j].continuity.ifLeft == false) {
-        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
-        else if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+        else if (MAZE.graph[i][j + 1].state == READEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -502,11 +583,11 @@ Point Maze::unreadedFork(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifRight == false) {
-        if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(READEDTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
@@ -516,11 +597,11 @@ Point Maze::unreadedFork(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifUp == false) {
-        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(READEDTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
@@ -530,11 +611,11 @@ Point Maze::unreadedFork(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifDown == false) {
-        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == READEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+        else if (MAZE.graph[i - 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
@@ -544,15 +625,15 @@ Point Maze::unreadedFork(int i, int j) {
         }
     }
     else {
-        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == READEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true) {
+        else if (MAZE.graph[i - 1][j].state == READEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
-        else if (MAZE.graph[i][j + 1].state.compare(READEDTYPE) == true) {
+        else if (MAZE.graph[i][j + 1].state == READEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
@@ -592,7 +673,7 @@ Point Maze::unreadedLeave(int i, int j) {
 Point Maze::readedBranch(int i, int j) {
     Point newPoint;
     if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifRight == true) {
-        if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == VISITEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
@@ -602,7 +683,7 @@ Point Maze::readedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifUp == true && MAZE.graph[i][j].continuity.ifDown == true) {
-        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == VISITEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -612,7 +693,7 @@ Point Maze::readedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifUp == true) {
-        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == VISITEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
@@ -622,7 +703,7 @@ Point Maze::readedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifLeft == true && MAZE.graph[i][j].continuity.ifDown == true) {
-        if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == VISITEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -632,7 +713,7 @@ Point Maze::readedBranch(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifRight == true && MAZE.graph[i][j].continuity.ifUp == true) {
-        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i][j + 1].state == VISITEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
@@ -642,7 +723,7 @@ Point Maze::readedBranch(int i, int j) {
         }
     }
     else {
-        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i][j + 1].state == VISITEDTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
@@ -659,24 +740,24 @@ Point Maze::readedBranch(int i, int j) {
 Point Maze::readedFork(int i, int j) {
     Point newPoint;
     if (MAZE.graph[i][j].continuity.ifLeft == false) {
-        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(UNREADTYPE) == true) {
+        if (MAZE.graph[i][j + 1].state == VISITEDTYPE && MAZE.graph[i + 1][j].state == UNREADTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == VISITEDTYPE && MAZE.graph[i - 1][j].state == UNREADTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i - 1][j].state == VISITEDTYPE && MAZE.graph[i][j + 1].state == UNREADTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
-        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+        else if (MAZE.graph[i][j + 1].state == VISITEDTYPE && MAZE.graph[i + 1][j].state == VISITEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
             MAZE.graph[i][j].state = VISITEDTYPE;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == VISITEDTYPE && MAZE.graph[i - 1][j].state == VISITEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
             MAZE.graph[i][j].state = VISITEDTYPE;
@@ -688,24 +769,24 @@ Point Maze::readedFork(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifRight == false) {
-        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(UNREADTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == VISITEDTYPE && MAZE.graph[i + 1][j].state == UNREADTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == VISITEDTYPE && MAZE.graph[i][j - 1].state == UNREADTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
-        else if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i][j - 1].state == VISITEDTYPE && MAZE.graph[i - 1][j].state == UNREADTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+        else if (MAZE.graph[i - 1][j].state == VISITEDTYPE && MAZE.graph[i + 1][j].state == VISITEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
             MAZE.graph[i][j].state = VISITEDTYPE;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == VISITEDTYPE && MAZE.graph[i][j - 1].state == VISITEDTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
             MAZE.graph[i][j].state = VISITEDTYPE;
@@ -717,70 +798,71 @@ Point Maze::readedFork(int i, int j) {
         }
     }
     else if (MAZE.graph[i][j].continuity.ifUp == false) {
-        if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(UNREADTYPE) == true) {
+        if (MAZE.graph[i][j + 1].state == VISITEDTYPE && MAZE.graph[i + 1][j].state == UNREADTYPE) {
             newPoint.X_Locat = i + 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i + 1][j].state == VISITEDTYPE && MAZE.graph[i][j - 1].state == UNREADTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
-        else if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i][j - 1].state == VISITEDTYPE && MAZE.graph[i][j + 1].state == UNREADTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
-        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
-            newPoint.X_Locat = i + 1;
-            newPoint.Y_Locat = j;
-            MAZE.graph[i][j].state = VISITEDTYPE;
-        }
-        else if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+        else if (MAZE.graph[i][j + 1].state == VISITEDTYPE && MAZE.graph[i + 1][j].state == VISITEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else if (MAZE.graph[i + 1][j].state == VISITEDTYPE && MAZE.graph[i][j - 1].state == VISITEDTYPE) {
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
             MAZE.graph[i][j].state = VISITEDTYPE;
         }
         else {
-            newPoint.X_Locat = i;
-            newPoint.Y_Locat = j + 1;
+            newPoint.X_Locat = i + 1;
+            newPoint.Y_Locat = j;
             MAZE.graph[i][j].state = VISITEDTYPE;
         }
     }
     else if (MAZE.graph[i][j].continuity.ifDown == false) {
-        if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(UNREADTYPE) == true) {
+        if (MAZE.graph[i - 1][j].state == VISITEDTYPE && MAZE.graph[i][j + 1].state == UNREADTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j + 1;
         }
-        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i][j + 1].state == VISITEDTYPE && MAZE.graph[i][j - 1].state == UNREADTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
         }
-        else if (MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i - 1][j].state.compare(UNREADTYPE) == true) {
+        else if (MAZE.graph[i][j - 1].state == VISITEDTYPE && MAZE.graph[i - 1][j].state == UNREADTYPE) {
             newPoint.X_Locat = i - 1;
             newPoint.Y_Locat = j;
         }
-        else if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
-            newPoint.X_Locat = i;
-            newPoint.Y_Locat = j + 1;
-            MAZE.graph[i][j].state = VISITEDTYPE;
-        }
-        else if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true && MAZE.graph[i][j - 1].state.compare(VISITEDTYPE) == true) {
+        else if (MAZE.graph[i - 1][j].state == VISITEDTYPE && MAZE.graph[i][j + 1].state == VISITEDTYPE) {
             newPoint.X_Locat = i;
             newPoint.Y_Locat = j - 1;
+            MAZE.graph[i][j].state = VISITEDTYPE;
+        }
+        else if (MAZE.graph[i][j + 1].state == VISITEDTYPE && MAZE.graph[i][j - 1].state == VISITEDTYPE) {
+            newPoint.X_Locat = i - 1;
+            newPoint.Y_Locat = j;
             MAZE.graph[i][j].state = VISITEDTYPE;
         }
         else {
-            newPoint.X_Locat = i - 1;
-            newPoint.Y_Locat = j;
+            newPoint.X_Locat = i;
+            newPoint.Y_Locat = j + 1;
             MAZE.graph[i][j].state = VISITEDTYPE;
         }
     }
     else {
-        if (MAZE.graph[i][j - 1].state.compare(READEDTYPE) == true) {
-            if (MAZE.graph[i - 1][j].state.compare(VISITEDTYPE) == true) {
-                if (MAZE.graph[i][j + 1].state.compare(VISITEDTYPE) == true) {
-                    if (MAZE.graph[i + 1][j].state.compare(VISITEDTYPE) == true) {
+        if (MAZE.graph[i][j - 1].state == READEDTYPE) {
+            if (MAZE.graph[i - 1][j].state == VISITEDTYPE) {
+                if (MAZE.graph[i][j + 1].state == VISITEDTYPE) {
+                    if (MAZE.graph[i + 1][j].state == VISITEDTYPE) {
                         newPoint.X_Locat = i;
                         newPoint.Y_Locat = j - 1;
+                        MAZE.graph[i][j].state = VISITEDTYPE;
                     }
                     else {
                         newPoint.X_Locat = i + 1;
@@ -797,8 +879,164 @@ Point Maze::readedFork(int i, int j) {
                 newPoint.Y_Locat = j;
             }
         }
-        else if (MAZE.graph[i - 1][j].state.compare(READEDTYPE) == true)
+        else if (MAZE.graph[i - 1][j].state == READEDTYPE) {
+            if (MAZE.graph[i][j + 1].state == VISITEDTYPE) {
+                if (MAZE.graph[i + 1][j].state == VISITEDTYPE) {
+                    if (MAZE.graph[i][j - 1].state == VISITEDTYPE) {
+                        newPoint.X_Locat = i - 1;
+                        newPoint.Y_Locat = j;
+                        MAZE.graph[i][j].state = VISITEDTYPE;
+                    }
+                    else {
+                        newPoint.X_Locat = i;
+                        newPoint.Y_Locat = j - 1;
+                    }
+                }
+                else {
+                    newPoint.X_Locat = i + 1;
+                    newPoint.Y_Locat = j;
+                }
+            }
+            else {
+                newPoint.X_Locat = i;
+                newPoint.Y_Locat = j + 1;
+            }
+        }
+        else if (MAZE.graph[i][j + 1].state == READEDTYPE) {
+            if (MAZE.graph[i + 1][j].state == VISITEDTYPE) {
+                if (MAZE.graph[i][j - 1].state == VISITEDTYPE) {
+                    if (MAZE.graph[i - 1][j].state == VISITEDTYPE) {
+                        newPoint.X_Locat = i;
+                        newPoint.Y_Locat = j + 1;
+                        MAZE.graph[i][j].state = VISITEDTYPE;
+                    }
+                    else {
+                        newPoint.X_Locat = i - 1;
+                        newPoint.Y_Locat = j;
+                    }
+                }
+                else {
+                    newPoint.X_Locat = i;
+                    newPoint.Y_Locat = j - 1;
+                }
+            }
+            else {
+                newPoint.X_Locat = i + 1;
+                newPoint.Y_Locat = j;
+            }
+        }
+        else {
+            if (MAZE.graph[i][j - 1].state == READEDTYPE) {
+                if (MAZE.graph[i - 1][j].state == VISITEDTYPE) {
+                    if (MAZE.graph[i][j + 1].state == VISITEDTYPE) {
+                        newPoint.X_Locat = i + 1;
+                        newPoint.Y_Locat = j;
+                        MAZE.graph[i][j].state = VISITEDTYPE;
+                    }
+                    else {
+                        newPoint.X_Locat = i;
+                        newPoint.Y_Locat = j + 1;
+                    }
+                }
+                else {
+                    newPoint.X_Locat = i - 1;
+                    newPoint.Y_Locat = j;
+                }
+            }
+            else {
+                newPoint.X_Locat = i;
+                newPoint.Y_Locat = j - 1;
+            }
+        }
     }
+
+    return newPoint;
+}
+
+void Maze::getPath(void) {
+    int i = MAZE.startPoint.X_Locat;
+    int j = MAZE.startPoint.Y_Locat;
+    cout << i << " " << j << endl;
+    Point newPoint;
+    while (ifIsDedication(i, j) == false) {
+        if (ifIsEntrance(i, j) == true) {
+            newPoint = unreadedEntrance(i, j);
+            i = newPoint.X_Locat;
+            j = newPoint.Y_Locat;
+        }
+        else if (MAZE.graph[i][j].type == BRANCHTYPE) {
+            if (MAZE.graph[i][j].state == UNREADTYPE) {
+                newPoint = unreadedBranch(i, j);
+                i = newPoint.X_Locat;
+                j = newPoint.Y_Locat;
+            }
+            else {
+                newPoint = readedBranch(i, j);
+                i = newPoint.X_Locat;
+                j = newPoint.Y_Locat;
+            }
+        }
+        else if (MAZE.graph[i][j].type == FORKTYPE) {
+            if (MAZE.graph[i][j].state == UNREADTYPE) {
+                newPoint = unreadedFork(i, j);
+                i = newPoint.X_Locat;
+                j = newPoint.Y_Locat;
+            }
+            else {
+                newPoint = readedFork(i, j);
+                i = newPoint.X_Locat;
+                j = newPoint.Y_Locat;
+            }
+        }
+        else if (MAZE.graph[i][j].type == LEAVETYPE) {
+            newPoint = unreadedLeave(i, j);
+            i = newPoint.X_Locat;
+            j = newPoint.Y_Locat;
+        }
+        else {
+
+        }
+    }
+    cout << i << " " << j << endl;
+}
+
+void menu_Fir(void) {
+    for (int i = 0; i < 20; i++) {
+        cout << SQUARE;
+    }
+    cout << endl;
+    cout << SQUARE << "                                    " << SQUARE << endl;
+    cout << SQUARE << "                MAZE                " << SQUARE << endl;
+    cout << SQUARE << "                                    " << SQUARE << endl;
+    cout << SQUARE << "        Please select a mode        " << SQUARE << endl;
+    cout << SQUARE << "        1. Randomly generated       " << SQUARE << endl;
+    cout << SQUARE << "        2. Generate from file       " << SQUARE << endl;
+    cout << SQUARE << "        3. Exit                     " << SQUARE << endl;
+    cout << SQUARE << "                                    " << SQUARE << endl;
+    for (int i = 0; i < 20; i++) {
+        cout << SQUARE;
+    }
+    cout << endl;
+}
+
+void menu_Sec(void) {
+    for (int i = 0; i < 20; i++) {
+        cout << SQUARE;
+    }
+    cout << endl;
+    cout << SQUARE << "                                    " << SQUARE << endl;
+    cout << SQUARE << "                MAZE                " << SQUARE << endl;
+    cout << SQUARE << "                                    " << SQUARE << endl;
+    cout << SQUARE << "        Please select a mode        " << SQUARE << endl;
+    cout << SQUARE << "        1. Edit the MAZE            " << SQUARE << endl;
+    cout << SQUARE << "        2. Print the MAZE           " << SQUARE << endl;
+    cout << SQUARE << "        3. Print the PATH           " << SQUARE << endl;
+    cout << SQUARE << "        4. Exit                     " << SQUARE << endl;
+    cout << SQUARE << "                                    " << SQUARE << endl;
+    for (int i = 0; i < 20; i++) {
+        cout << SQUARE;
+    }
+    cout << endl;
 }
 
 #endif
