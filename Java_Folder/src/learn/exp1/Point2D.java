@@ -1,3 +1,5 @@
+/*-----------------  Point2D类  --------------*/
+
 package src.learn.exp1;
 
 public class Point2D {

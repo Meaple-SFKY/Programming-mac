@@ -1,3 +1,5 @@
+/*-----------------  Client.java  ---------------*/
+
 package src.learn.exp2;
 
 import java.awt.*;
@@ -5,7 +7,6 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 
-//������
 class CFrame extends Frame 
 {
 	/**
@@ -20,7 +21,7 @@ class CFrame extends Frame
 	TextField cfTF = new TextField(40);
 	Button say = new Button("say");
 	CFListener cfListener = new CFListener();
-//	
+
 	CFrame(String title)
 	{
 		super(title);
