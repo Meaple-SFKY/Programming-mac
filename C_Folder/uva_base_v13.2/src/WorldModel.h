@@ -619,7 +619,10 @@ public:
     bool          resetTimeObjects           (                                 );
     void          removeGhosts               (                                 );
 
-
+    /************************** 第二十二题 ***********************/
+    /* bool isTeammateAtAngleEx(AngDeg angA, AngDeg angB, double dDist); */
+    /************************************************************/
+            
     ////////////////////////// PREDICTIONS (WorldModelPredict.C) ////////////////
 
     // predictions of worldmodel about future states of different objects

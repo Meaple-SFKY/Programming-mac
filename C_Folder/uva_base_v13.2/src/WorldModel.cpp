@@ -145,6 +145,28 @@ WorldModel::WorldModel( ServerSettings *ss, PlayerSettings *ps,
     }
 }
 
+/************************** 第二十二题 ***********************/
+/* bool WorldModel::isTeammateAtAngleEx(AngDeg angA, AngDeg angB, double dDist)
+{
+    VecPosition posAgent = getAgentGlobalPosition();
+    VecPosition posTeam;
+    AngDeg      angTeam;
+    int         iIndex;
+
+    for (ObjectT o = iterateObjectStart(iIndex, OBJECT_SET_TEAMMATES); o != OBJECT_ILLEGAL; o = iterateObjectNext(iIndex, OBJECT_SET_TEAMMATES))
+    {
+        posTeam = getGlobalPosition(o);
+        angTeam = (posTeam - posAgent).getDirection();
+        if (angA <= angTeam && angTeam <= angB && posAgent.getDistanceTo(posTeam) < dDist)
+        {
+            return true;
+        }
+    }
+    iterateObjectDone(iIndex);
+    return false;
+} */
+/************************************************************/
+
 /*! Destructor */
 WorldModel::~WorldModel()
 {

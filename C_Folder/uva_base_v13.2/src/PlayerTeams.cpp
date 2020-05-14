@@ -129,12 +129,356 @@ SoccerCommand Player::deMeer5(  )
         }
         else if ( WM->isBallKickable())                   // if kickable // 如果球已知，而且当前球在我脚下(可踢)
         {
-            VecPosition posGoal( PITCH_LENGTH/2.0,
+            /**************************** 原来的 *************************/
+            /* VecPosition posGoal( PITCH_LENGTH/2.0,
                                  (-1 + 2*(WM->getCurrentCycle()%2)) * 0.4 * SS->getGoalWidth() ); //定义一个射门点 PITCH_LENGTH是球场的长度。这个点就是按照周期看，交替的打球门的两个死角。
             soc = kickTo( posGoal, SS->getBallSpeedMax() ); // kick maximal // 把球以最大速度踢向那个射门点
             ACT->putCommandInQueue( soc ); // 放入命令队列
             ACT->putCommandInQueue( turnNeckToObject( OBJECT_BALL, soc ) ); // 把脖子转向球，也就是一直看着球
-            Log.log( 100, "kick ball" );
+            Log.log( 100, "kick ball" ); */
+            /************************************************************/
+
+            /**************************** 第一题 *************************/
+            /* AngDeg ang = 0.0;
+            soc = dribble(ang, DRIBBLE_FAST);
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 1"); */
+            /************************************************************/
+
+            /**************************** 第二题 *************************/
+            /* AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+            soc = dribble(ang, DRIBBLE_SLOW);
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 2"); */
+            /************************************************************/
+
+            /**************************** 第三题 *************************/
+            /* soc = kickBallCloseToBody(-120);
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 3); */
+            /************************************************************/
+
+            /**************************** 第四题 *************************/
+            /* Circle cir(posAgent, 7);
+            int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+            AngDeg ang = 0.0;
+            if (num > 0)
+            {
+                if ((WM->getGlobalPosition(WM->getClosestInSetTo(OBJECT_SET_OPPONENTS, posAgent)) - posAgent).getDirection() >= 0)
+                {
+                    ang += 45;
+                    soc = dribble(ang, DRIBBLE_WITHBALL);
+                }
+                else
+                {
+                    ang -= 45;
+                    soc = dribble(ang, DRIBBLE_WITHBALL);
+                }
+            }
+            else
+            {
+                AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                soc = dribble(ang, DRIBBLE_WITHBALL);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 4"); */
+            /************************************************************/
+
+            /**************************** 第五题 *************************/
+            /* Circle cir(posAgent, 7);
+            int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+            if (num > 0)
+            {
+                soc = leadingPass(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 1);
+            }
+            else
+            {
+                AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                soc = dribble(ang, DRIBBLE_FAST);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 5"); */
+            /************************************************************/
+
+            /**************************** 第六题 *************************/
+            /* Circle cir(posAgent, 7);
+            int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+            if (num > 0)
+            {
+                soc = dribble(0, DRIBBLE_WITHBALL);
+            }
+            else
+            {
+                AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                soc = dribble(ang, DRIBBLE_FAST);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 6"); */
+            /************************************************************/
+
+            /**************************** 第七题 *************************/
+            /* if (WM->isOpponentAtAngle(30, 30) == false)
+            {
+                VecPosition posGoal(PITCH_LENGTH / 2.0, (-1 + 2 * (WM->getCurrentCycle() % 2)) * 0.4 * SS -> getGoalWidth());
+                soc = kickTo(posGoal, SS->getBallSpeedMax());
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 7"); */
+            /************************************************************/
+
+            /**************************** 第八题 *************************/
+            /* if (WM->getBallPos().getX() < 0)
+            {
+                soc = kickTo(VecPosition(0, 0), 1.0);
+            }
+            else
+            {
+                AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                soc = dribble(ang, DRIBBLE_FAST);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 8"); */
+            /************************************************************/
+
+            /**************************** 第九题 *************************/
+            /* Circle cir(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 5);
+            int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+            if (num == 0)
+            {
+                soc = leadingPass(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 1.0);
+            }
+            else
+            {
+                soc = dribble(0, DRIBBLE_WITHBALL);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 9"); */
+            /************************************************************/
+
+            /**************************** 第十题 *************************/
+            /* Circle cir(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 5);
+            int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+            VecPosition destTeammate = WM->getGlobalPosition(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent));
+            AngDeg ang = (destTeammate - posAgent).getDirection();
+            if (num == 0 && ang >= -90 && ang <= 90)
+            {
+                soc = leadingPass(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 1.0);
+            }
+            else
+            {
+                soc = dribble(0, DRIBBLE_WITHBALL);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 10"); */
+            /************************************************************/
+
+            /*************************** 第十一题 ************************/
+            //有点问题, getSecondClosetInSetTo
+            /* if (WM->getBallPos().getX() < 0)
+            {
+                soc = leadingPass(WM->getSecondClosestInSetTo(OBJECT_SET_TEAMMATES, WM->getAgentObjectType()), 1.0);
+            }
+            else
+            {
+                if (WM->getAgentObjectType() != OBJECT_TEAMMATE_10)
+                {
+                    soc = leadingPass(OBJECT_TEAMMATE_10, 1.0);
+                }
+                else
+                {
+                    AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                    soc = dribble(ang, DRIBBLE_FAST);
+                }
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 11"); */
+            /************************************************************/
+
+            /*************************** 第十二题 ************************/
+            /* if (WM->getBallPos().getX() < 0)
+            {
+                soc = dribble(0, DRIBBLE_SLOW);
+            }
+            else
+            {
+                AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                soc = dribble(ang, DRIBBLE_FAST);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 12"); */
+            /************************************************************/
+
+            /*************************** 第十三题 ************************/
+           /*  if (WM->getAgentObjectType() == OBJECT_TEAMMATE_2)
+            {
+                soc = kickTo(VecPosition(WM->getBallPos().getX(), -34), 1.0);
+                ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            }
+            else if (WM->getAgentObjectType() == OBJECT_TEAMMATE_5)
+            {
+                soc = kickTo(VecPosition(WM->getBallPos().getX(), 34), 1.0);
+                ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            }
+            else
+            {
+                soc = dribble(0, DRIBBLE_WITHBALL);
+            }
+            ACT->putCommandInQueue(soc);
+            Log.log(100, "section 13"); */
+            /************************************************************/
+
+            /*************************** 第十四题 ************************/
+            /* if (WM->getAgentObjectType() == OBJECT_TEAMMATE_4)
+            {
+                soc = leadingPass(OBJECT_TEAMMATE_7, 1.0);
+            }
+            else
+            {
+                soc = leadingPass(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 1.0);
+            }
+            AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+            soc = dribble(ang, DRIBBLE_FAST);
+            if (WM->isInTheirPenaltyArea(WM->getBallPos()))
+            {
+                if (WM->getGlobalPosition(WM->getOppGoalieType()).getY() < 0)
+                {
+                    soc = kickTo(VecPosition(52.5, 6.0), SS->getBallSpeedMax());
+                }
+                else
+                {
+                    soc = kickTo(VecPosition(52.5, -6.0), SS->getBallSpeedMax());
+                }
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 14"); */
+            /************************************************************/
+
+            /*************************** 第十五题 ************************/
+            /* if (WM->getBallPos().getX() <= 0)
+            {
+                soc = dribble(90, DRIBBLE_WITHBALL);
+            }
+            else
+            {
+                soc = dribble(-90, DRIBBLE_WITHBALL);
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 15"); */
+            /************************************************************/
+
+            /*************************** 第十六题 ************************/
+            /* AngDeg ang = (VecPosition(0, 0) - posAgent).getDirection();
+            soc = dribble(ang, DRIBBLE_WITHBALL);
+            soc = leadingPass(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, posAgent), 1.0);
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 16"); */
+            /************************************************************/
+
+            /*************************** 第十七题 ************************/
+            //后面还有
+            /* if (WM->getAgentObjectType() != OBJECT_TEAMMATE_10);
+            soc = leadingPass(OBJECT_TEAMMATE_10, 1.0);
+            soc = dribble(0, DRIBBLE_SLOW);
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 17"); */
+            /************************************************************/
+
+            /*************************** 第二十题 ************************/
+            /* if (WM->getAgentObjectType() != OBJECT_TEAMMATE_10)
+            {
+                soc = leadingPass(OBJECT_TEAMMATE_10, 1.0);
+            }
+            if (WM->getAgentObjectType() == OBJECT_TEAMMATE_10)
+            {
+                soc = kickTo(VecPosition(52.5, 0), PS->getPlayerWhenToTurnAngle());
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 20"); */
+            /************************************************************/
+
+            /************************** 第二十一题 ***********************/
+            /*soc = leadingPass(WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, WM->getPosOpponentGoal()), 1.0);
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 20"); */
+            /************************************************************/
+
+            /************************** 第二十二题 ***********************/
+            //不会
+            //WorldModel.h和WorldModel.cpp里有修改
+            /* double ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+            if (WM->isTeammateAtAngleEx(ang - 30, ang, 20))
+            {
+
+            } */
+            /************************************************************/
+
+            /************************** 第二十三题 ***********************/
+            /* if (WM->getBallPos().getX() <= 0)
+            {
+                VecPosition pos(0, WM->getBallPos().getY());
+                soc = kickTo(pos, SS->getBallSpeedMax());
+            }
+            if (WM->getBallPos().getX() > 0)
+            {
+                soc = kickTo(VecPosition(52.5, 0), SS->getBallSpeedMax());
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 23"); */
+            /************************************************************/
+
+            /************************** 第二十四题 ***********************/
+            //后面还有
+            /* if (WM->getAgentObjectType() != OBJECT_TEAMMATE_9)
+            {
+                soc = leadingPass(OBJECT_TEAMMATE_9, 1.0);
+                AngDeg ang = (VecPosition(52.5, 0) - posAgent).getDirection();
+                soc = dribble(ang, DRIBBLE_FAST);
+            }
+            if (WM->isInTheirPenaltyArea(WM->getBallPos()))
+            {
+                soc = leadingPass(OBJECT_TEAMMATE_10, 1.0);
+            }
+            if (WM->getAgentObjectType() == OBJECT_TEAMMATE_10)
+            {
+                soc = kickTo(VecPosition(52.5, 0), SS->getBallSpeedMax());
+            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+            Log.log(100, "section 24"); */
+            /************************************************************/
+
+            /************************** 第二十五题 ***********************/
+            if (WM->getPlayerNumber() == 4)
+            {
+                soc = leadingPass(OBJECT_TEAMMATE_7, 1.0);
+            }
+            if (WM->getPlayerNumber() == 7)
+            {
+                soc = leadingPass(OBJECT_TEAMMATE_9, 1.0);
+            }
+            if (WM->getPlayerNumber() == 9)
+            {
+                
+            }
         }
         else if ( WM->getFastestInSetTo( OBJECT_SET_TEAMMATES, OBJECT_BALL, &iTmp )
                   == WM->getAgentObjectType()  && !WM->isDeadBallThem() ) // 如果球不在我的控制范围下，但是当前能最快抢到球的是我，那我就去执行抢球动作
@@ -176,6 +520,42 @@ SoccerCommand Player::deMeer5(  )
         }
         else if ( fabs( WM->getRelativeAngle( OBJECT_BALL ) ) > 1.0 ) // watch ball //其他剩下的球员呢，就看球。！
         {///这里就是无球队员的跑位决策
+            /*************************** 第十七题 ************************/
+            /* if (WM->getAgentObjectType() == OBJECT_TEAMMATE_5)
+            {
+                VecPosition pos(WM->getBallPos().getX() - 5, WM->getBallPos().getY());
+                soc = moveToPos(pos, 20);
+            } */
+            /************************************************************/
+
+            /*************************** 第十八题 ************************/
+            //有点问题
+            /* if (WM->getAgentObjectType() == OBJECT_TEAMMATE_5)
+            {
+                VecPosition pos(WM->getBallPos().getX() - 5, WM->getBallPos().getY());
+                soc = moveToPos(pos, 20);
+            } */
+            /************************************************************/
+
+            /*************************** 第十九题 ************************/
+            /* if (WM->getAgentObjectType() == OBJECT_TEAMMATE_2)
+            {
+                VecPosition pos(WM->getBallPos().getX() - 5, WM->getBallPos().getY());
+                soc = moveToPos(pos, 20);
+            }
+            if (WM->getAgentObjectType() == OBJECT_TEAMMATE_4)
+            {
+                VecPosition pos(WM->getBallPos().getX(), WM->getBallPos().getY() - 5);
+                soc = moveToPos(pos, 20);
+            } */
+            /************************************************************/
+
+            /************************** 第二十四题 ***********************/
+            /* if (WM->getAgentObjectType() == OBJECT_TEAMMATE_10)
+            {
+                soc = kickTo(VecPosition(52.5, 0), SS->getBallSpeedMax());
+            } */
+            /************************************************************/
             ACT->putCommandInQueue( soc = turnBodyToObject( OBJECT_BALL ) );
             ACT->putCommandInQueue( turnNeckToObject( OBJECT_BALL, soc ) );
         }
