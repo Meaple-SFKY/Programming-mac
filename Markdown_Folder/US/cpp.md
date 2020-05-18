@@ -56,3 +56,4 @@ void openpath(mazeInfo& maze, Point pointOpenPath)|public|递归随机生成迷�
 void setInfoFromFile(string name)|public|从文件创建迷宫，传入值为string类型的文件名
 void setGraphFromArray(void)|public|从基础的array生成封装有多种信息的Node类型的二维指针
 void getPath(void)|public|生成从起点到终点的路径，无参数传入
+
