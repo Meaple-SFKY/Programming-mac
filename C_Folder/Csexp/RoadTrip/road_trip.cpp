@@ -1,17 +1,20 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+
 using namespace std;
 
 const int n_max = 1e4 + 5;
 const int m_max = 5e4 + 5;
 const int inf = 0x3f3f3f3f;
-struct edge{
-    int to, wp, wq, ww, next;
-} ed[m_max*2];
 int n, m, head[n_max], tot;
 int hero[n_max], a[n_max], dis[n_max];
 bool vis[n_max];
+
+struct edge{
+    int to, wp, wq, ww, next;
+} ed[m_max*2];
+
 inline void add( int u, int v, int p, int q ){
     ed[tot].to = v;
     ed[tot].wp = p;
@@ -71,7 +74,7 @@ inline void dij3(int s) {
     priority_queue< pair<int, int> > q;
     dis[s] = 0;
     q.push(make_pair(0, s));
-    while(!q.empty()) {
+    while (!q.empty()) {
         int u = q.top().second;
         q.pop();
         if(vis[u])
@@ -106,14 +109,14 @@ inline void bfs(int s){
     }
 }
 
-int main(){
+int main(void) {
     // freopen("in.txt", "r", stdin);
     tot = 0;
     memset( head, -1, sizeof(head) );
-    scanf("%d%d", &n, &m);
+    cin >> n >> m;
     for( int i=0; i<m; i++ ){
         int u, v, p, q;
-        scanf("%d%d%d%d", &u, &v, &p, &q);
+        cin >> u >> v >> p >> q;
         add( u, v, p, q );
         add( v, u, p, q );
     }
@@ -121,7 +124,7 @@ int main(){
     dij2(n);
     bfs(1);
     dij3(1);
-    printf("%d\n", dis[n]);
+    cout << dis[n] << endl;
 
     return 0;
 }

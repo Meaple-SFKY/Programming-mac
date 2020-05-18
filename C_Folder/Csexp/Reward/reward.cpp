@@ -66,10 +66,6 @@ int main(void) {
     visual();
 
     for (int i = 0; i < number; i++) {
-        cout << cost_time[i] << endl;
-    }
-
-    for (int i = 0; i < number; i++) {
         for (int j = 1; j < number; j++) {
             if (child[i][j] != -1) {
                 if (level[i] > level[child[i][j]]) {
@@ -139,7 +135,7 @@ void visual(void) {
             if (flag != -1) {
                 if (flag != 0) {
                     for (int j_temp = 0; j_temp <= flag; j_temp++) {
-                        if (search(child, i_temp, stor[i_temp][j_temp]) == false) {
+                        if (search(child, i, stor[i_temp][j_temp]) == -1) {
                             insert(child, i, stor[i_temp][j_temp]);
                         }
                     }

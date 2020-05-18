@@ -1,59 +1,79 @@
 # 1
 
-Point类型成员名|含义
---------------|---
-int X_Locat|点的横坐标
-int Y_Locat|点的纵坐标
+---
 
-Continuity类型成员名|含义
-------------------|----
-bool ifUp|当前方块（road）是否可向上
-bool ifDown|当前方块（road）是否可向下
-bool ifLeft|当前方块（road）是否可向左
-bool ifRight|当前方块（road）是否可向右
+- 解法分析
+  - 读取输入信息，将直接上下级关系存入二维数组「上下级关系数组」，技术等级和审核该员工工作反馈所需要时间分别存入一维数组
+  - 根据「上下级关系数组」新建一个数组「上级数组」，数组每行的第一个元素是员工编号，后面的元素是该员工的直接上级或间接上级
+  - 根据「上级数组」新建一个数组「审核下级员工数组」，数组每行的第一个元素是员工编号，后面的元素是该员工的直接下级或间接下级
+  - 根据「审核下级员工数组」，对每行从第二个元素进行遍历，若元素的等级比该行第一个元素的等级高，将它的耗时计入该行第一个员工的「审核下属工作反馈所需时间」
 
-Node类型成员名|含义
-------------|-----
-string type|当前方块类型：road(leave, fork, branch), wall
-string state|当前方块状态：unread, readed, visited
-Continuity continuity|当前方块与周围四个方块的可通性
+---
 
-mazeInfo类型成员名|含义
-----------------|----
-int** array|储存基本信息wall/road
-int** read|创建迷宫时判断当前方块的状态
-Node** graph|从array生成的更高级的封装更多信息的方块的二维指针
-Point startPoint|起点
-Point endPoint|终点
-int size|迷宫大小
-int pointNum|创建迷宫的ROAD节点数
+> 此题中，上下级关系数组、上级数组、审核下级员工数组分别为
 
-类成员名|属性|作用
--------|---|----
-int getSeed(void)|private|获取随机数
-bool readJudge(mazeInfo maze, Point pointReadJudge)|private|创建迷宫时判断当前方块的状态
-bool around(mazeInfo maze, Point pointAround)|private|创建迷宫时判断当前方块是否可以向周围扩展
-void setPointNum(void)|private|根据迷宫信息设置迷宫ROAD节点数
-bool ifIsEntrance(int i, int j)|private|判断当前方块是否是起点
-bool ifIsDedication(int i, int j)|private|判断当前方块是否是终点
-Point unreadedEntrance(int i, int j)|private|当前方块是起点，状态为UNREADTYPE
-Point unreadedBranch(int i, int j)|private|当前方块是树枝（双向通），状态为UNREADTYPE
-Point unreadedFork(int i, int j)|private|当前方块是树杈（三向通或四向通），状态为UNREADTYPE
-Point unreadedLeave(int i, int j)|private|当前方块是树叶（单向通），状态为UNREADTYPE
-Point readedEntrance(int i, int j)|private|当前方块是起点，状态为READEDTYPE
-Point readedBranch(int i, int j)|private|当前方块是树枝（双向通），状态为READEDTYPE
-Point readedFork(int i, int j)|private|当前方块是树杈（三向通或四向通），状态为READEDTYPE
-mazeInfo MAZE|public|存储信息的mazeInfo类型变量
-Maze(int size)|public|构造函数，随机生成迷宫，传入值为迷宫大小
-Maze(string name)|public|构造函数，从文件获取迷宫信息，传入值为文件名
-~Maze() {}|public|析构函数
-void printMaze(mazeInfo maze)|public|根据MAZE储存的信息打印迷宫，传入值为mazeInfo类型
-void setStartPoint(Point pointStartPoint)|public|设置起点，传入值为Point类型
-void setEndPoint(Point pointStartPoint)|public|设置终点，传入值为Point类型
-void editWallPoint(Point pointSetWall)|public|编辑迷宫，将当前方块设为wall，传入值为Point类型
-void editRoadPoint(Point pointSetRoad)|public|编辑迷宫，将当前方块设为road，传入值为Point类型
-void openpath(mazeInfo& maze, Point pointOpenPath)|public|递归随机生成迷宫函数，传入值为mazeInfo类型，Point类型
-void setInfoFromFile(string name)|public|从文件创建迷宫，传入值为string类型的文件名
-void setGraphFromArray(void)|public|从基础的array生成封装有多种信息的Node类型的二维指针
-void getPath(void)|public|生成从起点到终点的路径，无参数传入
+---
+上下级关系数组
+0|1|2|3|4|5
+-|-|-|-|-|-
+1|0|0|0|1|0
+2|1|0|0|0|0
+3|0|0|-1|0|0
+4|0|0|1|0|0
+5|0|0|0|1|0
 
+---
+上级数组
+0|1|2|3|4|5
+-|-|-|-|-|-
+1|1|4|3|-1|-1
+2|2|1|4|3|-1
+3|3|-1|-1|-1|-1
+4|4|3|-1|-1|-1
+5|5|4|3|-1|-1
+
+---
+审核下级员工数组
+0|1|2|3|4|5
+-|-|-|-|-|-
+1|1|2|-1|-1|-1
+2|2|-1|-1|-1|-1
+3|3|1|4|2|5
+4|4|1|2|5|-1
+5|5|-1|-1|-1|-1
+
+> [!NOTE]
+> 这里是从「上下级关系数组」新建「上级数组」，再从「上级数组」新建「审核下级员工数组」，而不是直接从「上下级关系数组」新建「审核下级员工数组」，是因为直接新建「审核下级员工数组」过程中不能一次性将间接下级员工处理完，那得到的关系数组应该如下
+
+```cpp
+1 -> 2
+2
+3 -> 4 -> 1 -> 2
+4 -> 1 -> 2
+4 -> 5
+5
+```
+
+还需进行处理
+
+- 流程图
+  - number是员工个数，relation[][]储存上下级直接关系，level[]员工等级，cost_time[]储存员工的工作反馈处理时间
+  - void sum_set(int, int)传入的两个参数相同，从relation[][]获取信息，编号为i的员工所在行为 i - 1，该行第一个不为0且不为-1的元素所在的列号+1就是它的一个上级员工，递归出口为是元素值-1
+  - void visual(void)从stor[][]获取信息，对于编号为i的员工，从0到number-1行查找各行是否存在，若存在，将其前面的元素插入到child[][]第i行非-1元素的后面
+
+- 测试数据
+
+```cpp
+5
+4 4 80
+1 1 40
+-1 10 60
+3 5 50
+4 8 70
+```
+
+- 运行结果截图
+
+- 解法分析
+  - 先从终点n作为起点跑两次最短路，一个按Pi为权值，求出每个节点v的hero(v)，另一个以Qi为权值，求出每个节点v的a(v)
+  - 然后遍历每条边，用警告次数作为权值从1作为起点再跑一次最短路求出结果即可
