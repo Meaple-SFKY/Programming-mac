@@ -467,18 +467,70 @@ SoccerCommand Player::deMeer5(  )
             /************************************************************/
 
             /************************** 第二十五题 ***********************/
-            if (WM->getPlayerNumber() == 4)
-            {
-                soc = leadingPass(OBJECT_TEAMMATE_7, 1.0);
+            //有点问题
+            /* soc = leadingPass(OBJECT_TEAMMATE_7, 1);
+            if (WM->getPlayerNumber() == 7 && WM->isBallKickable()) {
+                soc = leadingPass(OBJECT_TEAMMATE_9, 1);
             }
-            if (WM->getPlayerNumber() == 7)
-            {
-                soc = leadingPass(OBJECT_TEAMMATE_9, 1.0);
+            if(WM->getPlayerNumber() == 9 && WM->isBallKickable()) {
+                soc = moveToPos(VecPosition(40, 0), 1);
+                soc = ShootToGoalex(OBJECT_GOAL_L);
             }
-            if (WM->getPlayerNumber() == 9)
-            {
-                
-            }
+            ACT->putCommandInQueue(soc);
+            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc)); */
+            /************************************************************/
+
+            /************************** 第二十六题 ***********************/
+            /* Rect* p1, * p2;
+            ObjectT pret;
+            p1->setRectanglePoints(WM->getGlobalArmDirection(OBJECT_FLAG_L_T), WM->getGlobalPosition(OBJECT_FLAG_R_0));
+            p2->setRectanglePoints(WM->getGlobalArmDirection(OBJECT_FLAG_L_B), WM->getGlobalPosition(OBJECT_FLAG_R_0));
+            if (WM->getNrInSetInRectangle(OBJECT_SET_OPPONENTS, p1) > WM->getNrInSetInRectangle(OBJECT_SET_OPPONENTS, p2)) {
+                if (WM->getAgentGlobalPosition().getY() > 0) {
+                    if (WM->getAgentObjectType() == WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, OBJECT_LINE_R)) {
+                        pret = WM->getAgentObjectType();
+                    }
+                }
+            } */
+            /************************************************************/
+
+            /************************** 第二十七题 ***********************/
+            /* Circle cir(posAgent,7);
+	        int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+	        if (num >= 2){
+	            ObjectT ClosestG;
+	            ClosestG = WM->getClosestInSetTo(OBJECT_SET_TEAMMATES, VecPosition(52.5, 0));
+	            soc = leadingPass(ClosestG, 1);
+	            ACT->putCommandInQueue(soc);
+	            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+	        } */
+            /************************************************************/
+
+            /************************** 第二十八题 ***********************/
+            /************************************************************/
+
+            /************************** 第二十九题 ***********************/
+            /************************************************************/
+
+            /*************************** 第三十题 ************************/
+            /* Circle cir(posAgent, 7);
+	        int num = WM->getNrInSetInCircle(OBJECT_SET_OPPONENTS, cir);
+	        if (num == 0) {
+	            AngDeg angDribble = (VecPosition(53.0, 0) - posAgent).getDirection();
+	            soc = dribble(angDribble, DRIBBLE_FAST);
+	            ACT->putCommandInQueue(soc);
+	            ACT->putCommandInQueue(turnNeckToObject(OBJECT_BALL, soc));
+	        } */
+            /************************************************************/
+
+            /************************** 第三十一题 ***********************/
+            /************************************************************/
+
+            /************************** 第三十二题 ***********************/
+            /************************************************************/
+
+            /************************** 第三十三题 ***********************/
+            //Player.cpp
         }
         else if ( WM->getFastestInSetTo( OBJECT_SET_TEAMMATES, OBJECT_BALL, &iTmp )
                   == WM->getAgentObjectType()  && !WM->isDeadBallThem() ) // 如果球不在我的控制范围下，但是当前能最快抢到球的是我，那我就去执行抢球动作
