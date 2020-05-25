@@ -1,81 +1,54 @@
-/*
-*作者：KDF5000
-*功能：利用拉格朗日插值法求解近似值
-*时间：2013.4.15
-*/
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-//存放插值节点
-typedef struct data{
-	double x;
-	double y;
-	struct data *next;
-} Data;
-/****************************************************
- *LagrangeInsert()
- *功能：拉格朗日插值法
- *****************************************************/
-double LagrangeInsert(struct Data *header,double x)
-{
-	Data *pi,*pj,*p;
-	pi=pj=header->next;
-	double temp1,temp2;
-	temp1=0;                //记录内循环的积
-	temp2=1;				//记录外循环的和
-	while(pi!=NULL)
-	{
-		while(pj!=NULL)
-		{
-			if(pi!=pj)
-				temp2 *=(x-pj->x)/(pi->x-pj->x);
-			pj = pj->next;
-		}
-		temp1 +=temp2*pi->y;
-		temp2=1;
-		pj = header->next;
-		pi = pi->next;
-	}
-	return temp1;   //返回计算结果
+
+const int N = 1000;
+
+//拉格朗日插值算法
+double lagrange(double abscissa[], double ordinate[], int n, double x) {
+    double sum = 0.0, lValue[N];
+
+    double temp_fir, temp_sec;
+
+    for (int k = 0; k < n; k++) {
+        temp_fir = 1.0;
+        temp_sec = 1.0;
+        for (int m = 0; m < n; m++) {
+            if (m == k)
+            {
+                continue;
+            }
+            temp_fir *= (x - abscissa[m]);
+            temp_sec *= (abscissa[k] - abscissa[m]);
+        }
+
+        lValue[k] = temp_fir / temp_sec;
+    }
+
+    for (int i = 0; i < n; i++) {
+        sum += ordinate[i] * lValue[i];
+    }
+
+    return sum;
 }
- 
-void main()
-{
-	Data *header = (Data *)malloc(sizeof(Data));
-	char str[20];
-	Data *p,*newData;
-	char strx[20],stry[20];
-	double x;
- 
-	p=header;
-	p->x=0;
-	p->y=0;
-	p->next=NULL;
- 
-	//输出提示信息
-	printf("*******************************************\n");
-	printf("使用说明：\n1.用户输入插值点，每一行输入一组：x y;\n2.输入换行表示输入结束。\n");
-	printf("*******************************************\n");
-	printf("x    y\n");
- 
-	//接收用户输入知道第一次输入非换行为止
-	memset(str,0,sizeof(str));
-	while(strlen(str)==0)
-     	gets(str);
-	//数据输入完毕，输入换行结束输入
-	while(strlen(str)!=0)
-	{
-		newData = (Data *)malloc(sizeof(Data));
-		sscanf(str,"%s%s",strx,stry);     //获取输入的前两个字符串 第一个为x,第二个为y
-		newData->x = strtod(strx,NULL);   //将输入转换成浮点数
-		newData->y = strtod(stry,NULL);   
-		newData->next=NULL;
-		p->next=newData;
-		p = p->next;
-		gets(str);
-	}
-	printf("请输入要计算的x值：");
-	scanf("%lf",&x);
-	printf("L(%f) = %f\n",x,LagrangeInsert(header,0.20));
-	return ;
+
+int main(void) {
+    double abscissa[N], ordinate[N];
+    double temp_x, answer;
+    int num;
+
+    printf("Please enter the number of interpolation nodes (less than %d): ", N);
+    scanf("%d", &num);
+    printf("Now, Please enter the abscissa and ordinate of these interpolation nodes:\n");
+
+    for (int i = 0; i < num; i++) {
+        printf("The abscissa and ordinate of the %d node: ", i + 1);
+        scanf("%lf %lf", &abscissa[i], &ordinate[i]);
+    }
+
+    printf("Please enter the abscissa of the interpolation node to be solved: \n");
+    scanf("%lf", &temp_x);
+
+    answer = lagrange(abscissa, ordinate, num, temp_x);
+    printf("Its ordinate is: %lf\n", answer);
+
+    return 0;
 }
