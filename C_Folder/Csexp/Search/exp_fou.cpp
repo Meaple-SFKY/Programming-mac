@@ -11,7 +11,7 @@ struct action {
     int to;
     int water;
 };
-//每个桶状态和倒水动作(倒水动作是由上一个状态到这个状态的倒水动作)
+
 struct bucket_states {
     vector<int> states_vector;
     action ac;
@@ -46,13 +46,13 @@ struct bucket_states {
     }
     bool dump_water(int from, int to, bucket_states& next) {
         vector<int> bucket_water(this->states_vector);
-        //倒水数目是to桶剩余的空间
+        
         int dump_water = bucket_size[to] - states_vector[to];
-        //如果from中的水大于to桶剩余的空间，则倒出dunp_water的水量
+        
         if(bucket_water[from] >= dump_water) {
             bucket_water[to] += dump_water;
             bucket_water[from] -= dump_water;
-        } else {//否则倒出from桶中的所有水
+        } else {
             dump_water = bucket_water[from];
             bucket_water[to] += dump_water;
             bucket_water[from] = 0;
@@ -72,7 +72,7 @@ void print_states(bucket_states& bucket){
         " | from " << bucket.ac.from << '\t' << " to " << bucket.ac.to << 
         "  dump " << bucket.ac.water << "L water." << endl; 
 }
-//禁止给自己倒水，禁止从空桶取水，禁止给满桶倒水
+
 bool is_action_valid(bucket_states& cur, int from, int to) {
     if((from != to) && !cur.is_empty(from) && !cur.is_full(to)) {
         return true;
@@ -88,10 +88,9 @@ bool is_loop(vector<bucket_states>& states, bucket_states& next) {
     }
     return false;
 }
-//搜索算法
+
 void DFS(vector<bucket_states>& states, int& cnt, int& shortest) {
     bucket_states cur = states.back();
-    //判断是否是最终状态, 打印倒水过程，记录方案数目以及需要最少操作的数目
     if(cur.is_final()) {
         ++cnt;
         shortest = min(shortest, static_cast<int>(states.size()));
@@ -103,9 +102,7 @@ void DFS(vector<bucket_states>& states, int& cnt, int& shortest) {
         for(int j = 0; j < 3; ++j) {
             if(is_action_valid(cur, i, j)) {
                 bucket_states next_states;
-                //进行状态转移，执行倒水动作，并判断倒水动作是否有效
                 bool is_dump = cur.dump_water(i, j, next_states);
-                //检查倒水动作是否可以驱动到下一个有效状态，以及下一个状态是否已经重复
                 if(is_dump && !is_loop(states, next_states)) {
                     states.push_back(next_states);
                     DFS(states, cnt, shortest);

@@ -1,7 +1,6 @@
 #include <iostream>
 
 using namespace std;
-//递归算法解决八皇后问题。总共有92种解法。
 
 int c[20], n = 8, cnt = 0;
 void print(void) {
@@ -38,7 +37,7 @@ void search(int r) {
 		}
     }
 }
-int main(){
+int main(void){
     search(0);
     cout << cnt << endl;
     return 0;
