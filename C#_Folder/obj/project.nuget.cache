@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "h904Ubyljm/utGYMCPrxKioLPf0fNT60foECJykr2QRvD9uJm3peLi7+c0vvfFDSOAgho3ur+G1xpN6qwmXjsw==",
+  "dgSpecHash": "8wweCmKQDDNP6RuXjjcZdBYEyhjjkbm//JtQzruOhaGlTlC6hAGgJ5S3E2oWFOpUAKGIbCNdVJzJmCfdxbfKSQ==",
   "success": true,
   "projectFilePath": "/Users/sfky/Documents/Programming/C#_Folder/C#_Folder.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/sfky/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

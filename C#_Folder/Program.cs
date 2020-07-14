@@ -1,17 +1,28 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 
 namespace C__Folder
 {
+    public class Account
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public DateTime DOB { get; set; }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\nWhat is your name? ");
-            var name = Console.ReadLine();
-            var date = DateTime.Now;
-            Console.WriteLine($"\nHello, {name}, on {date:d} at {date:t}!");
-            Console.Write("\nPress any key to exit...");
-            Console.ReadKey(true);
+            Account account = new Account
+            {
+                Name = "John Doe",
+                Email = "john@nuget.org",
+                DOB = new DateTime(1980, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+            };
+
+            string json = JsonConvert.SerializeObject(account, Formatting.Indented);
+            Console.WriteLine(json);
         }
     }
 }
