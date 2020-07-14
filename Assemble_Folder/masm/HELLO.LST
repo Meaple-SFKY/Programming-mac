@@ -1,0 +1,56 @@
+Microsoft (R) Macro Assembler Version 5.00                  7/8/20 23:52:58
+                                                             Page     1-1
+
+
+ 0000				stack   segment stack 
+ 0000  0400[			        db      1024 dup(?) 
+	    ??			
+			 ]	
+				
+ 0400				stack   ends 
+ 0000				data    segment 
+ 0000  48 65 6C 6C 6F 2C 20	string  db 'Hello, Everybody!', 0dh, 0ah, '$' 
+       45 76 65 72 79 62 6F	
+       64 79 21 0D 0A 24	
+ 0014				data    ends 
+ 0000				code    segment 'code' 
+				        assume  cs:code, ds:data, ss:stack 
+ 0000  B8 ---- R		start:  mov     ax, data 
+ 0003  8E D8			        mov     ds, ax 
+ 0005  BA 0000 R		        mov     dx, offset string 
+ 0008  B4 09			        mov     ah, 9 
+ 000A  CD 21			        int     21h 
+ 000C  B8 4C00			        mov     ax, 4c00h 
+ 000F  CD 21			        int     21h 
+ 0011				code    ends 
+				        end     start 
+Microsoft (R) Macro Assembler Version 5.00                  7/8/20 23:52:58
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	0011	PARA	NONE	'CODE'
+DATA . . . . . . . . . . . . . .  	0014	PARA	NONE	
+STACK  . . . . . . . . . . . . .  	0400	PARA	STACK	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
+STRING . . . . . . . . . . . . .  	L BYTE	0000	DATA
+
+@FILENAME  . . . . . . . . . . .  	TEXT  hello		
+
+
+     17 Source  Lines
+     17 Total   Lines
+      7 Symbols
+
+  51176 + 465368 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

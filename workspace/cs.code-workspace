@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "../C#_Folder"
+		}
+	],
+	"settings": {
+		"terminal.integrated.automationShell.linux": ""
+	}
+}

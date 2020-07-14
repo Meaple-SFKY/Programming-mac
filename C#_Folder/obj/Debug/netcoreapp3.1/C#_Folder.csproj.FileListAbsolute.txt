@@ -1,0 +1,12 @@
+/Users/sfky/Documents/Programming/C#_Folder/bin/Debug/netcoreapp3.1/C#_Folder.deps.json
+/Users/sfky/Documents/Programming/C#_Folder/bin/Debug/netcoreapp3.1/C#_Folder.runtimeconfig.json
+/Users/sfky/Documents/Programming/C#_Folder/bin/Debug/netcoreapp3.1/C#_Folder.runtimeconfig.dev.json
+/Users/sfky/Documents/Programming/C#_Folder/bin/Debug/netcoreapp3.1/C#_Folder.dll
+/Users/sfky/Documents/Programming/C#_Folder/bin/Debug/netcoreapp3.1/C#_Folder.pdb
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.csprojAssemblyReference.cache
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.AssemblyInfoInputs.cache
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.AssemblyInfo.cs
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.csproj.CoreCompileInputs.cache
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.dll
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.pdb
+/Users/sfky/Documents/Programming/C#_Folder/obj/Debug/netcoreapp3.1/C#_Folder.genruntimeconfig.cache
