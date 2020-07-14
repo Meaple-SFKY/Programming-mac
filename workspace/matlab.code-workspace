@@ -2,10 +2,6 @@
 	"folders": [
 		{
 			"path": "../Matlab_Folder"
-		},
-		{
-			"path": "."
 		}
-	],
-	"settings": {}
+	]
 }

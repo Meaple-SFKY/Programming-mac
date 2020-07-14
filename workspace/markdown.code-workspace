@@ -2,10 +2,6 @@
 	"folders": [
 		{
 			"path": "../Markdown_Folder"
-		},
-		{
-			"path": "."
 		}
-	],
-	"settings": {}
+	]
 }

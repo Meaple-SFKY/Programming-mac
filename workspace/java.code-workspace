@@ -2,10 +2,6 @@
 	"folders": [
 		{
 			"path": "../Java_Folder"
-		},
-		{
-			"path": "."
 		}
-	],
-	"settings": {}
+	]
 }

@@ -2,10 +2,6 @@
 	"folders": [
 		{
 			"path": "../Go_Folder"
-		},
-		{
-			"path": "."
 		}
-	],
-	"settings": {}
+	]
 }
