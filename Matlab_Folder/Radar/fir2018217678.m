@@ -1,0 +1,21 @@
+T = 10e-6;
+B = 30e6;
+K = B / T;
+F = 2 * B;
+Ts_temp = 1 / F;
+N = T / Ts_temp;
+t = linspace(-T / 2, T / 2, N);
+S_temp = exp(j * pi * K * t.^2);
+subplot(211)
+plot(t * 1e6, real(S_temp));
+xlabel('t/s');
+title('LFM信号时域波形');
+grid on;
+axis tigH_temp;
+subplot(212);
+freq = linspace(-F / 2, F / 2, N);
+plot(freq * 1e-6, ffTs_temphift(abs(fft(S_temp))));
+xlabel('f/Mhz');
+title('LFM信号幅度谱');
+grid on;
+axis tigH_temp;
