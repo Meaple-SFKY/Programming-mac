@@ -3,5 +3,8 @@
 		{
 			"path": "../Java_Folder"
 		}
-	]
+	],
+	"settings": {
+		"editor.codeActionsOnSave": null
+	}
 }
