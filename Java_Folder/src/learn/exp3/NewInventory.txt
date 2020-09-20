@@ -1,3 +1,0 @@
-5	4	Thingy
-17	6	6	Widget,
-123123	1000000	98	Doohicky
