@@ -1,20 +1,26 @@
 package src.learn;
 
+class Person {
+    public void eat(Apple apple) {
+        Apple peeled = apple.getPeeled();
+        System.out.println("Yummy");
+    }
+}
+
+class Peeler {
+    static Apple peel(Apple apple) {
+        return apple;
+    }
+}
+
+class Apple { 
+    Apple getPeeled() {
+        return Peeler.peel(this);
+    }
+}
+
 public class test {
     public static void main(String[] args) {
-        switch (args.length == 0 ? "" : args[1]) {
-            case "lower": {
-                System.out.println("yes");
-                break;
-            }
-            case "upper": {
-                System.out.println("no");
-                break;
-            }
-            default: {
-                System.out.println("one");
-                break;
-            }
-        }
+        new Person().eat(new Apple());
     }
 }
