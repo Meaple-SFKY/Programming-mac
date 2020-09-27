@@ -1,4 +1,4 @@
-package com.meaple.dessert;
+package com.meaple.hiding.dessert;
 
 public class Cookie {
     public Cookie() {
