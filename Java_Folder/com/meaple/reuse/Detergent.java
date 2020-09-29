@@ -38,6 +38,7 @@ public class Detergent extends Cleanser {
     public void foam() {
         append(" foam()");
     } // Test the new class:
+
     public static void main(String[] args) {
         Detergent x = new Detergent();
         x.dilute();
