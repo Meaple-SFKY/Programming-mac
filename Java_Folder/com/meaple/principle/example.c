@@ -15,8 +15,8 @@ void main(void) {
     printf("Please enter the weight of bananas: ");
     scanf("%d", &tempBanana);
     printf("Please enter the unit prices of bananas: ");
-    scanf("%f", &priBanna);
-    printf("You need to pay %.2f dallars.");
+    scanf("%f", &priBanana);
+    printf("You need to pay %0.2f dallars.");
 }
 
 int expProc(int temp, float price) {
