@@ -11,7 +11,7 @@ package com.meaple.principle;
 
 import java.io.*;
 
-public class Analyzer {
+public class LexicalAnalyzer {
     public int tempChar = 0;
     public String tempString = "";
 
@@ -21,6 +21,7 @@ public class Analyzer {
         1, 2, 3, 4, 5, 6
     };
 
+    //关键字
     public String[] keyWords = new String[] {
         "auto"     ,"short"    ,"int"      ,"long"      ,
         "float"    ,"double"   ,"char"     ,"struct"    ,
@@ -32,13 +33,16 @@ public class Analyzer {
         "break"    ,"default"  ,"sizeof"   ,"return"
     };
 
+    //分界符
     public char[] delimiters = {
-        '.', ',', '(', ')', '[', ']', '{', '}', ':'
+        '.', ',', '(', ')', '[', ']', '{', '}', ':', '#', ';'
     };
 
+    //运算符
     public char[] arithmeticOperators = {
-        '+', '-', '*', '/', '%', '#'
+        '+', '-', '*', '/', '%'
     };
+
 
     public String[] relationalOperators = {
         "<", "<=", "=", ">=", ">", "==", "<>"
@@ -296,7 +300,7 @@ public class Analyzer {
                             //     addCharToString(tempChar);
                             // } else {
                             //     if (ifIsASetDigitals() == true) {
-                                    addCharToString(tempChar);
+                            addCharToString(tempChar);
                             //     } else {
                             //         printString(lineLable, colLable);
                             //         flushTempString();
@@ -344,7 +348,7 @@ public class Analyzer {
     }
 
     public static void main(String[] args) {
-        Analyzer analyzer = new Analyzer();
+        LexicalAnalyzer analyzer = new LexicalAnalyzer();
         String fileName = new String("/Users/sfky/Documents/Programming/Java_Folder/com/meaple/principle/example.c");
         analyzer.analysis(fileName);
     }
