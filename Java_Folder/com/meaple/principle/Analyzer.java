@@ -202,7 +202,10 @@ public class Analyzer {
     //输出关键字、标识符、常数、关系运算符有关信息
     public void printString(int line, int col) {
         if (tempStorString.length() != 0) {
-            if (tempStorString.length() > 8) {
+            if (tempStorString.toString().equals(".") == true) {
+                System.out.println(tempStorString + "\t\t(" + 1 + ", '" + tempStorString
+                                    + "')\t\t" + "分界符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+            } else if (tempStorString.length() > 8) {
                 if (ifIsAKeyWord() == true) {
                     System.out.println(tempStorString + "\t(" + 1 + ", '" + tempStorString
                                     + "')\t" + "关键字\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
@@ -216,7 +219,7 @@ public class Analyzer {
                     System.out.println(tempStorString + "\t(" + 5 + ", '" + tempStorString
                                     + "')\t" + "关系运算符\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else {
-                    System.out.println(tempStorString + "\tERROR\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    System.out.println(tempStorString + "\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 }
             } else if (tempStorString.length() == 8) {
                 if (ifIsAKeyWord() == true) {
@@ -232,7 +235,7 @@ public class Analyzer {
                     System.out.println(tempStorString + "\t(" + 5 + ", '" + tempStorString
                                     + "')\t" + "关系运算符\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else {
-                    System.out.println(tempStorString + "\tERROR\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    System.out.println(tempStorString + "\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 }
             } else {
                 if (ifIsAKeyWord() == true) {
@@ -289,17 +292,17 @@ public class Analyzer {
                         addCharToString(tempChar);
                     } else if (ifIsADelimiter(tempChar)) {
                         if ((char)tempChar == '.') {
-                            if (tempStorString.length() == 0) {
-                                addCharToString(tempChar);
-                            } else {
-                                if (ifIsASetDigitals() == true) {
+                            // if (tempStorString.length() == 0) {
+                            //     addCharToString(tempChar);
+                            // } else {
+                            //     if (ifIsASetDigitals() == true) {
                                     addCharToString(tempChar);
-                                } else {
-                                    printString(lineLable, colLable);
-                                    flushTempString();
-                                    printDelimiter(tempChar, lineLable, colLable);
-                                }
-                            }
+                            //     } else {
+                            //         printString(lineLable, colLable);
+                            //         flushTempString();
+                            //         printDelimiter(tempChar, lineLable, colLable);
+                            //     }
+                            // }
                         } else {
                             printString(lineLable, colLable);
                             flushTempString();
