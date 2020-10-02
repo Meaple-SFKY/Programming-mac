@@ -127,19 +127,48 @@ public class Analyzer {
     //判断是否是常数
     public boolean ifIsASetDigitals() {
         int temp = 0;
-        if (tempStorString.length() != 0) {
-            for (int i = 0; i < tempStorString.length(); i++) {
-                if (tempStorString.charAt(i) < 48 || tempStorString.charAt(i) > 57) {
+        //末位是数字
+        if ((tempStorString.charAt(tempStorString.length() - 1) >= '0' &&
+            tempStorString.charAt(tempStorString.length() - 1) <= '9') ||
+            tempStorString.charAt(tempStorString.length() - 1) == '.') {
+            if (tempStorString.length() != 0) {
+                for (int i = 0; i < tempStorString.length(); i++) {
+                    if (tempStorString.charAt(i) < 48 || tempStorString.charAt(i) > 57) {
+                        return false;
+                    }
+                    if (tempStorString.charAt(i) == '.') {
+                        temp++;
+                    }
+                }
+                if (temp > 1) {
                     return false;
                 }
-                if (tempStorString.charAt(i) == '.') {
-                    temp++;
-                }
-            }
-            if (temp > 1) {
+                return true;
+            } else {
                 return false;
             }
-            return true;
+        } else if (tempStorString.charAt(tempStorString.length() - 1) == 'f' ||
+                    tempStorString.charAt(tempStorString.length() - 1) == 'F' ||
+                    tempStorString.charAt(tempStorString.length() - 1) == 'd' ||
+                    tempStorString.charAt(tempStorString.length() - 1) == 'D') {
+            //末位是f, F, d, D
+            if (tempStorString.length() > 1) {
+                for (int i = 0; i < tempStorString.length() - 1; i++) {
+                    if ((tempStorString.charAt(i) < 48 || tempStorString.charAt(i) > 57) &&
+                        tempStorString.charAt(i) != '.') {
+                        return false;
+                    }
+                    if (tempStorString.charAt(i) == '.') {
+                        temp++;
+                    }
+                }
+                if (temp > 1) {
+                    return false;
+                }
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -260,12 +289,16 @@ public class Analyzer {
                         addCharToString(tempChar);
                     } else if (ifIsADelimiter(tempChar)) {
                         if ((char)tempChar == '.') {
-                            if (ifIsASetDigitals() == true) {
+                            if (tempStorString.length() == 0) {
                                 addCharToString(tempChar);
                             } else {
-                                printString(lineLable, colLable);
-                                flushTempString();
-                                printDelimiter(tempChar, lineLable, colLable);
+                                if (ifIsASetDigitals() == true) {
+                                    addCharToString(tempChar);
+                                } else {
+                                    printString(lineLable, colLable);
+                                    flushTempString();
+                                    printDelimiter(tempChar, lineLable, colLable);
+                                }
                             }
                         } else {
                             printString(lineLable, colLable);
