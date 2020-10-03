@@ -23,7 +23,6 @@ public class Analyzer {
     private String fileName;
 
     private int tempChar = 0;
-    private String tempString = "";
     private StringBuffer tempStorString = new StringBuffer();
 
     
@@ -194,7 +193,7 @@ public class Analyzer {
                     System.out.println(tempStorString + "\t(" + 1 + ", '" + tempStorString
                                     + "')\t" + "关键字\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else if (ifIsASetDigitals() == true) {
-                    vectorArguments.constantAdd(tempString.toString());
+                    vectorArguments.constantAdd(tempStorString.toString());
                     System.out.println(tempStorString + "\t(" + 3 + ", '" + tempStorString
                                     + "')\t" + "常数\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else if (ifIsAIdentifier() == true) {
@@ -212,7 +211,7 @@ public class Analyzer {
                     System.out.println(tempStorString + "\t(" + 1 + ", '" + tempStorString
                                     + "')\t" + "关键字\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else if (ifIsASetDigitals() == true) {
-                    vectorArguments.constantAdd(tempString.toString());
+                    vectorArguments.constantAdd(tempStorString.toString());
                     System.out.println(tempStorString + "\t(" + 3 + ", '" + tempStorString
                                     + "')\t" + "常数\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else if (ifIsAIdentifier() == true) {
@@ -230,7 +229,7 @@ public class Analyzer {
                     System.out.println(tempStorString + "\t\t(" + 1 + ", '" + tempStorString
                                     + "')\t\t" + "关键字\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else if (ifIsASetDigitals() == true) {
-                    vectorArguments.constantAdd(tempString.toString());
+                    vectorArguments.constantAdd(tempStorString.toString());
                     System.out.println(tempStorString + "\t\t(" + 3 + ", '" + tempStorString
                                     + "')\t\t" + "常数\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 } else if (ifIsAIdentifier() == true) {

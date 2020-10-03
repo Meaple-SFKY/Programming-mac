@@ -7,11 +7,11 @@ public class VectorArguments {
     private Vector<String> vecConstants = new Vector<String>();
 
     public void identifierAdd(String identifier) {
-        vecIdentifiers.addElement(identifier);
+        vecIdentifiers.add(identifier);
     }
 
     public void constantAdd(String constant) {
-        vecConstants.addElement(constant);
+        vecConstants.add(constant);
     }
 
     public void demoIdentifiers() {
