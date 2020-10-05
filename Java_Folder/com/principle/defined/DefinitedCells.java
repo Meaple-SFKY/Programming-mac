@@ -28,8 +28,8 @@ public class DefinitedCells {
     };
 
     //运算符
-    public String[] arithmeticOperators = {
-        "+", "-", "*", "/", "%", "++", "--", "|"
+    public char[] arithmeticOperators = {
+        '+', '-', '*', '/', '%', '|'
     };
 
 

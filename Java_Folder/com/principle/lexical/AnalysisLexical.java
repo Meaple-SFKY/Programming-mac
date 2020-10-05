@@ -151,14 +151,14 @@ public class AnalysisLexical {
         }
     }
 
-    //判断是否是单个运算符
+    //判断是否是算术运算符
     private boolean ifIsAArithmeticOperator(int slice) {
-        if ((char)slice == '+' || (char)slice == '-' || (char)slice == '*' ||
-            (char)slice == '/' || (char)slice == '%' || (char)slice == '|') {
-            return true;
-        } else {
-            return false;
+        for (int i = 0; i < definitedCells.arithmeticOperators.length; i++) {
+            if ((char)slice == definitedCells.arithmeticOperators[i]) {
+                return true;
+            }
         }
+        return false;
     }
 
     //判断是否是关系运算符
@@ -172,10 +172,12 @@ public class AnalysisLexical {
     }
 
     //判断是否是运算符
-    private boolean ifIsArithmeticOperators() {
+    private boolean ifIsASetArithmeticOperators() {
         for (int i = 0; i < definitedCells.arithmeticOperators.length; i++) {
-            if (tempStorString.toString().equals(definitedCells.arithmeticOperators[i]) == true) {
-                return true;
+            for (int j = 0; j < tempStorString.length(); j++) {
+                if (tempStorString.charAt(j) == definitedCells.arithmeticOperators[i]) {
+                    return true;
+                }
             }
         }
         return false;
@@ -207,9 +209,13 @@ public class AnalysisLexical {
                 } else if (ifIsRelaOperator() == true) {
                     System.out.println(tempStorString + "\t(" + 5 + ", '" + tempStorString
                         + "')\t" + "关系运算符\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
-                } else if(ifIsArithmeticOperators() == true) {
-                    System.out.println(tempStorString + "\t(" + 4 + ", '" + tempStorString
-                        + "')\t" + "运算符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                } else if(ifIsASetArithmeticOperators() == true) {
+                    if (tempStorString.length() > 1) {
+                        System.out.println(tempStorString + "\t\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    } else {
+                        System.out.println(tempStorString + "\t\t(" + 4 + ", '" + tempStorString
+                            + "')\t\t" + "运算符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    }
                 } else {
                     System.out.println(tempStorString + "\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 }
@@ -228,9 +234,13 @@ public class AnalysisLexical {
                 } else if (ifIsRelaOperator() == true) {
                     System.out.println(tempStorString + "\t(" + 5 + ", '" + tempStorString
                         + "')\t" + "关系运算符\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
-                } else if(ifIsArithmeticOperators() == true) {
-                    System.out.println(tempStorString + "\t(" + 4 + ", '" + tempStorString
-                        + "')\t" + "运算符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                } else if(ifIsASetArithmeticOperators() == true) {
+                    if (tempStorString.length() > 1) {
+                        System.out.println(tempStorString + "\t\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    } else {
+                        System.out.println(tempStorString + "\t\t(" + 4 + ", '" + tempStorString
+                            + "')\t\t" + "运算符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    }
                 } else {
                     System.out.println(tempStorString + "\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 }
@@ -249,9 +259,13 @@ public class AnalysisLexical {
                 } else if (ifIsRelaOperator() == true) {
                     System.out.println(tempStorString + "\t\t(" + 5 + ", '" + tempStorString
                         + "')\t\t" + "关系运算符\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
-                } else if(ifIsArithmeticOperators() == true) {
-                    System.out.println(tempStorString + "\t\t(" + 4 + ", '" + tempStorString
-                        + "')\t\t" + "运算符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                } else if(ifIsASetArithmeticOperators() == true) {
+                    if (tempStorString.length() > 1) {
+                        System.out.println(tempStorString + "\t\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    } else {
+                        System.out.println(tempStorString + "\t\t(" + 4 + ", '" + tempStorString
+                            + "')\t\t" + "运算符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+                    }
                 } else {
                     System.out.println(tempStorString + "\t\tERROR\t\t\tERROR\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
                 }
@@ -262,7 +276,7 @@ public class AnalysisLexical {
     //输出分界符有关信息
     private void printDelimiter(int slice, int line, int col) {
         System.out.println((char)slice + "\t\t(" + 6 + ", '" + (char)slice
-                            + "')\t\t" + "分界符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
+            + "')\t\t" + "分界符\t\t" + "(" + (line + 1) + ", " + (col - tempStorString.length()) + ")");
     }
 
     //刷新临时字符串
@@ -281,8 +295,8 @@ public class AnalysisLexical {
                 if (ifIsASpace(tempChar) == false && (char)tempChar != '\n') {
                     if (ifIsALetter(tempChar) == true || ifIsADigital(tempChar) == true ||
                         (char)tempChar == '_') {
-                        if (tempStorString.length() > 0 && (ifIsAArithmeticOperator(tempStorString.charAt(0)) == true ||
-                            ifIsARelaOperator(tempStorString.charAt(0)) == true)) {
+                        if (tempStorString.length() > 0 && ((ifIsASetArithmeticOperators() == true ||
+                            ifIsARelaOperator(tempStorString.charAt(0)) == true))) {
                             printString(lineLable, colLable);
                             flushTempString();
                             addCharToString(tempChar);
@@ -302,24 +316,35 @@ public class AnalysisLexical {
                             printDelimiter(tempChar, lineLable, colLable);
                         }
                     } else if (ifIsAArithmeticOperator(tempChar) == true) {
-                        if (((char)tempChar == '+' || (char)tempChar == '-') == false) {
-                            addCharToString(tempChar);
-                            printString(lineLable, colLable);
-                            flushTempString();
-                        } else {
-                            if (tempStorString.length() > 0) {
-                                if (ifIsAArithmeticOperator(tempStorString.charAt(0)) == false) {
-                                    printString(lineLable, colLable);
-                                    flushTempString();
-                                    addCharToString(tempChar);
-                                } else {
-                                    addCharToString(tempChar);
-                                    printString(lineLable, colLable);
-                                    flushTempString();
-                                }
+                        // if (((char)tempChar == '+' || (char)tempChar == '-') == false) {
+                        //     addCharToString(tempChar);
+                        //     printString(lineLable, colLable);
+                        //     flushTempString();
+                        // } else {
+                        //     if (tempStorString.length() > 0) {
+                        //         if (ifIsAArithmeticOperator(tempStorString.charAt(0)) == false) {
+                        //             printString(lineLable, colLable);
+                        //             flushTempString();
+                        //             addCharToString(tempChar);
+                        //         } else {
+                        //             addCharToString(tempChar);
+                        //             printString(lineLable, colLable);
+                        //             flushTempString();
+                        //         }
+                        //     } else {
+                        //         addCharToString(tempChar);
+                        //     }
+                        // }
+                        if (tempStorString.length() > 0) {
+                            if (ifIsASetArithmeticOperators() == true) {
+                                addCharToString(tempChar);
                             } else {
+                                printString(lineLable, colLable);
+                                flushTempString();
                                 addCharToString(tempChar);
                             }
+                        } else {
+                            addCharToString(tempChar);
                         }
                     } else if (ifIsARelaOperator(tempChar) == true) {
                         if (tempStorString.length() > 0) {
