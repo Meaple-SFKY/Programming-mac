@@ -1,4 +1,4 @@
-package com.meaple.principle;
+package com.principle.lexical;
 
 public class DefinitedCells {
     //关键字
@@ -15,12 +15,12 @@ public class DefinitedCells {
 
     //分界符
     public char[] delimiters = {
-        '.', ',', '(', ')', '[', ']', '{', '}', ':', '#', ';'
+        '.', ',', '(', ')', '[', ']', '{', '}', ':', '#', ';', '&'
     };
 
     //运算符
-    public char[] arithmeticOperators = {
-        '+', '-', '*', '/', '%'
+    public String[] arithmeticOperators = {
+        "+", "-", "*", "/", "%", "++", "--", "|"
     };
 
 

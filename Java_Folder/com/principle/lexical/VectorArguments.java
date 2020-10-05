@@ -1,4 +1,4 @@
-package com.meaple.principle;
+package com.principle.lexical;
 
 import java.util.Vector;
 

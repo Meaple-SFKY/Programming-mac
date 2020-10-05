@@ -12,13 +12,14 @@ int expProc(int, float);
 void main(void) {
     int tempBanana.;
     float priBanna 22.21;
-    printf("Please enter the weight of bananas: ");
+    priBanana++;
+    printf("Please enter +the weight of bananas: ");
     scanf("%d", &tempBanana);
     printf("Please enter the unit prices of bananas: ");
     scanf("%f", &priBanana);
-    printf("You need to pay %.2f dallars .");
+    printf("You need to pay %.2f dallars.");
 }
 
 int expProc(int temp, float price) {
-    return temp + price;
+    return temp + pri.ce;
 }
