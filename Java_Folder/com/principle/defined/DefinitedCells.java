@@ -1,5 +1,14 @@
 package com.principle.defined;
 
+/**
+ *  1   关键字
+ *  2   标识符
+ *  3   常数
+ *  4   运算符
+ *  5   关系运算符
+ *  6   分界符
+ * */
+
 public class DefinitedCells {
     //关键字
     public String[] keyWords = new String[] {

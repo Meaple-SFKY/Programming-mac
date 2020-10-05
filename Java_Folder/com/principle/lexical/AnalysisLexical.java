@@ -13,20 +13,15 @@ import com.principle.defined.*;
  * */
 
 public class AnalysisLexical {
+    public VectorArguments vectorArguments = new VectorArguments();
     public AnalysisLexical(String name) {
         fileName = name;
     }
-
-    private DefinitedCells definitedCells = new DefinitedCells();
-
-    public VectorArguments vectorArguments = new VectorArguments();
-
-    private String fileName;
-
-    private int tempChar = 0;
-    private StringBuffer tempStorString = new StringBuffer();
-
     
+    private int tempChar = 0;
+    private String fileName;
+    private StringBuffer tempStorString = new StringBuffer();
+    private DefinitedCells definitedCells = new DefinitedCells();
 
     //判断是否是空格
     private boolean ifIsASpace(int slice) {
