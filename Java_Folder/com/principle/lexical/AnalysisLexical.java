@@ -1,5 +1,8 @@
 package com.principle.lexical;
 
+import java.io.*;
+import com.principle.defined.*;
+
 /**
  *  1   关键字
  *  2   标识符
@@ -8,8 +11,6 @@ package com.principle.lexical;
  *  5   关系运算符
  *  6   分界符
  * */
-
-import java.io.*;
 
 public class AnalysisLexical {
     public AnalysisLexical(String name) {

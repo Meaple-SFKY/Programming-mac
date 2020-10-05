@@ -1,4 +1,4 @@
-package com.principle.lexical;
+package com.principle.defined;
 
 import java.util.Vector;
 
