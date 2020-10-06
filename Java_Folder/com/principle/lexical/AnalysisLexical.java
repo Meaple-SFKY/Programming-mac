@@ -56,9 +56,8 @@ public class AnalysisLexical {
 
     //判断是否是分界符
     private boolean ifIsADelimiter(int slice) {
-        int asciiCode = slice;
         for (int i = 0; i < definitedCells.delimiters.length; i++) {
-            if (asciiCode == Integer.valueOf(definitedCells.delimiters[i])) {
+            if (definitedCells.delimiters[i] == (char)slice) {
                 return true;
             }
         }
@@ -308,6 +307,10 @@ public class AnalysisLexical {
                             addCharToString(tempChar);
                         }
                     } else if (ifIsADelimiter(tempChar)) {
+                        if (ifIsASetArithmeticOperators() == true) {
+                            printString(lineLable, colLable);
+                            flushTempString();
+                        }
                         if ((char)tempChar == '.') {
                             addCharToString(tempChar);
                         } else {
@@ -316,25 +319,6 @@ public class AnalysisLexical {
                             printDelimiter(tempChar, lineLable, colLable);
                         }
                     } else if (ifIsAArithmeticOperator(tempChar) == true) {
-                        // if (((char)tempChar == '+' || (char)tempChar == '-') == false) {
-                        //     addCharToString(tempChar);
-                        //     printString(lineLable, colLable);
-                        //     flushTempString();
-                        // } else {
-                        //     if (tempStorString.length() > 0) {
-                        //         if (ifIsAArithmeticOperator(tempStorString.charAt(0)) == false) {
-                        //             printString(lineLable, colLable);
-                        //             flushTempString();
-                        //             addCharToString(tempChar);
-                        //         } else {
-                        //             addCharToString(tempChar);
-                        //             printString(lineLable, colLable);
-                        //             flushTempString();
-                        //         }
-                        //     } else {
-                        //         addCharToString(tempChar);
-                        //     }
-                        // }
                         if (tempStorString.length() > 0) {
                             if (ifIsASetArithmeticOperators() == true) {
                                 addCharToString(tempChar);
@@ -360,6 +344,8 @@ public class AnalysisLexical {
                         } else {
                             addCharToString(tempChar);
                         }
+                    } else {
+                        System.out.println((char)tempChar + "\t\tERROR\t\t\tERROR\t\t" + "(" + (lineLable + 1) + ", " + (colLable - tempStorString.length()) + ")");
                     }
                 } else {
                     printString(lineLable, colLable);
