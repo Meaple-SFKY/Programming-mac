@@ -7,7 +7,6 @@ abstract class Basic2 extends Basic {
 
     @Override
     void unimplemented() {
-        // TODO Auto-generated method stub
-        
+        // 
     }
 }
