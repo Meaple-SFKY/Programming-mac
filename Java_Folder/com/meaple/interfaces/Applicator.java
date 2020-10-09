@@ -32,6 +32,7 @@ class Splitter extends Processor {
         return Arrays.toString(((String) input).split(" "));
     }
 }
+
 public class Applicator {
     public static void apply(Processor p, Object s) {
         System.out.println("Using Processor " + p.name());

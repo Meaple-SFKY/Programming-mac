@@ -99,6 +99,9 @@
 
 ---
 
+- [x] sa
+
+
 - SQL Server 2014的安装
   - 下载sql server2014安装包
     - 进入msdn i tell you: [https://msdn.itellyou.cn/](https://msdn.itellyou.cn/)，选择**SQL Server 2014**，选择第三个，打开后复制链接，在服务器上下载迅雷，使用迅雷下载
