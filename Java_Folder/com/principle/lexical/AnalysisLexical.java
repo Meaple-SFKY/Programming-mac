@@ -23,6 +23,7 @@ public class AnalysisLexical {
     private StringBuffer tempStorString = new StringBuffer();
     private DefinitedCells definitedCells = new DefinitedCells();
 
+
     //判断是否是空格
     private boolean ifIsASpace(int slice) {
         int asciiCode = slice;
