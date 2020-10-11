@@ -3,22 +3,42 @@ package com.principle.parser;
 // 内部集合类
 public class BasicData {
     // 非终结符集合
-    public char VN[] = { 'E', 'G', 'T', 'S', 'F' };
+    private char VN[] = { 'E', 'G', 'T', 'S', 'F' };
 
     // 终结符集合
-    public char VT[] = { '+', '-', 'ε', '*', '/', '(', ')', 'i', '#' };
+    private char VT[] = { '+', '-', 'ε', '*', '/', '(', ')', 'i', '#' };
 
     // 文法串
-    public String GRAMMER[] = { "E->TG", "G->+TG|-TG", "G->ε", "T->FS", "S->*FS|/FS", "S->ε", "F->(E)", "F->i" };
+    private String GRAMMER[] = { "E->TG", "G->+TG|-TG", "G->ε", "T->FS", "S->*FS|/FS", "S->ε", "F->(E)", "F->i" };
 
     // FIRST集合
-    public String[] FIRST = new String[VN.length];
+    private String[] FIRST = new String[VN.length];
 
     // FOLLOW集合
-    public String[] FOLLOW = new String[VN.length];
+    private String[] FOLLOW = new String[VN.length];
 
     // 预测分析表
-    public String[][] ANALYSISTABLE = new String[VN.length][VT.length];
+    private String[][] ANALYSISTABLE = new String[VN.length][VT.length];
+
+    public char[] getVn() {
+        return VN;
+    }
+
+    public char[] getVt() {
+        return VT;
+    }
+
+    public String[] getFirst() {
+        return FIRST;
+    }
+
+    public String[] getFollow() {
+        return FOLLOW;
+    }
+
+    public String[][] getTable() {
+        return ANALYSISTABLE;
+    }
 
     public BasicData() {
         initFirst();
@@ -26,6 +46,7 @@ public class BasicData {
         initAnalyTable();
         formFirst();
         formFollow();
+        formTable();
     }
 
     private void initFirst() {
@@ -65,6 +86,21 @@ public class BasicData {
         FIRST[firstLab] = string;
     }
 
+    private void delDupliCh(String str) {
+        int len = str.length();
+        if (len == 0) {
+            return;
+        }
+        String string = "";
+        for (int i = 0; i < len; i++) {
+            String tempStr = Character.toString(str.charAt(i));
+            if (string.contains(tempStr) == false) {
+                string += tempStr;
+            }
+        }
+        str = string;
+    }
+
     private void tidyFirst() {
         for (int i = 0; i < FIRST.length; i++) {
             delDupliChOfFir(i);
@@ -94,7 +130,7 @@ public class BasicData {
     }
 
     // 判断字符是否在VN中
-    private boolean ifIsAVn(char chVn) {
+    public boolean ifIsAVn(char chVn) {
         for (int i = 0; i < VN.length; i++) {
             if (chVn == VN[i]) {
                 return true;
@@ -104,7 +140,7 @@ public class BasicData {
     }
 
     // 判断字符在VN中的位置
-    private int indexOfVn(char chVn) {
+    public int indexOfVn(char chVn) {
         if (ifIsAVn(chVn) == true) {
             int i;
             for (i = 0; i < VN.length; i++) {
@@ -118,7 +154,7 @@ public class BasicData {
     }
 
     // 判断字符是否在VT中
-    private boolean ifIsAVt(char chVt) {
+    public boolean ifIsAVt(char chVt) {
         for (int i = 0; i < VT.length; i++) {
             if (chVt == VT[i]) {
                 return true;
@@ -127,8 +163,8 @@ public class BasicData {
         return false;
     }
 
-    // 判断字符在VN中的位置
-    private int indexOfVt(char chVt) {
+    // 判断字符在VT中的位置
+    public int indexOfVt(char chVt) {
         if (ifIsAVt(chVt) == true) {
             int i;
             for (i = 0; i < VT.length; i++) {
@@ -215,7 +251,21 @@ public class BasicData {
                         for (int temp = 3; temp < GRAMMER[j].length(); temp++) {
                             if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
                                 int index = indexOfVn(GRAMMER[j].charAt(temp));
-                                addNoEmptyToFirst(i, index);
+                                if (temp == 3) {
+                                    addNoEmptyToFirst(i, index);
+                                } else {
+                                    if (ifIsInFirst(index, 'ε') == true) {
+                                        addNoEmptyToFirst(i, index);
+                                    } else {
+                                        for (int k = temp; k < GRAMMER[j].length(); j++) {
+                                            if (GRAMMER[j].charAt(k) == '|') {
+                                                temp = k;
+                                                break;
+                                            }
+                                        }
+                                        continue;
+                                    }
+                                }
                             } else {
                                 break;
                             }
@@ -233,7 +283,7 @@ public class BasicData {
         tidyFirst();
     }
 
-    // 把除空字的FIRST集合加到FOLLOW
+    /* // 把除空字的FIRST集合加到FOLLOW
     private void addNoEmptyFirToFollow(int added, char add) {
         int index = indexOfVn(add);
         if (FIRST[index].length() == 0) {
@@ -244,8 +294,69 @@ public class BasicData {
                 FOLLOW[added] += FIRST[index].charAt(i);
             }
         }
+    } */
+
+    // 生成串的FIRST集合
+    private String getStrFirst(String setOfChar) {
+        if (setOfChar.length() > 0) {
+            if (ifIsAVt(setOfChar.charAt(0)) == true) {
+                return Character.toString(setOfChar.charAt(0));
+            } else {
+                String tempString = "";
+                for (int i = 0; i < setOfChar.length(); i++) {
+                    char ch = setOfChar.charAt(i);
+                    if (i == 0) {
+                        tempString += FIRST[indexOfVn(ch)];
+                        if(ifIsInFirst(indexOfVn(ch), 'ε') == false) {
+                            break;
+                        }
+                    } else {
+                        if (ifIsAVn(ch) == true) {
+                            if(ifIsInFirst(indexOfVn(ch), 'ε')) {
+                                if (FIRST[indexOfVn(ch)].length() != 0) {
+                                    for (int j = 0; j < FIRST[indexOfVn(ch)].length(); j++) {
+                                        if (FIRST[indexOfVn(ch)].charAt(j) != 'ε') {
+                                            tempString += FIRST[indexOfVn(ch)].charAt(j);
+                                        }
+                                    }
+                                }
+                            } else {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                return tempString;
+            }
+        } else {
+            return "";
+        }
     }
 
+    // 删除FIRST集合中的空字
+    private String deleteEmpty(String strFirst) {
+        String str = "";
+        if (strFirst.length() == 0) {
+            return "";
+        }
+        for (int i = 0; i < strFirst.length(); i++) {
+            if (strFirst.charAt(i) != 'ε') {
+                str += strFirst.charAt(i);
+            }
+        }
+        return str;
+    }
+
+    // 取串的不含空字的FIRST集合
+    private String strCharFirst(String str) {
+        String strTemp = "";
+        String string = getStrFirst(str);
+        delDupliCh(getStrFirst(str));
+        strTemp = deleteEmpty(string);
+        return strTemp;
+    }
     // 把FIRST集合加到FOLLOW
     private void addFirstToFollow() {
         for (int i = 0; i < VN.length; i++) {
@@ -256,10 +367,19 @@ public class BasicData {
                             temp++;
                             if (temp < GRAMMER[j].length()) {
                                 if (GRAMMER[j].charAt(temp) != '|') {
-                                    if (ifIsAVt(GRAMMER[j].charAt(temp)) == true) {
+                                    if (ifIsAVt(GRAMMER[j].charAt(temp)) == true) {;
                                         FOLLOW[i] += GRAMMER[j].charAt(temp);
                                     } else if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
-                                        addNoEmptyFirToFollow(i, GRAMMER[j].charAt(temp));
+                                        String tempString = "";
+                                        for (int t = temp; t < GRAMMER[j].length(); t++) {
+                                            if (GRAMMER[j].charAt(t) != '|') {
+                                                tempString += GRAMMER[j].charAt(t);
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                        String strFirst = strCharFirst(tempString);
+                                        FOLLOW[i] += strFirst;
                                     }
                                 }
                             }
@@ -312,16 +432,73 @@ public class BasicData {
         tidyFollow();
     }
 
-    // 对于终结符构造预测分析表
-    private void formTableForVt() {
-        String tempFirstStr = "";
+    private void formTableCell(int tempGra) {
+        String headString = GRAMMER[tempGra].substring(0, 3);
+        int locVnHead = indexOfVn(GRAMMER[tempGra].charAt(0));
+        for (int i = 0; i < GRAMMER[tempGra].length(); i++) {
+            if ((GRAMMER[tempGra].charAt(i) == '|') || (GRAMMER[tempGra].charAt(i) == '>')) {
+                i++;
+                String tempStorString = "";
+                for (int j = i; j < GRAMMER[tempGra].length(); j++) {
+                    if (GRAMMER[tempGra].charAt(j) == '|') {
+                        break;
+                    } else {
+                        tempStorString += GRAMMER[tempGra].charAt(j);
+                    }
+                }
+                if (ifIsAVt(GRAMMER[tempGra].charAt(i)) == true) {
+                    if (GRAMMER[tempGra].charAt(i) == 'ε') {
+                        if (FOLLOW[locVnHead].length() != 0) {
+                            for (int j = 0; j < FOLLOW[locVnHead].length(); j++) {
+                                int locVtFo = indexOfVt(FOLLOW[locVnHead].charAt(j));
+                                ANALYSISTABLE[locVnHead][locVtFo] = headString + tempStorString;
+                            }
+                        }
+                    }
+                    int locVt = indexOfVt(GRAMMER[tempGra].charAt(i));
+                    ANALYSISTABLE[locVnHead][locVt] = headString + tempStorString;
+                } else if (ifIsAVn(GRAMMER[tempGra].charAt(i)) == true) {
+                    String setOfChar = "";
+                    String strFirst = "";
+                    boolean ifInFisrt = false;
+                    for (int t = i; t < GRAMMER[tempGra].length(); t++) {
+                        if (GRAMMER[tempGra].charAt(t) != '|') {
+                            setOfChar += GRAMMER[tempGra].charAt(t);
+                        } else {
+                            break;
+                        }
+                    }
+                    strFirst = strCharFirst(setOfChar);
+                    int locVnTail = indexOfVn(GRAMMER[tempGra].charAt(i));
+                    if (strFirst.length() != 0) {
+                        for (int j = 0; j < strFirst.length(); j++) {
+                            int locVtFo = indexOfVt(strFirst.charAt(j));
+                            ANALYSISTABLE[locVnHead][locVtFo] = headString + tempStorString;
+                        }
+                    }
+                    for (int t = 0; t < strFirst.length(); t++) {
+                        if (strFirst.charAt(t) == 'ε') {
+                            ifInFisrt = true;
+                            break;
+                        }
+                    }
+                    if (ifInFisrt == true) {
+                        if (FOLLOW[locVnTail].length() != 0) {
+                            for (int j = 0; j < FOLLOW[locVnHead].length(); j++) {
+                                int locVtFo = indexOfVt(FOLLOW[locVnHead].charAt(j));
+                                ANALYSISTABLE[locVnHead][locVtFo] = headString + tempStorString;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-
-    public static void main(String[] args) {
-        BasicData basicData = new BasicData();
-        for (int i = 0; i < basicData.FOLLOW.length; i++) {
-            System.out.println(basicData.FIRST[i]);
-            System.out.println(basicData.FOLLOW[i]);
+    
+    // 构造预测分析表
+    private void formTable() {
+        for (int i = 0; i < GRAMMER.length; i++) {
+            formTableCell(i);
         }
     }
 }

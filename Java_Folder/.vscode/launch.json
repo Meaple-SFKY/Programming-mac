@@ -2,6 +2,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Demo",
+            "request": "launch",
+            "mainClass": "com.principle.parser.Demo",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LL",
+            "request": "launch",
+            "mainClass": "com.principle.parser.LL",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Parser",
+            "request": "launch",
+            "mainClass": "com.principle.parser.Parser",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - BasicData",
             "request": "launch",
             "mainClass": "com.principle.parser.BasicData",
