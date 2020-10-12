@@ -249,25 +249,44 @@ public class BasicData {
                 for (int j = 0; j < GRAMMER.length; j++) {
                     if (VN[i] == GRAMMER[j].charAt(0)) {
                         for (int temp = 3; temp < GRAMMER[j].length(); temp++) {
-                            if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
-                                int index = indexOfVn(GRAMMER[j].charAt(temp));
-                                if (temp == 3) {
-                                    addNoEmptyToFirst(i, index);
-                                } else {
-                                    if (ifIsInFirst(index, 'ε') == true) {
-                                        addNoEmptyToFirst(i, index);
-                                    } else {
-                                        for (int k = temp; k < GRAMMER[j].length(); j++) {
-                                            if (GRAMMER[j].charAt(k) == '|') {
-                                                temp = k;
-                                                break;
-                                            }
+                            if (ifIsAVt(GRAMMER[j].charAt(temp)) == true) {
+                                while (temp < GRAMMER[j].length()) {
+                                    if (GRAMMER[j].charAt(temp) == '|') {
+                                        break;
+                                    }
+                                    temp++;
+                                }
+                            } else if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
+                                while (temp < GRAMMER[j].length()) {
+                                    if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
+                                        if (ifIsInFirst(indexOfVn(GRAMMER[j].charAt(temp)), 'ε') == true) {
+                                            addNoEmptyToFirst(i, indexOfVn(GRAMMER[j].charAt(temp)));
+                                            temp++;
+                                        } else {
+                                            break;
                                         }
-                                        continue;
+                                    } else {
+                                        break;
                                     }
                                 }
-                            } else {
-                                break;
+                                if (temp < GRAMMER[j].length()) {
+                                    if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
+                                        addNoEmptyToFirst(i, indexOfVn(GRAMMER[j].charAt(temp)));
+                                        while (temp < GRAMMER[j].length()) {
+                                            if (GRAMMER[j].charAt(temp) == '|') {
+                                                break;
+                                            }
+                                            temp++;
+                                        }
+                                    } else {
+                                        while (temp < GRAMMER[j].length()) {
+                                            if (GRAMMER[j].charAt(temp) == '|') {
+                                                break;
+                                            }
+                                            temp++;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -283,19 +302,6 @@ public class BasicData {
         tidyFirst();
     }
 
-    /* // 把除空字的FIRST集合加到FOLLOW
-    private void addNoEmptyFirToFollow(int added, char add) {
-        int index = indexOfVn(add);
-        if (FIRST[index].length() == 0) {
-            return;
-        }
-        for (int i = 0; i < FIRST[index].length(); i++) {
-            if (FIRST[index].charAt(i) != 'ε') {
-                FOLLOW[added] += FIRST[index].charAt(i);
-            }
-        }
-    } */
-
     // 生成串的FIRST集合
     private String getStrFirst(String setOfChar) {
         if (setOfChar.length() > 0) {
@@ -303,29 +309,22 @@ public class BasicData {
                 return Character.toString(setOfChar.charAt(0));
             } else {
                 String tempString = "";
-                for (int i = 0; i < setOfChar.length(); i++) {
-                    char ch = setOfChar.charAt(i);
-                    if (i == 0) {
-                        tempString += FIRST[indexOfVn(ch)];
-                        if(ifIsInFirst(indexOfVn(ch), 'ε') == false) {
-                            break;
-                        }
-                    } else {
-                        if (ifIsAVn(ch) == true) {
-                            if(ifIsInFirst(indexOfVn(ch), 'ε')) {
-                                if (FIRST[indexOfVn(ch)].length() != 0) {
-                                    for (int j = 0; j < FIRST[indexOfVn(ch)].length(); j++) {
-                                        if (FIRST[indexOfVn(ch)].charAt(j) != 'ε') {
-                                            tempString += FIRST[indexOfVn(ch)].charAt(j);
-                                        }
-                                    }
-                                }
-                            } else {
-                                break;
-                            }
+                int i = 0;
+                while (i < setOfChar.length()) {
+                    if (ifIsAVn(setOfChar.charAt(i)) == true) {
+                        if (ifIsInFirst(indexOfVn(setOfChar.charAt(i)), 'ε') == true) {
+                            tempString += deleteEmpty(FIRST[indexOfVn(setOfChar.charAt(i))]);
+                            i++;
                         } else {
                             break;
                         }
+                    } else {
+                        break;
+                    }
+                }
+                if (i < setOfChar.length()) {
+                    if (ifIsAVn(setOfChar.charAt(i)) == true) {
+                        tempString += deleteEmpty(FIRST[indexOfVn(setOfChar.charAt(i))]);
                     }
                 }
                 return tempString;

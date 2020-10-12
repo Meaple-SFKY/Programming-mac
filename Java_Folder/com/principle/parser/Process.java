@@ -7,7 +7,7 @@ public class Process {
     String[] first = basicData.getFirst();
     String[] follow = basicData.getFollow();
     String[][] table = basicData.getTable();
-    String testString = "i+i*(i-i/i)-i/(i+i)#";
+    String testString = "i+i*i#";
     String gramString = "#E";
     char[] vn = basicData.getVn();
     char[] vt = basicData.getVt();
