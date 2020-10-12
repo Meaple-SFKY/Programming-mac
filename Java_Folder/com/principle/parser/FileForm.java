@@ -3,10 +3,14 @@ package com.principle.parser;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Parser {
-    public static void main(String[] args) throws Exception {
-        ArrayList<String[]> processList = new ArrayList<String[]>();
-        Process process = new Process();
+public class FileForm {
+    public String testString = "";
+    public FileForm(String testString) {
+        this.testString = testString;
+    }
+    ArrayList<String[]> processList = new ArrayList<String[]>();
+    public void formFile () {
+        Process process = new Process(testString);
         processList = process.process();
         String[] first = process.first;
         String[] follow = process.follow;

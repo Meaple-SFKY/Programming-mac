@@ -7,12 +7,16 @@ public class Process {
     String[] first = basicData.getFirst();
     String[] follow = basicData.getFollow();
     String[][] table = basicData.getTable();
-    String testString = "i+i*i#";
+    String testString = "";
     String gramString = "#E";
     char[] vn = basicData.getVn();
     char[] vt = basicData.getVt();
     int cycles = 1;
     int ptr = 0;
+
+    public Process(String testString) {
+        this.testString = testString;
+    }
 
     private String[] processCells(int subPtr, int cycle) {
         String[] outPutString = {"", "", "", "", "", ""};
@@ -64,13 +68,14 @@ public class Process {
                             outPutString[4] += tempString;
                             outPutString[4] += ")";
                         }
+                        outPutString[5] += "CONTINUE";
                     } else {
                         outPutString[1] += gramString;
                         outPutString[2] += testString.substring(subPtr, testString.length());
                         outPutString[3] += "ERROR";
                         outPutString[4] += "ERROR";
+                        outPutString[5] += "ERRORINFINDTABLE";
                     }
-                    outPutString[5] += "CONTINUE";
                 } else {
                     outPutString[1] += gramString;
                     outPutString[2] += testString.substring(subPtr, testString.length());
@@ -100,6 +105,13 @@ public class Process {
             cells = processCells(ptr, cycles);
             cycles++;
             arrayList.add(cells);
+            if (cells[5].equals("ERRORINFINDTABLE")) {
+                if (ptr < testString.length()) {
+                    ptr++;
+                } else {
+                    break;
+                }
+            }
         };
         return arrayList;
     }

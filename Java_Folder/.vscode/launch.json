@@ -2,6 +2,55 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - SwingDemo",
+            "request": "launch",
+            "mainClass": "com.principle.parser.SwingDemo",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GUI9",
+            "request": "launch",
+            "mainClass": "com.principle.parser.GUI9",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Explorer",
+            "request": "launch",
+            "mainClass": "com.principle.parser.Explorer",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FileTree",
+            "request": "launch",
+            "mainClass": "com.principle.parser.FileTree",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MyMenuDemo",
+            "request": "launch",
+            "mainClass": "com.principle.parser.MyMenuDemo",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ImageViewer",
+            "request": "launch",
+            "mainClass": "com.principle.preview.ImageViewer",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Test",
+            "request": "launch",
+            "mainClass": "com.principle.preview.Test",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Demo",
             "request": "launch",
             "mainClass": "com.principle.parser.Demo",

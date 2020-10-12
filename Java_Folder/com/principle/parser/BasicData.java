@@ -20,6 +20,35 @@ public class BasicData {
     // 预测分析表
     private String[][] ANALYSISTABLE = new String[VN.length][VT.length];
 
+    public void printFirst() {
+        for (int i = 0; i < VN.length; i++) {
+            System.out.print(VN[i] + "\t");
+            System.out.println(FIRST[i]);
+        }
+    }
+
+    public void printFollow() {
+        for (int i = 0; i < VN.length; i++) {
+            System.out.print(VN[i] + "\t");
+            System.out.println(FOLLOW[i]);
+        }
+    }
+
+    public void printTable() {
+        System.out.print("Symbols\t");
+        for (int i = 0; i < VT.length; i++) {
+            System.out.print(VT[i] + "\t");
+        }
+        System.out.println();
+        for (int i = 0; i < VN.length; i++) {
+            System.out.print(VN[i] + "\t");
+            for (int j = 0; j < VT.length; j++) {
+                System.out.print(ANALYSISTABLE[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
     public char[] getVn() {
         return VN;
     }
@@ -40,6 +69,7 @@ public class BasicData {
         return ANALYSISTABLE;
     }
 
+    // 构造函数
     public BasicData() {
         initFirst();
         initFollow();
@@ -47,6 +77,12 @@ public class BasicData {
         formFirst();
         formFollow();
         formTable();
+        System.out.println("------------------- FIRST -----------------");
+        printFirst();
+        System.out.println("------------------- FOLLOW -----------------");
+        printFollow();
+        System.out.println("--------------- ANALYSIS TABLE---------------");
+        printTable();
     }
 
     private void initFirst() {
@@ -86,6 +122,7 @@ public class BasicData {
         FIRST[firstLab] = string;
     }
 
+    // 删除串FIRST集合的空字
     private void delDupliCh(String str) {
         int len = str.length();
         if (len == 0) {
