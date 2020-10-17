@@ -2,6 +2,146 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - SetFamily",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.SetFamily",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Item",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.Item",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FirstSet",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.FirstSet",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BasicData",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.BasicData",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LrAnalyzer",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.LrAnalyzer",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TextComponentFrame",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.TextComponentFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CalculatorFrame",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.CalculatorFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ActionFrame",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.ActionFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PlafFrame",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.PlafFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ButtonTest",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.ButtonTest",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ButtonFrame",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.ButtonFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ButtonListener",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.ButtonListener",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ImageTest",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.ImageTest",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FontTest",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.FontTest",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FontName",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.FontName",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DrawTest",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.DrawTest",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - NotHelloWordFrame",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.NotHelloWordFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SubmitLabelManipulationTask",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.SubmitLabelManipulationTask",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - HelloLabel",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.HelloLabel",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SimpleTestFrame",
+            "request": "launch",
+            "mainClass": "com.principle.parser.SimpleTestFrame",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - SwingDemo",
             "request": "launch",
             "mainClass": "com.principle.parser.SwingDemo",

@@ -122,7 +122,7 @@ public class BasicData {
         FIRST[firstLab] = string;
     }
 
-    // 删除串FIRST集合的空字
+    // 删除串FIRST集合的重复字符
     private void delDupliCh(String str) {
         int len = str.length();
         if (len == 0) {
