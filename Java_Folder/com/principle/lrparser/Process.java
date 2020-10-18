@@ -68,6 +68,7 @@ class Line {
 
 public class Process {
     SetTable setTable = new SetTable();
+    FirstSet firstSet = new FirstSet();
     ArrayList<String> actionList = new ArrayList<String>();
     ArrayList<Line> lineList = new ArrayList<Line>();
     String[][] analysisTable = setTable.getAnalyzisTable();
@@ -174,7 +175,13 @@ public class Process {
         for (int i = 0; i < actionList.size(); i++) {
             lineList.get(i).freshAction(actionList.get(i));
         }
-        lineList.get(lineList.size() - 1).freshAction("Successfully completed the analysis process");
+        String str = Character.toString(firstSet.getVt()[firstSet.getVt().length - 1]);
+        String string = str + Character.toString(firstSet.grammar[0].charAt(0));
+        if (lineList.get(lineList.size() - 1).bufferStack.equals(str) && lineList.get(lineList.size() - 1).symbolStack.equals(string)) {
+            lineList.get(lineList.size() - 1).freshAction("Acc: Successfully completed the analysis process");
+        } else {
+            lineList.get(lineList.size() - 1).freshAction("Failed to completed the analysis process");
+        }
     }
 
     public String[][] listToStrTable() {

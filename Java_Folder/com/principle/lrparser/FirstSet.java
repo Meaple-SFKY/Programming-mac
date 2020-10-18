@@ -4,6 +4,7 @@ public class FirstSet {
     /* private char[] VN = {'S', 'C'};
     private char[] VT = {'c', 'd', '#'};
     public char[] charactor = {'S', 'C', 'c', 'd'};
+    public String[] title = {"Status", "c", "d", "#", "S", "C"};
 
     public String[] grammar = {
         "S->CC",
