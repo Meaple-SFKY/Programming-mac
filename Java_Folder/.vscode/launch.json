@@ -2,6 +2,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - DemoLr",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.DemoLr",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Demo",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.Demo",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Table",
+            "request": "launch",
+            "mainClass": "com.meaple.guifaces.Table",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Process",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.Process",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SetTable",
+            "request": "launch",
+            "mainClass": "com.principle.lrparser.SetTable",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - SetFamily",
             "request": "launch",
             "mainClass": "com.principle.lrparser.SetFamily",

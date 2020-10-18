@@ -1,27 +1,9 @@
 package com.principle.lrparser;
 
 public class FirstSet {
-    /* private char[] VN = {'E', 'T', 'F'};
-    private char[] VT = {'+', '*', '(', ')', 'i', '#'}; */
-    private char[] VN = {'S', 'C'};
+    /* private char[] VN = {'S', 'C'};
     private char[] VT = {'c', 'd', '#'};
     public char[] charactor = {'S', 'C', 'c', 'd'};
-
-    private String[] FIRST = new String[VN.length];
-    /* public String[] grammar = {
-        "E->E+T",
-        "E->T",
-        "T->T*F",
-        "T->F",
-        "F->(E)",
-        "F->i"
-    }; */
-
-    public void print() {
-        for (int i = 0; i < FIRST.length; i++) {
-            System.out.println(FIRST[i]);
-        }
-    }
 
     public String[] grammar = {
         "S->CC",
@@ -34,7 +16,60 @@ public class FirstSet {
         "S->CC",
         "C->cC",
         "C->d"
+    }; */
+
+    private char[] VN = {'E', 'T', 'F'};
+    private char[] VT = {'i', '+', '*', '(', ')', '#'};
+    public char[] charactor = {'E', 'T', 'F', '+', '*', '(', ')', 'i'};
+    public String[] title = {"Status", "i", "+", "*", "(", ")", "#", "E", "T", "F"};
+    
+    public String[] grammar = {
+        "E->E+T",
+        "E->T",
+        "T->T*F",
+        "T->F",
+        "F->(E)",
+        "F->i"
+    }; 
+    
+    public String[] extendGrammar = {
+        "S->E",
+        "E->E+T",
+        "E->T",
+        "T->T*F",
+        "T->F",
+        "F->(E)",
+        "F->i"
     };
+
+    private String[] FIRST = new String[VN.length];
+
+    public int getLength() {
+        return VN.length + VT.length;
+    }
+
+    public char[] getVn() {
+        return VN;
+    }
+
+    public char[] getVt() {
+        return VT;
+    }
+
+    public void print() {
+        for (int i = 0; i < FIRST.length; i++) {
+            System.out.println(FIRST[i]);
+        }
+    }
+
+    public int indexOfGrammar(String str) {
+        for (int i = 0; i < extendGrammar.length; i++) {
+            if (str.equals(extendGrammar[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public FirstSet() {
         initFirst();

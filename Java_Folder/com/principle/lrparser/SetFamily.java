@@ -5,6 +5,10 @@ public class SetFamily {
 
     FirstSet firstSet = new FirstSet();
 
+    public SetFamily(String[] grammar) {
+        setItemFamily(grammar);
+    }
+
     private ItemSet closure(ItemSet itemSet) {
         ItemSet tempSet = itemSet;
         while (true) {
@@ -89,27 +93,23 @@ public class SetFamily {
         }
     }
 
-    public static void main(String[] args) {
-        SetFamily setFamily = new SetFamily();
-        setFamily.setItemFamily(setFamily.firstSet.extendGrammar);
-        for (int i = 0; i < setFamily.itemFamily.itemSets.size(); i++) {
-            setFamily.itemFamily.itemSets.get(i).printSet();
-            System.out.println();
-        }
-        /* SetFamily setFamily = new SetFamily();
-        Item item = new Item("S->CC,#", 3);
-        ItemSet itemSet = new ItemSet();
-        itemSet.addItem(item);
-        itemSet = setFamily.goTo(setFamily.closure(itemSet), 'C');
-        itemSet.printSet(); */
-        /* Item item = new Item("E->S,#", 3);
-        ItemSet itemSet = new ItemSet();
-        itemSet.addItem(item);
-        itemSet = setFamily.closure(itemSet);
-        itemSet = setFamily.goTo(itemSet, 'c');
-        itemSet.printSet();
-        if (setFamily.itemFamily.isInFamily(itemSet) == true) {
-            System.out.println(true);
-        } */
-    }
+    // public static void main(String[] args) {
+    //     /* SetFamily setFamily = new SetFamily();
+    //     setFamily.setItemFamily(setFamily.firstSet.extendGrammar); */
+    //     /* SetFamily setFamily = new SetFamily();
+    //     Item item = new Item("S->CC,#", 3);
+    //     ItemSet itemSet = new ItemSet();
+    //     itemSet.addItem(item);
+    //     itemSet = setFamily.goTo(setFamily.closure(itemSet), 'C');
+    //     itemSet.printSet(); */
+    //     /* Item item = new Item("E->S,#", 3);
+    //     ItemSet itemSet = new ItemSet();
+    //     itemSet.addItem(item);
+    //     itemSet = setFamily.closure(itemSet);
+    //     itemSet = setFamily.goTo(itemSet, 'c');
+    //     itemSet.printSet();
+    //     if (setFamily.itemFamily.isInFamily(itemSet) == true) {
+    //         System.out.println(true);
+    //     } */
+    // }
 }

@@ -89,6 +89,15 @@ public class ItemFamily {
         itemSets.add(itemSet);
     }
 
+    public void printFamily() {
+        for (int i = 0; i < itemSets.size(); i++) {
+            for (int j = 0; j < itemSets.get(i).items.size(); j++) {
+                System.out.println(itemSets.get(i).items.get(j).item);
+            }
+            System.out.println();
+        }
+    }
+
     public boolean isEqualItems(ItemSet firSet, ItemSet secSet) {
         if (firSet.items.size() == secSet.items.size()) {
             for (int i = 0; i < firSet.items.size(); i++) {
