@@ -116,56 +116,60 @@ public class Process {
     public void process() {
         while (true) {
             line.label++;
-            if (indexOfVt(line.getBufferTop()) != -1) {
-                String nowAction = analysisTable[line.getStatusTop()][indexOfVt(line.getBufferTop()) + actionIndex];
-                if (nowAction.length() != 0) {
-                    if (nowAction.charAt(0) == 's') {
-                        int temp = Integer.valueOf(nowAction.substring(1, nowAction.length()));
-                        line.freshAction("ACTION[" + line.getStatusTop() + "," + line.getBufferTop() + "] = " + nowAction + ", Status " + temp + " Move Into Stack");
-                        line.pushStatusStack(temp);
-                        line.pushSymbolStack(Character.toString(line.getBufferTop()));
-                        line.freshBuffer();
-                        actionList.add(line.action);
-                        Line newLine = new Line();
-                        ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
-                        newLine.action = line.action;
-                        newLine.bufferStack = line.bufferStack;
-                        newLine.label = line.label;
-                        Collections.copy(newArray, line.statusStack);
-                        newLine.statusStack = newArray;
-                        newLine.symbolStack = line.symbolStack;
-                        lineList.add(newLine);
-                    } else if (nowAction.charAt(0) == 'r') {
-                        int temp = Integer.valueOf(nowAction.substring(1, nowAction.length()));
-                        String tempStr = new FirstSet().extendGrammar[temp];
-                        int len = tempStr.length() - 3;
-                        for (int i = 0; i < len; i++) {
-                            line.popStatusStack();
-                            line.popSymbolStack();
+            if (line.bufferStack.length() != 0) {
+                if (indexOfVt(line.getBufferTop()) == -1) {
+                    break;
+                } else {
+                    String nowAction = analysisTable[line.getStatusTop()][indexOfVt(line.getBufferTop()) + actionIndex];
+                    if (nowAction.length() != 0) {
+                        if (nowAction.charAt(0) == 's') {
+                            int temp = Integer.valueOf(nowAction.substring(1, nowAction.length()));
+                            line.freshAction("ACTION[" + line.getStatusTop() + "," + line.getBufferTop() + "] = " + nowAction + ", Status " + temp + " Move Into Stack");
+                            line.pushStatusStack(temp);
+                            line.pushSymbolStack(Character.toString(line.getBufferTop()));
+                            line.freshBuffer();
+                            actionList.add(line.action);
+                            Line newLine = new Line();
+                            ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
+                            newLine.action = line.action;
+                            newLine.bufferStack = line.bufferStack;
+                            newLine.label = line.label;
+                            Collections.copy(newArray, line.statusStack);
+                            newLine.statusStack = newArray;
+                            newLine.symbolStack = line.symbolStack;
+                            lineList.add(newLine);
+                        } else if (nowAction.charAt(0) == 'r') {
+                            int temp = Integer.valueOf(nowAction.substring(1, nowAction.length()));
+                            String tempStr = new FirstSet().extendGrammar[temp];
+                            int len = tempStr.length() - 3;
+                            for (int i = 0; i < len; i++) {
+                                line.popStatusStack();
+                                line.popSymbolStack();
+                            }
+                            int inPush = Integer.valueOf(analysisTable[line.getStatusTop()][indexOfVn(tempStr.charAt(0)) + goToIndex]);
+                            line.freshAction(nowAction + ", " + tempStr + " Reduce, GOTO(" + line.getStatusTop() + "," + tempStr.charAt(0) + ") = " + inPush + " Move Into Stack");
+                            line.pushStatusStack(inPush);
+                            line.pushSymbolStack(Character.toString(tempStr.charAt(0)));
+                            actionList.add(line.action);
+                            Line newLine = new Line();
+                            ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
+                            newLine.action = line.action;
+                            newLine.bufferStack = line.bufferStack;
+                            newLine.label = line.label;
+                            Collections.copy(newArray, line.statusStack);
+                            newLine.statusStack = newArray;
+                            newLine.symbolStack = line.symbolStack;
+                            lineList.add(newLine);
+                        } else if (nowAction.equals("acc")) {
+                            break;
+                        } else {
+                            line.freshAction("ERROR; Location 1");
+                            break;
                         }
-                        int inPush = Integer.valueOf(analysisTable[line.getStatusTop()][indexOfVn(tempStr.charAt(0)) + goToIndex]);
-                        line.freshAction(nowAction + ", " + tempStr + " Reduce, GOTO(" + line.getStatusTop() + "," + tempStr.charAt(0) + ") = " + inPush + " Move Into Stack");
-                        line.pushStatusStack(inPush);
-                        line.pushSymbolStack(Character.toString(tempStr.charAt(0)));
-                        actionList.add(line.action);
-                        Line newLine = new Line();
-                        ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
-                        newLine.action = line.action;
-                        newLine.bufferStack = line.bufferStack;
-                        newLine.label = line.label;
-                        Collections.copy(newArray, line.statusStack);
-                        newLine.statusStack = newArray;
-                        newLine.symbolStack = line.symbolStack;
-                        lineList.add(newLine);
-                    } else if (nowAction.equals("acc")) {
-                        break;
                     } else {
-                        line.freshAction("ERROR; Location 1");
+                        line.freshAction("ERROR; Location 2");
                         break;
                     }
-                } else {
-                    line.freshAction("ERROR; Location 2");
-                    break;
                 }
             } else {
                 break;
