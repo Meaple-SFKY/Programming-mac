@@ -97,9 +97,11 @@ public class Process {
     private void initLine() {
         line.label = currentLable;
         line.pushStatusStack(0);
-        line.pushSymbolStack("#");
+        line.pushSymbolStack(Character.toString(firstSet.getVt()[firstSet.getVt().length - 1]));
         line.bufferStack = testString;
-        line.action = "";
+        String nowAction = analysisTable[line.getStatusTop()][indexOfVt(line.getBufferTop()) + actionIndex];
+        int temp = Integer.valueOf(nowAction.substring(1, nowAction.length()));
+        line.freshAction("ACTION[" + line.getStatusTop() + "," + line.getBufferTop() + "] = " + nowAction + ", Status " + temp + " Move Into Stack");
         Line newLine = new Line();
         ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
         newLine.action = line.action;
@@ -119,10 +121,10 @@ public class Process {
                 if (nowAction.length() != 0) {
                     if (nowAction.charAt(0) == 's') {
                         int temp = Integer.valueOf(nowAction.substring(1, nowAction.length()));
+                        line.freshAction("ACTION[" + line.getStatusTop() + "," + line.getBufferTop() + "] = " + nowAction + ", Status " + temp + " Move Into Stack");
                         line.pushStatusStack(temp);
                         line.pushSymbolStack(Character.toString(line.getBufferTop()));
                         line.freshBuffer();
-                        line.freshAction("ACTION[" + line.getStatusTop() + "," + line.getBufferTop() + "] = " + nowAction + ", Status " + temp + " Move Into Stack");
                         actionList.add(line.action);
                         Line newLine = new Line();
                         ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
@@ -142,9 +144,9 @@ public class Process {
                             line.popSymbolStack();
                         }
                         int inPush = Integer.valueOf(analysisTable[line.getStatusTop()][indexOfVn(tempStr.charAt(0)) + goToIndex]);
+                        line.freshAction(nowAction + ", " + tempStr + " Reduce, GOTO(" + line.getStatusTop() + "," + tempStr.charAt(0) + ") = " + inPush + " Move Into Stack");
                         line.pushStatusStack(inPush);
                         line.pushSymbolStack(Character.toString(tempStr.charAt(0)));
-                        line.freshAction(nowAction + ", " + tempStr + " Reduce, GOTO(" + line.getStatusTop() + "," + tempStr.charAt(0) + ") = " + inPush + " Move Into Stack");
                         actionList.add(line.action);
                         Line newLine = new Line();
                         ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(new Integer[line.statusStack.size()]));
