@@ -11,11 +11,11 @@ public class SetTable {
     public SetTable() {
         initTable();
         formTable();
-        /* printTable(); */
-        /* printFamily(); */
+        printTable();
+        printFamily();
     }
 
-    public String[][] getAnalyzisTable() {
+    public String[][] getAnalysisTable() {
         return analysisTable;
     }
 

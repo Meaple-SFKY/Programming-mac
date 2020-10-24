@@ -76,7 +76,7 @@ public class FirstSet {
         initFirst();
         addVtToFirOfVn();
         addFirOfVnToFirOfVn();
-        tidyFirt();
+        tidyFirst();
     }
 
     private int head = 0;
@@ -156,7 +156,7 @@ public class FirstSet {
         }
     }
 
-    private void tidyFirt() {
+    private void tidyFirst() {
         for (int firstLab = 0; firstLab < FIRST.length; firstLab++) {
             int len = FIRST[firstLab].length();
             if (len == 0) {

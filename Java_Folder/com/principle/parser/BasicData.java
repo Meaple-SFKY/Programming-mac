@@ -9,7 +9,7 @@ public class BasicData {
     private char VT[] = { '+', '-', 'ε', '*', '/', '(', ')', 'i', '#' };
 
     // 文法串
-    private String GRAMMER[] = { "E->TG", "G->+TG|-TG", "G->ε", "T->FS", "S->*FS|/FS", "S->ε", "F->(E)", "F->i" };
+    private String GRAMMAR[] = { "E->TG", "G->+TG|-TG", "G->ε", "T->FS", "S->*FS|/FS", "S->ε", "F->(E)", "F->i" };
 
     // FIRST集合
     private String[] FIRST = new String[VN.length];
@@ -220,12 +220,12 @@ public class BasicData {
         return index;
     }
 
-    // GRAMMER最长子串
+    // GRAMMAR最长子串
     private int lenSubStr(int lineNum) {
         int length = 0;
         int len = 0;
-        for (int i = 3; i < GRAMMER[lineNum].length(); i++) {
-            if (GRAMMER[lineNum].charAt(i) != '|') {
+        for (int i = 3; i < GRAMMAR[lineNum].length(); i++) {
+            if (GRAMMAR[lineNum].charAt(i) != '|') {
                 len++;
             } else {
                 if (length < len) {
@@ -240,7 +240,7 @@ public class BasicData {
     // 求循环次数
     private int cycleNum() {
         int length = 0;
-        for (int i = 0; i < GRAMMER.length; i++) {
+        for (int i = 0; i < GRAMMAR.length; i++) {
             int len = lenSubStr(i);
             if (length < len) {
                 length = len;
@@ -263,15 +263,15 @@ public class BasicData {
     // 添加终结符到FIRST集合
     private void addVtToFirst() {
         for (int i = 0; i < VN.length; i++) {
-            for (int j = 0; j < GRAMMER.length; j++) {
-                if (VN[i] == GRAMMER[j].charAt(0)) {
-                    if (ifIsAVt(GRAMMER[j].charAt(3)) == true) {
-                        FIRST[i] += GRAMMER[j].charAt(3);
+            for (int j = 0; j < GRAMMAR.length; j++) {
+                if (VN[i] == GRAMMAR[j].charAt(0)) {
+                    if (ifIsAVt(GRAMMAR[j].charAt(3)) == true) {
+                        FIRST[i] += GRAMMAR[j].charAt(3);
                     }
-                    for (int temp = 4; temp < GRAMMER[j].length(); temp++) {
-                        if (GRAMMER[j].charAt(temp) == '|') {
+                    for (int temp = 4; temp < GRAMMAR[j].length(); temp++) {
+                        if (GRAMMAR[j].charAt(temp) == '|') {
                             temp++;
-                            FIRST[i] += GRAMMER[j].charAt(temp);
+                            FIRST[i] += GRAMMAR[j].charAt(temp);
                         }
                     }
                 }
@@ -283,21 +283,21 @@ public class BasicData {
     private void addVtOfVnToFirst() {
         for (int cycleNum = 0; cycleNum < cycleNum(); cycleNum++) {
             for (int i = 0; i < VN.length; i++) {
-                for (int j = 0; j < GRAMMER.length; j++) {
-                    if (VN[i] == GRAMMER[j].charAt(0)) {
-                        for (int temp = 3; temp < GRAMMER[j].length(); temp++) {
-                            if (ifIsAVt(GRAMMER[j].charAt(temp)) == true) {
-                                while (temp < GRAMMER[j].length()) {
-                                    if (GRAMMER[j].charAt(temp) == '|') {
+                for (int j = 0; j < GRAMMAR.length; j++) {
+                    if (VN[i] == GRAMMAR[j].charAt(0)) {
+                        for (int temp = 3; temp < GRAMMAR[j].length(); temp++) {
+                            if (ifIsAVt(GRAMMAR[j].charAt(temp)) == true) {
+                                while (temp < GRAMMAR[j].length()) {
+                                    if (GRAMMAR[j].charAt(temp) == '|') {
                                         break;
                                     }
                                     temp++;
                                 }
-                            } else if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
-                                while (temp < GRAMMER[j].length()) {
-                                    if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
-                                        if (ifIsInFirst(indexOfVn(GRAMMER[j].charAt(temp)), 'ε') == true) {
-                                            addNoEmptyToFirst(i, indexOfVn(GRAMMER[j].charAt(temp)));
+                            } else if (ifIsAVn(GRAMMAR[j].charAt(temp)) == true) {
+                                while (temp < GRAMMAR[j].length()) {
+                                    if (ifIsAVn(GRAMMAR[j].charAt(temp)) == true) {
+                                        if (ifIsInFirst(indexOfVn(GRAMMAR[j].charAt(temp)), 'ε') == true) {
+                                            addNoEmptyToFirst(i, indexOfVn(GRAMMAR[j].charAt(temp)));
                                             temp++;
                                         } else {
                                             break;
@@ -306,18 +306,18 @@ public class BasicData {
                                         break;
                                     }
                                 }
-                                if (temp < GRAMMER[j].length()) {
-                                    if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
-                                        addNoEmptyToFirst(i, indexOfVn(GRAMMER[j].charAt(temp)));
-                                        while (temp < GRAMMER[j].length()) {
-                                            if (GRAMMER[j].charAt(temp) == '|') {
+                                if (temp < GRAMMAR[j].length()) {
+                                    if (ifIsAVn(GRAMMAR[j].charAt(temp)) == true) {
+                                        addNoEmptyToFirst(i, indexOfVn(GRAMMAR[j].charAt(temp)));
+                                        while (temp < GRAMMAR[j].length()) {
+                                            if (GRAMMAR[j].charAt(temp) == '|') {
                                                 break;
                                             }
                                             temp++;
                                         }
                                     } else {
-                                        while (temp < GRAMMER[j].length()) {
-                                            if (GRAMMER[j].charAt(temp) == '|') {
+                                        while (temp < GRAMMAR[j].length()) {
+                                            if (GRAMMAR[j].charAt(temp) == '|') {
                                                 break;
                                             }
                                             temp++;
@@ -396,20 +396,20 @@ public class BasicData {
     // 把FIRST集合加到FOLLOW
     private void addFirstToFollow() {
         for (int i = 0; i < VN.length; i++) {
-            for (int j = 0; j < GRAMMER.length; j++) {
-                if (GRAMMER[j].substring(3).contains(Character.toString(VN[i])) == true) {
-                    for (int temp = 3; temp < GRAMMER[j].length(); temp++) {
-                        if (VN[i] == GRAMMER[j].charAt(temp)) {
+            for (int j = 0; j < GRAMMAR.length; j++) {
+                if (GRAMMAR[j].substring(3).contains(Character.toString(VN[i])) == true) {
+                    for (int temp = 3; temp < GRAMMAR[j].length(); temp++) {
+                        if (VN[i] == GRAMMAR[j].charAt(temp)) {
                             temp++;
-                            if (temp < GRAMMER[j].length()) {
-                                if (GRAMMER[j].charAt(temp) != '|') {
-                                    if (ifIsAVt(GRAMMER[j].charAt(temp)) == true) {;
-                                        FOLLOW[i] += GRAMMER[j].charAt(temp);
-                                    } else if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
+                            if (temp < GRAMMAR[j].length()) {
+                                if (GRAMMAR[j].charAt(temp) != '|') {
+                                    if (ifIsAVt(GRAMMAR[j].charAt(temp)) == true) {;
+                                        FOLLOW[i] += GRAMMAR[j].charAt(temp);
+                                    } else if (ifIsAVn(GRAMMAR[j].charAt(temp)) == true) {
                                         String tempString = "";
-                                        for (int t = temp; t < GRAMMER[j].length(); t++) {
-                                            if (GRAMMER[j].charAt(t) != '|') {
-                                                tempString += GRAMMER[j].charAt(t);
+                                        for (int t = temp; t < GRAMMAR[j].length(); t++) {
+                                            if (GRAMMAR[j].charAt(t) != '|') {
+                                                tempString += GRAMMAR[j].charAt(t);
                                             } else {
                                                 break;
                                             }
@@ -430,24 +430,24 @@ public class BasicData {
     private void addFolToFol() {
         for (int cycleNum = 0; cycleNum < cycleNum(); cycleNum++) {
             for (int i = 0; i < VN.length; i++) {
-                for (int j = 0; j < GRAMMER.length; j++) {
-                    if (GRAMMER[j].substring(3).contains(Character.toString(VN[i])) == true) {
-                        for (int temp = 3; temp < GRAMMER[j].length(); temp++) {
-                            if (VN[i] == GRAMMER[j].charAt(temp)) {
+                for (int j = 0; j < GRAMMAR.length; j++) {
+                    if (GRAMMAR[j].substring(3).contains(Character.toString(VN[i])) == true) {
+                        for (int temp = 3; temp < GRAMMAR[j].length(); temp++) {
+                            if (VN[i] == GRAMMAR[j].charAt(temp)) {
                                 temp++;
-                                if (temp >= GRAMMER[j].length()) {
-                                    FOLLOW[i] += FOLLOW[indexOfVn(GRAMMER[j].charAt(0))];
+                                if (temp >= GRAMMAR[j].length()) {
+                                    FOLLOW[i] += FOLLOW[indexOfVn(GRAMMAR[j].charAt(0))];
                                 } else {
-                                    if (GRAMMER[j].charAt(temp) == '|') {
-                                        FOLLOW[i] += FOLLOW[indexOfVn(GRAMMER[j].charAt(0))];
+                                    if (GRAMMAR[j].charAt(temp) == '|') {
+                                        FOLLOW[i] += FOLLOW[indexOfVn(GRAMMAR[j].charAt(0))];
                                     } else {
-                                        if (ifIsAVt(GRAMMER[j].charAt(temp)) == true) {
-                                            if (GRAMMER[j].charAt(temp) == 'ε') {
-                                                FOLLOW[i] += FOLLOW[indexOfVn(GRAMMER[j].charAt(0))];
+                                        if (ifIsAVt(GRAMMAR[j].charAt(temp)) == true) {
+                                            if (GRAMMAR[j].charAt(temp) == 'ε') {
+                                                FOLLOW[i] += FOLLOW[indexOfVn(GRAMMAR[j].charAt(0))];
                                             }
-                                        } else if (ifIsAVn(GRAMMER[j].charAt(temp)) == true) {
-                                            if (ifIsInFirst(indexOfVn(GRAMMER[j].charAt(temp)), 'ε') == true) {
-                                                FOLLOW[i] += FOLLOW[indexOfVn(GRAMMER[j].charAt(0))];
+                                        } else if (ifIsAVn(GRAMMAR[j].charAt(temp)) == true) {
+                                            if (ifIsInFirst(indexOfVn(GRAMMAR[j].charAt(temp)), 'ε') == true) {
+                                                FOLLOW[i] += FOLLOW[indexOfVn(GRAMMAR[j].charAt(0))];
                                             }
                                         }
                                     }
@@ -469,21 +469,21 @@ public class BasicData {
     }
 
     private void formTableCell(int tempGra) {
-        String headString = GRAMMER[tempGra].substring(0, 3);
-        int locVnHead = indexOfVn(GRAMMER[tempGra].charAt(0));
-        for (int i = 0; i < GRAMMER[tempGra].length(); i++) {
-            if ((GRAMMER[tempGra].charAt(i) == '|') || (GRAMMER[tempGra].charAt(i) == '>')) {
+        String headString = GRAMMAR[tempGra].substring(0, 3);
+        int locVnHead = indexOfVn(GRAMMAR[tempGra].charAt(0));
+        for (int i = 0; i < GRAMMAR[tempGra].length(); i++) {
+            if ((GRAMMAR[tempGra].charAt(i) == '|') || (GRAMMAR[tempGra].charAt(i) == '>')) {
                 i++;
                 String tempStorString = "";
-                for (int j = i; j < GRAMMER[tempGra].length(); j++) {
-                    if (GRAMMER[tempGra].charAt(j) == '|') {
+                for (int j = i; j < GRAMMAR[tempGra].length(); j++) {
+                    if (GRAMMAR[tempGra].charAt(j) == '|') {
                         break;
                     } else {
-                        tempStorString += GRAMMER[tempGra].charAt(j);
+                        tempStorString += GRAMMAR[tempGra].charAt(j);
                     }
                 }
-                if (ifIsAVt(GRAMMER[tempGra].charAt(i)) == true) {
-                    if (GRAMMER[tempGra].charAt(i) == 'ε') {
+                if (ifIsAVt(GRAMMAR[tempGra].charAt(i)) == true) {
+                    if (GRAMMAR[tempGra].charAt(i) == 'ε') {
                         if (FOLLOW[locVnHead].length() != 0) {
                             for (int j = 0; j < FOLLOW[locVnHead].length(); j++) {
                                 int locVtFo = indexOfVt(FOLLOW[locVnHead].charAt(j));
@@ -491,21 +491,21 @@ public class BasicData {
                             }
                         }
                     }
-                    int locVt = indexOfVt(GRAMMER[tempGra].charAt(i));
+                    int locVt = indexOfVt(GRAMMAR[tempGra].charAt(i));
                     ANALYSISTABLE[locVnHead][locVt] = headString + tempStorString;
-                } else if (ifIsAVn(GRAMMER[tempGra].charAt(i)) == true) {
+                } else if (ifIsAVn(GRAMMAR[tempGra].charAt(i)) == true) {
                     String setOfChar = "";
                     String strFirst = "";
                     boolean ifInFisrt = false;
-                    for (int t = i; t < GRAMMER[tempGra].length(); t++) {
-                        if (GRAMMER[tempGra].charAt(t) != '|') {
-                            setOfChar += GRAMMER[tempGra].charAt(t);
+                    for (int t = i; t < GRAMMAR[tempGra].length(); t++) {
+                        if (GRAMMAR[tempGra].charAt(t) != '|') {
+                            setOfChar += GRAMMAR[tempGra].charAt(t);
                         } else {
                             break;
                         }
                     }
                     strFirst = strCharFirst(setOfChar);
-                    int locVnTail = indexOfVn(GRAMMER[tempGra].charAt(i));
+                    int locVnTail = indexOfVn(GRAMMAR[tempGra].charAt(i));
                     if (strFirst.length() != 0) {
                         for (int j = 0; j < strFirst.length(); j++) {
                             int locVtFo = indexOfVt(strFirst.charAt(j));
@@ -533,7 +533,7 @@ public class BasicData {
     
     // 构造预测分析表
     private void formTable() {
-        for (int i = 0; i < GRAMMER.length; i++) {
+        for (int i = 0; i < GRAMMAR.length; i++) {
             formTableCell(i);
         }
     }

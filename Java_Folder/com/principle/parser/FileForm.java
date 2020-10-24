@@ -19,9 +19,9 @@ public class FileForm {
         File firstFollowFile = new File("/Users/sfky/Desktop/First_Follow.csv");
         File tableFile = new File("/Users/sfky/Desktop/Table.csv");
         try{
-            OutputStreamWriter processStream = new OutputStreamWriter(new FileOutputStream(processFile), "GBK");
-            OutputStreamWriter firFolStream = new OutputStreamWriter(new FileOutputStream(firstFollowFile), "GBK");
-            OutputStreamWriter tableStream = new OutputStreamWriter(new FileOutputStream(tableFile), "GBK");
+            OutputStreamWriter processStream = new OutputStreamWriter(new FileOutputStream(processFile));
+            OutputStreamWriter firFolStream = new OutputStreamWriter(new FileOutputStream(firstFollowFile));
+            OutputStreamWriter tableStream = new OutputStreamWriter(new FileOutputStream(tableFile));
             BufferedWriter processText = new BufferedWriter(processStream);
             BufferedWriter firFolText = new BufferedWriter(firFolStream);
             BufferedWriter tableText = new BufferedWriter(tableStream);

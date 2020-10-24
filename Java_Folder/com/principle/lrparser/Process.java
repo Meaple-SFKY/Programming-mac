@@ -71,7 +71,7 @@ public class Process {
     FirstSet firstSet = new FirstSet();
     ArrayList<String> actionList = new ArrayList<String>();
     ArrayList<Line> lineList = new ArrayList<Line>();
-    String[][] analysisTable = setTable.getAnalyzisTable();
+    String[][] analysisTable = setTable.getAnalysisTable();
     ItemFamily itemFamily = setTable.getFamily();
     Line line = new Line();
     String testString = "";
@@ -88,6 +88,8 @@ public class Process {
     }
 
     public Process(String str) {
+        /* itemFamily.printFamily();
+        System.out.println("------------------------------------------------------------------"); */
         this.testString = str;
         initLine();
         process();
