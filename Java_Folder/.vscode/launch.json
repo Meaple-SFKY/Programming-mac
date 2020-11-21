@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - ParcelFir",
+            "request": "launch",
+            "mainClass": "com.meaple.innerclasses.ParcelFir",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - DemoLr",
             "request": "launch",
             "mainClass": "com.principle.lrparser.DemoLr",
