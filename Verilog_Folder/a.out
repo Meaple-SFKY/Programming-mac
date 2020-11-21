@@ -1,0 +1,88 @@
+#! /usr/local/Cellar/icarus-verilog/11.0/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 10;
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/system.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/va_math.vpi";
+S_0x7f92bf409a80 .scope module, "vaddsws_tb" "vaddsws_tb" 2 4;
+ .timescale -9 -10;
+v0x7f92bf422e30_0 .net "sat", 0 0, L_0x7f92bf423090;  1 drivers
+v0x7f92bf422ec0_0 .var "vra", 31 0;
+v0x7f92bf422f50_0 .var "vrb", 31 0;
+v0x7f92bf422fe0_0 .net "vrt", 31 0, L_0x7f92bf4241a0;  1 drivers
+S_0x7f92bf4077d0 .scope module, "add" "vaddsws" 2 24, 3 1 0, S_0x7f92bf409a80;
+ .timescale -9 -10;
+    .port_info 0 /INPUT 32 "vra";
+    .port_info 1 /INPUT 32 "vrb";
+    .port_info 2 /OUTPUT 32 "vrt";
+    .port_info 3 /OUTPUT 1 "sat";
+L_0x7f92bf4237d0 .functor XOR 1, L_0x7f92bf423650, L_0x7f92bf4236f0, C4<0>, C4<0>;
+L_0x7f92bf423b50 .functor AND 1, L_0x7f92bf4238c0, L_0x7f92bf4239e0, C4<1>, C4<1>;
+L_0x7f92bf563050 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x7f92bf411320_0 .net *"_ivl_10", 0 0, L_0x7f92bf563050;  1 drivers
+v0x7f92bf421d60_0 .net *"_ivl_11", 32 0, L_0x7f92bf423510;  1 drivers
+v0x7f92bf421e10_0 .net *"_ivl_14", 0 0, L_0x7f92bf423650;  1 drivers
+v0x7f92bf421ed0_0 .net *"_ivl_16", 0 0, L_0x7f92bf4236f0;  1 drivers
+v0x7f92bf421f80_0 .net *"_ivl_17", 0 0, L_0x7f92bf4237d0;  1 drivers
+v0x7f92bf422070_0 .net *"_ivl_20", 0 0, L_0x7f92bf4238c0;  1 drivers
+v0x7f92bf422120_0 .net *"_ivl_22", 0 0, L_0x7f92bf4239e0;  1 drivers
+v0x7f92bf4221d0_0 .net *"_ivl_24", 0 0, L_0x7f92bf423b50;  1 drivers
+v0x7f92bf422270_0 .net *"_ivl_26", 0 0, L_0x7f92bf423bc0;  1 drivers
+L_0x7f92bf563098 .functor BUFT 1, C4<10000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x7f92bf422380_0 .net/2u *"_ivl_27", 31 0, L_0x7f92bf563098;  1 drivers
+v0x7f92bf422430_0 .net *"_ivl_29", 31 0, L_0x7f92bf423cd0;  1 drivers
+v0x7f92bf4224e0_0 .net *"_ivl_3", 32 0, L_0x7f92bf423270;  1 drivers
+v0x7f92bf422590_0 .net *"_ivl_32", 0 0, L_0x7f92bf423e10;  1 drivers
+L_0x7f92bf5630e0 .functor BUFT 1, C4<01111111111111111111111111111111>, C4<0>, C4<0>, C4<0>;
+v0x7f92bf422640_0 .net/2u *"_ivl_33", 31 0, L_0x7f92bf5630e0;  1 drivers
+v0x7f92bf4226f0_0 .net *"_ivl_35", 31 0, L_0x7f92bf423f30;  1 drivers
+v0x7f92bf4227a0_0 .net *"_ivl_37", 31 0, L_0x7f92bf424040;  1 drivers
+L_0x7f92bf563008 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x7f92bf422850_0 .net *"_ivl_6", 0 0, L_0x7f92bf563008;  1 drivers
+v0x7f92bf4229e0_0 .net *"_ivl_7", 32 0, L_0x7f92bf4233d0;  1 drivers
+v0x7f92bf422a70_0 .net "sat", 0 0, L_0x7f92bf423090;  alias, 1 drivers
+v0x7f92bf422b10_0 .net "sum", 31 0, L_0x7f92bf423170;  1 drivers
+v0x7f92bf422bc0_0 .net "vra", 31 0, v0x7f92bf422ec0_0;  1 drivers
+v0x7f92bf422c70_0 .net "vrb", 31 0, v0x7f92bf422f50_0;  1 drivers
+v0x7f92bf422d20_0 .net "vrt", 31 0, L_0x7f92bf4241a0;  alias, 1 drivers
+L_0x7f92bf423090 .part L_0x7f92bf423510, 32, 1;
+L_0x7f92bf423170 .part L_0x7f92bf423510, 0, 32;
+L_0x7f92bf423270 .concat [ 32 1 0 0], v0x7f92bf422ec0_0, L_0x7f92bf563008;
+L_0x7f92bf4233d0 .concat [ 32 1 0 0], v0x7f92bf422f50_0, L_0x7f92bf563050;
+L_0x7f92bf423510 .arith/sum 33, L_0x7f92bf423270, L_0x7f92bf4233d0;
+L_0x7f92bf423650 .part v0x7f92bf422ec0_0, 31, 1;
+L_0x7f92bf4236f0 .part v0x7f92bf422f50_0, 31, 1;
+L_0x7f92bf4238c0 .part v0x7f92bf422ec0_0, 31, 1;
+L_0x7f92bf4239e0 .part v0x7f92bf422f50_0, 31, 1;
+L_0x7f92bf423bc0 .part L_0x7f92bf423170, 31, 1;
+L_0x7f92bf423cd0 .functor MUXZ 32, L_0x7f92bf563098, L_0x7f92bf423170, L_0x7f92bf423bc0, C4<>;
+L_0x7f92bf423e10 .part L_0x7f92bf423170, 31, 1;
+L_0x7f92bf423f30 .functor MUXZ 32, L_0x7f92bf423170, L_0x7f92bf5630e0, L_0x7f92bf423e10, C4<>;
+L_0x7f92bf424040 .functor MUXZ 32, L_0x7f92bf423f30, L_0x7f92bf423cd0, L_0x7f92bf423b50, C4<>;
+L_0x7f92bf4241a0 .functor MUXZ 32, L_0x7f92bf424040, L_0x7f92bf423170, L_0x7f92bf4237d0, C4<>;
+    .scope S_0x7f92bf409a80;
+T_0 ;
+    %vpi_call 2 13 "$dumpfile", "test.vcd" {0 0 0};
+    %vpi_call 2 14 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x7f92bf409a80 {0 0 0};
+    %pushi/vec4 4294967295, 0, 32;
+    %cassign/vec4 v0x7f92bf422ec0_0;
+    %pushi/vec4 4294967295, 0, 32;
+    %cassign/vec4 v0x7f92bf422f50_0;
+    %delay 1000, 0;
+    %pushi/vec4 19088743, 0, 32;
+    %cassign/vec4 v0x7f92bf422ec0_0;
+    %pushi/vec4 1985229328, 0, 32;
+    %cassign/vec4 v0x7f92bf422f50_0;
+    %delay 1000, 0;
+    %vpi_call 2 21 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "test_tb.v";
+    "./test.v";
