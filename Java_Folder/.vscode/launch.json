@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Server",
+            "request": "launch",
+            "mainClass": "com.meaple.youchat.Server",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "Launch Temps",
+            "request": "launch",
+            "mainClass": "com.meaple.youchat.Temps",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - ParcelFir",
             "request": "launch",
             "mainClass": "com.meaple.innerclasses.ParcelFir",
