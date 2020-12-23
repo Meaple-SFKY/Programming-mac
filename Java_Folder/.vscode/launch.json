@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch FileClient",
+            "request": "launch",
+            "mainClass": "com.meaple.youchat.FileClient",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileServer",
+            "request": "launch",
+            "mainClass": "com.meaple.youchat.FileServer",
+            "projectName": "Java_Folder_24993286"
+        },
+        {
+            "type": "java",
             "name": "Launch Server",
             "request": "launch",
             "mainClass": "com.meaple.youchat.Server",

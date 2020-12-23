@@ -70,12 +70,12 @@ class ServerFrame extends Frame {
         addWindowListener(
 			new WindowAdapter()	{
 	    		public void windowClosing(WindowEvent e) {
-		    			try	{
-		    				server.close();
-		    			} catch(Exception ee) {
-		    				ee.printStackTrace();
-		    			}
-		     			System.exit(0);
+                    try	{
+                        server.close();
+                    } catch(Exception ee) {
+                        ee.printStackTrace();
+                    }
+                    System.exit(0);
 	    		}
 	   		}
 	   	);
@@ -140,3 +140,11 @@ public class FileServer {
         serverFrame.setVisible(true);
     }
 }
+
+
+
+/**
+ * 运行后Terminal报错，检查发现没有给客户端（小黄）指定端口号
+ * 建立连接后无法发消息，且程序卡死，解决方式是给等待对方消息的部分建个线程
+ * 窗口无法正常关闭，使用windowClosing侦听窗口，就可以正常关闭
+*/

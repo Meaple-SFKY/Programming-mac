@@ -8,7 +8,8 @@
 		"editor.codeActionsOnSave": null,
 		"editor.fontFamily": "Cascadia Code, Monaco, monospace",
 		"terminal.integrated.fontFamily": "Hack Nerd Font",
-		"terminal.integrated.fontSize": 14
+		"terminal.integrated.fontSize": 14,
+		"git.ignoreLimitWarning": true
 	},
 	"launch": {
 		"version": "0.2.0",

@@ -24,8 +24,8 @@ class ClientFrame extends JFrame {
 
     //初始化GUI界面
     private void init() {
-        ipTextField = new JTextField("127.0.0.1");
-        portTextField = new JTextField("2001");
+        ipTextField = new JTextField("192.168.43.103");
+        portTextField = new JTextField("19400");
         connect = new JButton("连接");
         send = new JButton("发送");
         clear = new JButton("清屏");
@@ -93,6 +93,7 @@ class ClientFrame extends JFrame {
 
             if (actionString.equals("连接")) {              //点按连接按钮
                 try {
+                    System.out.println("Hello");
                     connect.setEnabled(false);
                     int i = Integer.parseInt(portTextField.getText());  //获取端口号
                     client = new Socket(ipTextField.getText(), i);      //建立连接
@@ -115,6 +116,7 @@ class ClientFrame extends JFrame {
                     }
                     sendField.setText("");
                 } catch(Exception se) {
+                    System.out.println("_________________\n____________________\n--------------");
                     se.printStackTrace();
                 }
             } else if (actionString.equals("清屏")) {       //点按清屏按钮
