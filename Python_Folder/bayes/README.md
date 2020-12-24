@@ -1,17 +1,39 @@
-Êı¾İ
-	À´Ô´ÓÚÌÚÑ¶ĞÂÎÅ£¬¹²7Àà£¬·Ö±ğÊÇ1 ²Æ¾­£¬2 ¿Æ¼¼£¬3 Æû³µ£¬4 ·¿²ú£¬5 ÌåÓı£¬6 ÓéÀÖ£¬7 ÆäËû¡£ÎÄ¼şµÄ¿ªÍ·Êı×Ö¼´±íÊ¾ĞÂÎÅÀàĞÍ¡£
-	Êı¾İÊÇyouthpassesÅÀ³æÅÀÈ¡µÄ£¬ÎªÁË·½±ãÖ±½ÓÒıÓÃÁËÆäÊı¾İ¡£Á´½ÓÎª£ºhttps://github.com/youthpasses/bayes_classifier¡£
-	
-·ÖÀàÆ÷
-	ÆÓËØ±´Ò¶Ë¹·ÖÀàÆ÷
-	
-¹¤¾ß
-	python+jieba+sklearn+numpy
-	
-Á÷³Ì
-	ÖĞÎÄ·Ö´Ê´æÈëÖĞ¼ä±í
-	ÒıÈëÍ£ÓÃ´Ê
-	TfidfVectorizer½øĞĞÌØÕ÷´¦Àí£¨ÏòÁ¿»¯£¬TF-IDFºÍ±ê×¼»¯Èı²½´¦Àí£©
-	MultinomialNB´´½¨ÎÄ±¾·ÖÀàÆ÷£¬²¢ÓÃ²âÊÔ¼¯½øĞĞ²âÊÔ¡£score=0.827¡£
-	ÕÒ³öÃ¿¸öÎÄ¼şÖĞ×î´óµÄTF-IDFÖµ¼°Æä¶ÔÓ¦µÄ´ÊÓï
-	
+# ä»£ç ç»“æ„
+```python
+import ......
+# è¯»å–åœç”¨è¯
+def make_words_set(words_file):
+	......
+# è¯»å…¥æ–‡ä»¶ï¼Œåˆ†è¯åå†™å…¥ä¸­é—´è¡¨
+def read_write(datafile,tempfile):
+	......
+# åˆ†è¯åå†™å…¥ä¸­é—´è¡¨--è®­ç»ƒé›†
+	......
+# è¯»å–ä¸­é—´è¡¨æ•°æ®--è®­ç»ƒé›†
+	......
+# åˆ†è¯åå†™å…¥ä¸­é—´è¡¨--æµ‹è¯•é›†
+	......
+# è¯»å–ä¸­é—´è¡¨æ•°æ®--æµ‹è¯•é›†
+	......
+# è·å–åœç”¨è¯
+stop_words=make_words_set(r'./bayes/docs/stop_words.txt')
+stop_word=list(stop_words)
+# ç‰¹å¾å¤„ç†ï¼ŒTF-IDFç‰¹å¾å¤„ç†æ–¹æ³•
+vector = TfidfVectorizer(stop_words=stop_word)
+......
+# å¯¹æ¨¡å‹è¿›è¡Œè¯„ä¼°
+clf = MultinomialNB().fit(x_train, y_train)
+score = clf.score(x_test,y_test)
+print(score)
+# æ‰¾å‡ºæ¯ä¸ªæ–‡ä»¶æœ€å¤§çš„TF-IDFå€¼åŠå…¶å¯¹åº”çš„è¯
+wordlist = vector.get_feature_names()
+weightlist = x_train.toarray()
+# å°†åˆ†ç±»ç»“æœå­˜å…¥æ–‡ä»¶
+with open (r'./bayes/docs/Classify.csv','w',encoding='gbk') as fp:
+	......
+# ç”Ÿæˆè¯äº‘
+wc = WordCloud(
+	......
+)
+......
+```
