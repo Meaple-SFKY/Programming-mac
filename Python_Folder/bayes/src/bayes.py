@@ -140,10 +140,10 @@ fp.close()
 words = " ".join(words)
 
 
-wc = WordCloud(font_path="./bayes/pictures/font.ttc",
+wc = WordCloud(font_path="./bayes/img/font.ttc",
                background_color="white",
                mask=plt.imread(
-                   "./bayes/pictures/map.jpeg"),
+                   "./bayes/img/map.jpeg"),
                max_words=100,
                width=1000,
                height=800)
@@ -151,4 +151,4 @@ img = wc.generate(words)
 plt.figure(figsize=(25, 20))
 plt.imshow(img)
 plt.axis("off")
-wc.to_file("./bayes/pictures/wordcloud.jpeg")
+wc.to_file("./bayes/img/wordcloud.jpeg")
