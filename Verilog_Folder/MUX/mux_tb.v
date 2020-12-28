@@ -10,6 +10,7 @@ module mux41_tb;
         $dumpfile("test.vcd");
         $dumpvars(0, mux41_tb);
         in1 = 4'b0001;
+        in1[3] = 1;
         in2 = 4'b0011;
         in3 = 4'b0111;
         in4 = 4'b1111;
