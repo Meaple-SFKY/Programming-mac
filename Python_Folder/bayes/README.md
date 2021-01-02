@@ -31,9 +31,5 @@ weightlist = x_train.toarray()
 # 将分类结果存入文件
 with open (r'./bayes/docs/Classify.csv','w',encoding='gbk') as fp:
 	......
-# 生成词云
-wc = WordCloud(
-	......
-)
 ......
 ```
