@@ -4,7 +4,6 @@ import random
 import jieba
 import numpy as np
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud
 from itertools import chain
 from sklearn.metrics import classification_report
 from sklearn.metrics import precision_recall_curve
@@ -103,8 +102,6 @@ print(score)
 # 找出每个文件最大的TF-IDF值及其对应的词
 wordlist = vector.get_feature_names()
 weightlist = x_train.toarray()
-
-words = []
 with open (r'./bayes/docs/Classify.csv','w',encoding='gbk') as fp:
     xx = "种类,TF-IDF,关键词"
     fp.write(xx)
@@ -132,23 +129,6 @@ with open (r'./bayes/docs/Classify.csv','w',encoding='gbk') as fp:
         else:
             x3=[]
             x3.append(wordlist[x1[0]])
-            words.append(wordlist[x1[0]])
         xx="\n%s,%s,%s"%(str(x0),str(x2),x3)
         fp.write(xx)
 fp.close()
-
-words = " ".join(words)
-
-
-wc = WordCloud(font_path="./bayes/img/font.ttc",
-               background_color="white",
-               mask=plt.imread(
-                   "./bayes/img/map.jpeg"),
-               max_words=100,
-               width=1000,
-               height=800)
-img = wc.generate(words)
-plt.figure(figsize=(25, 20))
-plt.imshow(img)
-plt.axis("off")
-wc.to_file("./bayes/img/wordcloud.jpeg")
