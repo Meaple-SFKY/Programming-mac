@@ -5,14 +5,19 @@ module ALU (
 	output reg ifBan
 );
 
-	initial
-	begin
+	initial begin
 		ifBan = 0;
 		aluData = 0;
 	end
 
-	always @*
-	begin
+	always @* begin
+		if (ifBan == 1) begin
+			#2
+			ifBan = ~ifBan;
+		end
+	end
+
+	always @* begin
 		case (aluCode)
 			4'b0000: aluData = 0;
 			4'b0001: aluData = ~inDataA;
@@ -22,7 +27,6 @@ module ALU (
 			4'b0101: aluData = inDataA;
 			4'b0110: aluData = inDataB;
 			4'b0111: ifBan = inDataA[15] == 1 ? 1 : 0;
-			default: aluData = 1'bX;
 		endcase
 	end
 endmodule

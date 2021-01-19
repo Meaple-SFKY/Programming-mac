@@ -9,19 +9,23 @@ module CPU (
 	input wire clk, rst
 );
 
-	wire stop, pcWR, accWR, memWR, ifBan;
-	wire [3 : 0] aluCode;
-	wire [7 : 0] Addr;
-	wire [11 : 0] ins;
+	wire stop, pcWR, accWR, memWR, insMode, ifBan;
+	wire [2 : 0] insShort;
+	wire [3 : 0] aluCode, insLong;
+	wire [7 : 0] Addr, dataAddr;
 	wire [15 : 0] inDataA, inDataB, aluData;
 
 	PC pc (
 		.clk(clk), .rst(rst), .stop(stop), .pcWR(pcWR), .ifBan(ifBan),
-		.jump(ins[7 : 0]), .Addr(Addr)
+		.jump(dataAddr[7 : 0]), .Addr(Addr)
 	);
 
 	INSREG insreg (
-		.Addr(Addr), .ins(ins)
+		.Addr(Addr),
+		.insMode(insMode),
+		.insShort(insShort),
+		.insLong(insLong),
+		.dataAddr(dataAddr)
 	);
 
 	ACC acc (
@@ -32,13 +36,15 @@ module CPU (
 
 	MEMOR memor (
 		.memWR(memWR), .clk(clk),
-		.Addr(ins[7 : 0]),
+		.dataAddr(dataAddr[7 : 0]),
 		.inData(aluData),
 		.outData(inDataB)
 	);
 
 	CTRLUNIT cu (
-		.ins(ins[11 : 8]),
+		.insShort(insShort),
+		.insLong(insLong),
+		.insMode(insMode),
 		.stop(stop), .pcWR(pcWR), .accWR(accWR), .memWR(memWR),
 		.aluCode(aluCode)
 	);

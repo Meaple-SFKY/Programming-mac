@@ -8,13 +8,11 @@ module ACC (
 
 	assign outData = accData;
 
-	initial
-	begin
+	initial begin
 		accData = 0;
 	end
 
-	always @(negedge clk)
-	begin
+	always @(negedge clk) begin
 		if (accWR == 1)
 			accData = inData;
 	end
